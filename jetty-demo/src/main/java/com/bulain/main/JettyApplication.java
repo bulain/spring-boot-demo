@@ -7,10 +7,10 @@ import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletConta
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class Application {
+public class JettyApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(JettyApplication.class, args);
     }
     
     @Bean

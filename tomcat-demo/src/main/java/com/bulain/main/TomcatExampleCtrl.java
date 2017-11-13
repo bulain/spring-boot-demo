@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController  
 @EnableAutoConfiguration  
-public class ExampleCtrl {  
+public class TomcatExampleCtrl {  
       
     @RequestMapping("/")  
     String home() {  
