@@ -20,6 +20,7 @@
 		<module>tomcat-demo</module>
 		<module>redis-demo</module>
 		<module>elastic-demo</module>
+		<module>mybatis-demo</module>
 	</modules>
 
 </project>
