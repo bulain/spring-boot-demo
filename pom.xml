@@ -17,6 +17,7 @@
 
 	<modules>
 		<module>activemq-demo</module>
+		<module>batch-demo</module>
 		<module>cache-demo</module>
 		<module>elastic-demo</module>
 		<module>jetty-demo</module>
