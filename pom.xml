@@ -16,11 +16,15 @@
 	</parent>
 
 	<modules>
-		<module>jetty-demo</module>
-		<module>tomcat-demo</module>
-		<module>redis-demo</module>
 		<module>elastic-demo</module>
+		<module>jetty-demo</module>
+		<module>kafka-demo</module>
+		<module>mongo-demo</module>
 		<module>mybatis-demo</module>
+		<module>rabbit-demo</module>
+		<module>redis-demo</module>
+		<module>rest-demo</module>
+		<module>tomcat-demo</module>
 	</modules>
 
 </project>
