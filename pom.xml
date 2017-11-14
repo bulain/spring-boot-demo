@@ -16,9 +16,12 @@
 	</parent>
 
 	<modules>
+		<module>activemq-demo</module>
+		<module>cache-demo</module>
 		<module>elastic-demo</module>
 		<module>jetty-demo</module>
 		<module>kafka-demo</module>
+		<module>mail-demo</module>
 		<module>mongo-demo</module>
 		<module>mybatis-demo</module>
 		<module>rabbit-demo</module>
