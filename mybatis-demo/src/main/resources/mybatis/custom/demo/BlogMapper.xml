@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bulain.mybatis.demo.dao.BlogMapper">
+
+    <insert id="bulkInsert" useGeneratedKeys="true" parameterType="java.util.List">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into blog
+        (TITLE, DESCR, ACTIVE_FLAG, CREATED_VIA, REMARKS, CREATED_AT, CREATED_BY, UPDATED_AT, UPDATED_BY
+        )values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.title,jdbcType=VARCHAR}, #{item.descr,jdbcType=VARCHAR}, #{item.activeFlag,jdbcType=VARCHAR},
+            #{item.createdVia,jdbcType=VARCHAR}, #{item.remarks,jdbcType=VARCHAR}, #{item.createdAt,jdbcType=TIMESTAMP},
+            #{item.createdBy,jdbcType=VARCHAR}, #{item.updatedAt,jdbcType=TIMESTAMP}, #{item.updatedBy,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+</mapper>

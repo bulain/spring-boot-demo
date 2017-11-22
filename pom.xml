@@ -20,6 +20,7 @@
 		<module>batch-demo</module>
 		<module>cache-demo</module>
 		<module>elastic-demo</module>
+		<module>jpa-demo</module>
 		<module>jetty-demo</module>
 		<module>kafka-demo</module>
 		<module>mail-demo</module>
