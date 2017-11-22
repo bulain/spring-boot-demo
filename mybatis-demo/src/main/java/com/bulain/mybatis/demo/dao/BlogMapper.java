@@ -1,22 +1,8 @@
 package com.bulain.mybatis.demo.dao;
 
-import java.util.List;
-
 import com.bulain.mybatis.demo.model.Blog;
+import com.bulain.mybatis.demo.pojo.BlogSearch;
 
-public interface BlogMapper {
-    int deleteByPrimaryKey(Long id);
-
-    int insert(Blog record);
-
-    int insertSelective(Blog record);
-
-    Blog selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(Blog record);
-
-    int updateByPrimaryKey(Blog record);
-
-    int bulkInsert(List<Blog> list);
+public interface BlogMapper extends PagedMapper<Blog, BlogSearch>, BasicMapper<Blog> {
 
 }

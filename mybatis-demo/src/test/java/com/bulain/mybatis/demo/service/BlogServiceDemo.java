@@ -2,6 +2,7 @@ package com.bulain.mybatis.demo.service;
 
 import java.util.Date;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.bulain.mybatis.MybatisApplication;
 import com.bulain.mybatis.demo.model.Blog;
+import com.bulain.mybatis.demo.pojo.BlogSearch;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = MybatisApplication.class)
@@ -17,6 +19,17 @@ public class BlogServiceDemo {
 
 	@Autowired
 	private BlogService blogService;
+
+	private BlogSearch search;
+
+	@Before
+	public void setUp() {
+		search = new BlogSearch();
+		search.setTitle("abd");
+		search.setDescr("descr");
+		search.setActiveFlag("Y");
+		search.setCreatedVia("Thread");
+	}
 
 	@Test
 	public void testInsert() {
@@ -41,6 +54,25 @@ public class BlogServiceDemo {
 		data.setCreatedAt(new Date());
 		data.setCreatedBy("PT");
 		blogService.update(data, true);
+	}
+
+	@Test
+	public void testCount() {
+		blogService.count(search);
+	}
+
+	@Test
+	public void testFind() {
+		search.addOrderBy("id", "asc");
+		blogService.find(search);
+	}
+
+	@Test
+	public void testPage() {
+		search.setPage(3);
+		search.setPageSize(2);
+		search.addOrderBy("id", "asc");
+		blogService.page(search);
 	}
 
 }
