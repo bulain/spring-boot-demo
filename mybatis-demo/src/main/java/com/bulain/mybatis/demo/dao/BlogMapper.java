@@ -2,11 +2,8 @@ package com.bulain.mybatis.demo.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Mapper;
-
 import com.bulain.mybatis.demo.model.Blog;
 
-@Mapper
 public interface BlogMapper {
     int deleteByPrimaryKey(Long id);
 
