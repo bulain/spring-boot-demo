@@ -51,21 +51,26 @@ public abstract class PagedServiceImpl<T, S extends Search> extends BasicService
 	@Override
 	public Paged<T> page(S search) {
 		PagedMapper<T, S> pagedMapper = getPagedMapper();
-		
-		PageHelper.startPage(search.getPage(), search.getPageSize());
-		
-		List<T> list = pagedMapper.find(search);
-		
-		PageInfo pageInfo = new PageInfo(list);
-		
-		Paged<T> paged = new Paged<T>();
-        paged.setPageSize(pageInfo.getPageSize());
-        paged.setTotalPage(pageInfo.getPages());
-        paged.setTotalCount(pageInfo.getTotal());
-        paged.setPage(pageInfo.getPageNum());
-        paged.setData(list);
 
-        return paged;
+		PageHelper.startPage(search.getPage(), search.getPageSize());
+
+		List<T> list = null;
+		try {
+			list = pagedMapper.find(search);
+		} finally {
+			PageHelper.clearPage();
+		}
+
+		PageInfo pageInfo = new PageInfo(list);
+
+		Paged<T> paged = new Paged<T>();
+		paged.setPageSize(pageInfo.getPageSize());
+		paged.setTotalPage(pageInfo.getPages());
+		paged.setTotalCount(pageInfo.getTotal());
+		paged.setPage(pageInfo.getPageNum());
+		paged.setData(list);
+
+		return paged;
 	}
 
 }
