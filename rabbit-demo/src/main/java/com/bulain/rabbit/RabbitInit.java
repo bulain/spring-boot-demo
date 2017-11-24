@@ -10,6 +10,8 @@ import org.springframework.amqp.core.Exchange;
 import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -104,6 +106,27 @@ public class RabbitInit {
 		String routingKey = "fanout";
 		Map<String, Object> arguments = new HashMap<String, Object>();
 		return new Binding(destination, destinationType, exchange, routingKey, arguments);
+	}
+
+	@Bean
+	public SimpleMessageListenerContainer topicQueueContainer(ConnectionFactory connectionFactory) {
+		SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+		container.setConcurrentConsumers(2);
+		container.setConnectionFactory(connectionFactory);
+		container.setQueueNames("bulain.topic.queue1","bulain.topic.queue2");
+		container.setMessageListener(new RabbitMessageListener());
+		container.setAutoStartup(false);
+		return container;
+	}
+
+	@Bean
+	public SimpleMessageListenerContainer fanoutQueueContainer(ConnectionFactory connectionFactory) {
+		SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+		container.setConnectionFactory(connectionFactory);
+		container.setQueueNames("bulain.fanout.queue1", "bulain.fanout.queue2");
+		container.setMessageListener(new RabbitMessageListener());
+		container.setAutoStartup(false);
+		return container;
 	}
 
 }

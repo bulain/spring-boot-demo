@@ -5,9 +5,9 @@ import org.junit.runner.RunWith;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest(classes = RabbitApplication.class)
 public class RabbitSender {
 
@@ -17,7 +17,7 @@ public class RabbitSender {
 	@Test
 	public void testSendByRoutingKey() {
 		
-		amqpTemplate.convertAndSend("bulain.direct", "direct", "this is a direct message");
+		amqpTemplate.convertAndSend("bulain.direct", "direct", "this is a direct.1 message");
 		amqpTemplate.convertAndSend("bulain.topic", "topic.1", "this is a topic.1 message");
 		amqpTemplate.convertAndSend("bulain.topic", "topic.2", "this is a topic.2 message");
 		amqpTemplate.convertAndSend("bulain.fanout", "fanout", "this is a fanout.1 message");
@@ -29,7 +29,7 @@ public class RabbitSender {
 	@Test
 	public void testSendByQueue() {
 		
-		amqpTemplate.convertAndSend("bulain.direct.queue", "this is a direct message");
+		amqpTemplate.convertAndSend("bulain.direct.queue", "this is a direct.2 message");
 		amqpTemplate.convertAndSend("bulain.topic.queue1", "this is a topic.3 message");
 		amqpTemplate.convertAndSend("bulain.topic.queue2", "this is a topic.4 message");
 		amqpTemplate.convertAndSend("bulain.fanout.queue1", "this is a fanout.3 message");
