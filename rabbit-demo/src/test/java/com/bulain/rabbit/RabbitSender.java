@@ -21,6 +21,13 @@ public class RabbitSender {
 	private AmqpTemplate amqpTemplate;
 
 	@Test
+	public void testSendByRoutingKeySp() {
+		for (int i = 0; i < 100; i++) {
+			amqpTemplate.convertAndSend("bulain.topic", "topic.1", "this is a topic.1 message " + i);
+		}
+	}
+
+	@Test
 	public void testSendByRoutingKey() {
 
 		amqpTemplate.convertAndSend("bulain.direct", "direct", "this is a direct.1 message");

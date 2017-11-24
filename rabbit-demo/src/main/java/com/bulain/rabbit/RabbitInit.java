@@ -13,6 +13,7 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
+import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -110,12 +111,25 @@ public class RabbitInit {
 	}
 
 	@Bean
-	public SimpleMessageListenerContainer topicQueueContainer(ConnectionFactory connectionFactory) {
+	public SimpleMessageListenerContainer topicQueueContainer1(ConnectionFactory connectionFactory) {
 		SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-		container.setConcurrentConsumers(2);
+		container.setConcurrentConsumers(3);
 		container.setConnectionFactory(connectionFactory);
-		container.setQueueNames("bulain.topic.queue1","bulain.topic.queue2");
+		container.setQueueNames("bulain.topic.queue1");
 		container.setMessageListener(new RabbitMessageListener());
+		container.setAutoStartup(false);
+		return container;
+	}
+	
+	@Bean
+	public SimpleMessageListenerContainer topicQueueContainer2(ConnectionFactory connectionFactory) {
+		SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+		container.setConcurrentConsumers(1);
+		container.setConnectionFactory(connectionFactory);
+		container.setQueueNames("bulain.topic.queue2");
+		MessageListenerAdapter messageListenerAdapter = new MessageListenerAdapter();
+		messageListenerAdapter.setDelegate(new RabbitMessageWorker());
+		container.setMessageListener(messageListenerAdapter);
 		container.setAutoStartup(false);
 		return container;
 	}

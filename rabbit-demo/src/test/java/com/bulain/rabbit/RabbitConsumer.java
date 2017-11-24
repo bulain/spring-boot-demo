@@ -13,7 +13,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class RabbitConsumer {
 
 	@Autowired
-	private SimpleMessageListenerContainer topicQueueContainer;
+	private SimpleMessageListenerContainer topicQueueContainer1;
+	@Autowired
+	private SimpleMessageListenerContainer topicQueueContainer2;
 	@Autowired
 	private SimpleMessageListenerContainer fanoutQueueContainer;
 
@@ -27,8 +29,13 @@ public class RabbitConsumer {
 	}
 	
 	@Test
-	public void testStartTopic() {
-		topicQueueContainer.start();
+	public void testStartTopic1() {
+		topicQueueContainer1.start();
+	}
+	
+	@Test
+	public void testStartTopic2() {
+		topicQueueContainer2.start();
 	}
 
 	@Test
