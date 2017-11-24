@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.Binding.DestinationType;
+import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Exchange;
 import org.springframework.amqp.core.FanoutExchange;
@@ -124,8 +125,9 @@ public class RabbitInit {
 		SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
 		container.setConnectionFactory(connectionFactory);
 		container.setQueueNames("bulain.fanout.queue1", "bulain.fanout.queue2");
-		container.setMessageListener(new RabbitMessageListener());
+		container.setMessageListener(new RabbitAckMessageListener());
 		container.setAutoStartup(false);
+		container.setAcknowledgeMode(AcknowledgeMode.MANUAL);
 		return container;
 	}
 

@@ -1,5 +1,6 @@
 package com.bulain.rabbit;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
@@ -16,6 +17,15 @@ public class RabbitConsumer {
 	@Autowired
 	private SimpleMessageListenerContainer fanoutQueueContainer;
 
+	@SuppressWarnings("static-access")
+	@AfterClass
+	public static void tearDownClass(){
+		try {
+			Thread.currentThread().sleep(2000L);
+		} catch (InterruptedException e) {
+		}
+	}
+	
 	@Test
 	public void testStartTopic() {
 		topicQueueContainer.start();
