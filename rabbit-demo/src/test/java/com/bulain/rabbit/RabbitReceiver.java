@@ -19,7 +19,7 @@ public class RabbitReceiver {
 
 	@Test
 	public void testReceive() {
-		Object message = amqpTemplate.receiveAndConvert("queue");
+		Object message = amqpTemplate.receiveAndConvert("bulain.direct.queue");
 		logger.debug("{}", message);
 	}
 

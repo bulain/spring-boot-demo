@@ -15,8 +15,26 @@ public class RabbitSender {
 	private AmqpTemplate amqpTemplate;
 
 	@Test
-	public void testSend() {
-		amqpTemplate.convertAndSend("queue", "this is a test message");
+	public void testSendByRoutingKey() {
+		
+		amqpTemplate.convertAndSend("bulain.direct", "direct", "this is a direct message");
+		amqpTemplate.convertAndSend("bulain.topic", "topic.1", "this is a topic.1 message");
+		amqpTemplate.convertAndSend("bulain.topic", "topic.2", "this is a topic.2 message");
+		amqpTemplate.convertAndSend("bulain.fanout", "fanout", "this is a fanout.1 message");
+		amqpTemplate.convertAndSend("bulain.fanout", "fanout", "this is a fanout.2 message");
+	
+	}
+	
+
+	@Test
+	public void testSendByQueue() {
+		
+		amqpTemplate.convertAndSend("bulain.direct.queue", "this is a direct message");
+		amqpTemplate.convertAndSend("bulain.topic.queue1", "this is a topic.3 message");
+		amqpTemplate.convertAndSend("bulain.topic.queue2", "this is a topic.4 message");
+		amqpTemplate.convertAndSend("bulain.fanout.queue1", "this is a fanout.3 message");
+		amqpTemplate.convertAndSend("bulain.fanout.queue2", "this is a fanout.4 message");
+	
 	}
 
 }
