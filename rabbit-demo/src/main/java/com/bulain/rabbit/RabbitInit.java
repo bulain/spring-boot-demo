@@ -3,9 +3,9 @@ package com.bulain.rabbit;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.Binding.DestinationType;
-import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Exchange;
 import org.springframework.amqp.core.FanoutExchange;
@@ -28,7 +28,7 @@ public class RabbitInit {
 	public Queue directQueue() {
 		return new Queue("bulain.direct.queue");
 	}
-
+	
 	@Bean
 	public Binding directBinding() {
 		String destination = "bulain.direct.queue";
