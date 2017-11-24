@@ -50,6 +50,16 @@ public class RabbitSender {
 	}
 
 	@Test
+	public void testSendObject() {
+		RabbitData data = new RabbitData();
+		data.setId("1");
+		data.setName("test");
+		data.setDescr("descr");
+		amqpTemplate.convertAndSend("bulain.object.queue", data);
+	}
+
+	
+	@Test
 	public void testConvertSendAndReceive() {
 		Object msg = amqpTemplate.convertSendAndReceive("bulain.direct", "direct", "this is a direct.3 message");
 		logger.debug("{}", msg);

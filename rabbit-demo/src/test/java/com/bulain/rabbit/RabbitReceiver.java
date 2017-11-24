@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.ReceiveAndReplyCallback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,6 +23,22 @@ public class RabbitReceiver {
 	public void testReceive() {
 		Object message = amqpTemplate.receiveAndConvert("bulain.direct.queue");
 		logger.debug("{}", message);
+	}
+	
+	@Test
+	public void testReceiveObject() {
+
+		RabbitData data = (RabbitData) amqpTemplate.receiveAndConvert("bulain.object.queue");
+		logger.debug("{}", data);
+	
+	}
+	
+	@Test
+	public void testReceiveMessage() {
+
+		Message message = amqpTemplate.receive("bulain.object.queue");
+		logger.debug("{}", message);
+	
 	}
 	
 	@Test

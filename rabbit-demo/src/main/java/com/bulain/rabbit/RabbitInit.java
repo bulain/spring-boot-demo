@@ -41,6 +41,11 @@ public class RabbitInit {
 	}
 
 	@Bean
+	public Queue objectQueue() {
+		return new Queue("bulain.object.queue");
+	}
+	
+	@Bean
 	public Exchange topicExchange() {
 		return new TopicExchange("bulain.topic");
 	}
