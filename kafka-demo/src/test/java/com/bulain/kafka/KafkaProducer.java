@@ -5,28 +5,27 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest(classes = KafkaApplication.class)
-public class KafkaSender {
+public class KafkaProducer {
 
 	@Autowired
 	private KafkaTemplate<String, Object> kafkaTemplate;
 
-	
-    @SuppressWarnings("static-access")
-    @Test
-	public void testSend() {
+	@Test
+	public void testProducer() {
 		for (int i = 0; i < 100; i++) {
 			kafkaTemplate.send("myTopic", "this is a test message " + i);
 		}
-		
-		try {
-	        Thread.currentThread().sleep(100L);
-        } catch (InterruptedException e) {
-        }
-		
+	}
+	
+	@Test
+	public void testAck() {
+		for (int i = 0; i < 10; i++) {
+			kafkaTemplate.send("ackTopic", "this is a test message " + i);
+		}
 	}
 
 }
