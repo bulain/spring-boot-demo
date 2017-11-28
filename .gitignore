@@ -1,3 +1,4 @@
 .classpath
 .project
 target/
+elastic-demo/data/
