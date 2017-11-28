@@ -16,6 +16,8 @@ public class KafkaConsumer {
 	private MessageListenerContainer messageListenerContainer;
 	@Autowired
 	private MessageListenerContainer ackMessageListenerContainer;
+	@Autowired
+	private MessageListenerContainer concurrentMessageListenerContainer;
 
 	@SuppressWarnings("static-access")
 	@AfterClass
@@ -31,5 +33,14 @@ public class KafkaConsumer {
 		messageListenerContainer.start();
 	}
 
+	@Test
+	public void testAck() {
+		messageListenerContainer.start();
+	}
+	
+	@Test
+	public void testConcurrent() {
+		concurrentMessageListenerContainer.start();
+	}
 
 }

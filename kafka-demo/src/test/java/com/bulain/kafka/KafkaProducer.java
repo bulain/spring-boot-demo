@@ -27,5 +27,12 @@ public class KafkaProducer {
 			kafkaTemplate.send("ackTopic", "this is a test message " + i);
 		}
 	}
+	
+	@Test
+	public void testConcurrent() {
+		for (int i = 0; i < 100; i++) {
+			kafkaTemplate.send("concurrentTopic", "this is a test message " + i);
+		}
+	}
 
 }
