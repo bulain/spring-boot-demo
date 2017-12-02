@@ -12,11 +12,13 @@ import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.Criteria;
 import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.bulain.elastic.demo.model.Blog;
 
 @RunWith(SpringRunner.class)
+@ContextConfiguration({"classpath:spring/applicationContext.xml"})
 public class TemplateDemo {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
