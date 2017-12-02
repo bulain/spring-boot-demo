@@ -8,18 +8,15 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.Criteria;
 import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.bulain.elastic.ElasticApplication;
 import com.bulain.elastic.demo.model.Blog;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = ElasticApplication.class)
 public class TemplateDemo {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
