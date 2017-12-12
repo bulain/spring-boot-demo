@@ -35,7 +35,7 @@ public class KafkaConsumer {
 
 	@Test
 	public void testAck() {
-		messageListenerContainer.start();
+		ackMessageListenerContainer.start();
 	}
 	
 	@Test

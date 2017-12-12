@@ -16,7 +16,7 @@ public class KafkaProducer {
 
 	@Test
 	public void testProducer() {
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 10; i++) {
 			kafkaTemplate.send("myTopic", "this is a test message " + i);
 		}
 	}
