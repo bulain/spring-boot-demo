@@ -16,11 +16,13 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 public class RabbitSpringSender {
 
 	@Autowired
-	private AmqpTemplate amqpTemplate;
+	private AmqpTemplate amqpTemplate1;
 
 	@Test
 	public void testSend() {
-		amqpTemplate.convertAndSend("this is a testing");
+		for (int i = 0; i < 10; i++) {
+			amqpTemplate1.convertAndSend("this is a testing " + i);
+		}
 	}
 
 }

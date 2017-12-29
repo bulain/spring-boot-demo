@@ -10,11 +10,12 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 @RunWith(SpringJUnit4ClassRunner.class)
 @TestExecutionListeners(value = {DependencyInjectionTestExecutionListener.class})
 @ContextConfiguration(locations = {"classpath:spring/applicationContext-resources.xml",
-		"classpath:spring/applicationContext-rabbit.xml", "classpath:spring/applicationContext-consumer.xml"})
+		"classpath:spring/applicationContext-rabbit.xml", "classpath:spring/applicationContext-consumer.xml",
+		"classpath:spring/applicationContext-sender.xml"})
 public class RabbitSpringConsumer {
 
 	@Test
-	public void testConsumer() {
+	public void testWorkder() {
 		try {
 			Thread.currentThread().join();
 		} catch (InterruptedException e) {

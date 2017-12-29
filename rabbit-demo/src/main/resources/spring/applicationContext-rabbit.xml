@@ -5,10 +5,23 @@
     <rabbit:connection-factory id="connectionFactory" host="${rabbit.host}" port="${rabbit.port}" username="${rabbit.username}" password="${rabbit.password}" virtual-host="${rabbit.virtualHost}" requested-heartbeat="60" />
     <rabbit:admin connection-factory="connectionFactory" />
     <rabbit:queue name="${rabbit.queue.1}" />
+    <rabbit:queue name="${rabbit.queue.2}">
+        <rabbit:queue-arguments>
+            <entry key="x-message-ttl" value="10000" value-type="java.lang.Long" />
+            <entry key="x-dead-letter-exchange" value="${rabbit.exchange.1}" />
+            <entry key="x-dead-letter-routing-key" value="${rabbit.routingKey.3}" />
+        </rabbit:queue-arguments>
+    </rabbit:queue>
+    <rabbit:queue name="${rabbit.queue.3}" />
+    <rabbit:queue name="${rabbit.queue.4}" />
     <rabbit:topic-exchange name="${rabbit.exchange.1}">
         <rabbit:bindings>
             <rabbit:binding queue="${rabbit.queue.1}" pattern="${rabbit.routingKey.1}" />
+            <rabbit:binding queue="${rabbit.queue.2}" pattern="${rabbit.routingKey.2}" />
+            <rabbit:binding queue="${rabbit.queue.3}" pattern="${rabbit.routingKey.3}" />
+            <rabbit:binding queue="${rabbit.queue.4}" pattern="${rabbit.routingKey.4}" />
         </rabbit:bindings>
     </rabbit:topic-exchange>
+
 
 </beans>
