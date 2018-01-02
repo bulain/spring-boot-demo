@@ -7,7 +7,6 @@
     <rabbit:queue name="${rabbit.queue.1}" />
     <rabbit:queue name="${rabbit.queue.2}">
         <rabbit:queue-arguments>
-            <entry key="x-message-ttl" value="10000" value-type="java.lang.Long" />
             <entry key="x-dead-letter-exchange" value="${rabbit.exchange.1}" />
             <entry key="x-dead-letter-routing-key" value="${rabbit.routingKey.3}" />
         </rabbit:queue-arguments>
