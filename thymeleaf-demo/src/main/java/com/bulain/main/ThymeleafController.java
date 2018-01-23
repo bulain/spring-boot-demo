@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class JspController {
+public class ThymeleafController {
 
 	@Value("${application.message:Hello World}")
 	private String message = "Hello World";
