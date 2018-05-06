@@ -1,8 +1,10 @@
 package com.bulain.elastic.demo.dao;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
+import java.util.Optional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,13 +37,16 @@ public class BlogDaoDemo {
 
 	@Test
 	public void testFindOne() {
-		Blog blog = blogDao.findOne(1L);
-		assertNotNull(blog);
+		Optional<Blog> opt = blogDao.findById(1L);
+		if (opt.isPresent()) {
+			Blog blog = opt.get();
+			assertNotNull(blog);
+		}
 	}
 
 	@Test
 	public void testExists() {
-		boolean exists = blogDao.exists(1L);
+		boolean exists = blogDao.existsById(1L);
 		assertTrue(exists);
 	}
 
@@ -59,7 +64,7 @@ public class BlogDaoDemo {
 
 	@Test
 	public void testDeleteID() {
-		blogDao.delete(1L);
+		blogDao.deleteById(1L);
 	}
 
 }
