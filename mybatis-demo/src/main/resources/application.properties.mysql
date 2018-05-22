@@ -1,0 +1,12 @@
+spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/mybatis_development
+spring.datasource.username=mybatis
+spring.datasource.password=mybatis
+
+mybatis.configLocation=classpath:mybatis/mybatis-config.xml
+mybatis.mapperLocations=classpath:mybatis/xml/Common.xml,classpath:mybatis/mysql/**/*.xml,classpath:mybatis/custom/**/*.xml
+
+pagehelper.helperDialect=mysql
+pagehelper.reasonable=true
+pagehelper.supportMethodsArguments=true
+pagehelper.params=count=countSql

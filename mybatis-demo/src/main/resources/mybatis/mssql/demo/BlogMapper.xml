@@ -20,15 +20,15 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from blog
+    from BLOG
     where ID = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from blog
+    delete from BLOG
     where ID = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.bulain.mybatis.demo.model.Blog" useGeneratedKeys="true" keyProperty="id" >
-    insert into blog (TITLE, DESCR, ACTIVE_FLAG, 
+    insert into BLOG (TITLE, DESCR, ACTIVE_FLAG, 
       CREATED_VIA, REMARKS, CREATED_AT, 
       CREATED_BY, UPDATED_AT, UPDATED_BY
       )
@@ -38,7 +38,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.bulain.mybatis.demo.model.Blog" useGeneratedKeys="true" keyProperty="id" >
-    insert into blog
+    insert into BLOG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="title != null" >
         TITLE,
@@ -99,7 +99,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.bulain.mybatis.demo.model.Blog" >
-    update blog
+    update BLOG
     <set >
       <if test="title != null" >
         TITLE = #{title,jdbcType=VARCHAR},
@@ -132,7 +132,7 @@
     where ID = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.bulain.mybatis.demo.model.Blog" >
-    update blog
+    update BLOG
     set TITLE = #{title,jdbcType=VARCHAR},
       DESCR = #{descr,jdbcType=VARCHAR},
       ACTIVE_FLAG = #{activeFlag,jdbcType=VARCHAR},

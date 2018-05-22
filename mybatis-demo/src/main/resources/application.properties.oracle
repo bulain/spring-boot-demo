@@ -1,0 +1,12 @@
+spring.datasource.driver-class-name=oracle.jdbc.OracleDriver
+spring.datasource.url=jdbc:oracle:thin:@localhost:1521:xe
+spring.datasource.username=mybatis_development
+spring.datasource.password=mybatis
+
+mybatis.configLocation=classpath:mybatis/mybatis-config.xml
+mybatis.mapperLocations=classpath:mybatis/xml/Common.xml,classpath:mybatis/oracle/**/*.xml,classpath:mybatis/custom/**/*.xml
+
+pagehelper.helperDialect=oracle
+pagehelper.reasonable=true
+pagehelper.supportMethodsArguments=true
+pagehelper.params=count=countSql

@@ -1,0 +1,12 @@
+spring.datasource.driver-class-name=com.microsoft.sqlserver.jdbc.SQLServerDriver
+spring.datasource.url=jdbc:sqlserver://localhost:1433;databaseName=mybatis_development
+spring.datasource.username=mybatis
+spring.datasource.password=mybatis
+
+mybatis.configLocation=classpath:mybatis/mybatis-config.xml
+mybatis.mapperLocations=classpath:mybatis/xml/Common.xml,classpath:mybatis/mssql/**/*.xml,classpath:mybatis/custom/**/*.xml
+
+pagehelper.helperDialect=sqlserver
+pagehelper.reasonable=true
+pagehelper.supportMethodsArguments=true
+pagehelper.params=count=countSql

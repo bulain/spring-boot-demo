@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.bulain.mybatis.demo.dao.BlogMapper" >
   <resultMap id="BaseResultMap" type="com.bulain.mybatis.demo.model.Blog" >
-    <id column="ID" property="id" jdbcType="BIGINT" />
+    <id column="ID" property="id" jdbcType="DECIMAL" />
     <result column="TITLE" property="title" jdbcType="VARCHAR" />
     <result column="DESCR" property="descr" jdbcType="VARCHAR" />
     <result column="ACTIVE_FLAG" property="activeFlag" jdbcType="VARCHAR" />
@@ -20,26 +20,33 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from blog
-    where ID = #{id,jdbcType=BIGINT}
+    from BLOG
+    where ID = #{id,jdbcType=DECIMAL}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from blog
-    where ID = #{id,jdbcType=BIGINT}
+    delete from BLOG
+    where ID = #{id,jdbcType=DECIMAL}
   </delete>
-  <insert id="insert" parameterType="com.bulain.mybatis.demo.model.Blog" useGeneratedKeys="true" keyProperty="id" >
-    insert into blog (TITLE, DESCR, ACTIVE_FLAG, 
-      CREATED_VIA, REMARKS, CREATED_AT, 
-      CREATED_BY, UPDATED_AT, UPDATED_BY
-      )
-    values (#{title,jdbcType=VARCHAR}, #{descr,jdbcType=VARCHAR}, #{activeFlag,jdbcType=VARCHAR}, 
-      #{createdVia,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, 
-      #{createdBy,jdbcType=VARCHAR}, #{updatedAt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}
-      )
+  <insert id="insert" parameterType="com.bulain.mybatis.demo.model.Blog" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      select S_BLOG.nextval from dual
+    </selectKey>
+    insert into BLOG (ID, TITLE, DESCR, 
+      ACTIVE_FLAG, CREATED_VIA, REMARKS, 
+      CREATED_AT, CREATED_BY, UPDATED_AT, 
+      UPDATED_BY)
+    values (#{id,jdbcType=DECIMAL}, #{title,jdbcType=VARCHAR}, #{descr,jdbcType=VARCHAR}, 
+      #{activeFlag,jdbcType=VARCHAR}, #{createdVia,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, 
+      #{createdAt,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{updatedAt,jdbcType=TIMESTAMP}, 
+      #{updatedBy,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.bulain.mybatis.demo.model.Blog" useGeneratedKeys="true" keyProperty="id" >
-    insert into blog
+  <insert id="insertSelective" parameterType="com.bulain.mybatis.demo.model.Blog" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      select S_BLOG.nextval from dual
+    </selectKey>
+    insert into BLOG
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
       <if test="title != null" >
         TITLE,
       </if>
@@ -69,6 +76,7 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=DECIMAL},
       <if test="title != null" >
         #{title,jdbcType=VARCHAR},
       </if>
@@ -99,7 +107,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.bulain.mybatis.demo.model.Blog" >
-    update blog
+    update BLOG
     <set >
       <if test="title != null" >
         TITLE = #{title,jdbcType=VARCHAR},
@@ -129,10 +137,10 @@
         UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
       </if>
     </set>
-    where ID = #{id,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=DECIMAL}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.bulain.mybatis.demo.model.Blog" >
-    update blog
+    update BLOG
     set TITLE = #{title,jdbcType=VARCHAR},
       DESCR = #{descr,jdbcType=VARCHAR},
       ACTIVE_FLAG = #{activeFlag,jdbcType=VARCHAR},
@@ -142,6 +150,6 @@
       CREATED_BY = #{createdBy,jdbcType=VARCHAR},
       UPDATED_AT = #{updatedAt,jdbcType=TIMESTAMP},
       UPDATED_BY = #{updatedBy,jdbcType=VARCHAR}
-    where ID = #{id,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=DECIMAL}
   </update>
 </mapper>
