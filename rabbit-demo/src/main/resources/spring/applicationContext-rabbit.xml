@@ -3,6 +3,7 @@
 
     <!-- 消息配置 -->
     <rabbit:connection-factory id="connectionFactory" host="${rabbit.host}" port="${rabbit.port}" username="${rabbit.username}" password="${rabbit.password}" virtual-host="${rabbit.virtualHost}" requested-heartbeat="60" />
+    <!-- <rabbit:connection-factory id="connectionFactory" username="${rabbit.username}" password="${rabbit.password}" virtual-host="${rabbit.virtualHost}" addresses="${rabbit.addresses}" requested-heartbeat="60" /> -->
     <rabbit:admin connection-factory="connectionFactory" />
     <rabbit:queue name="${rabbit.queue.1}" />
     <rabbit:queue name="${rabbit.queue.2}">
