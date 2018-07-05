@@ -32,7 +32,7 @@ public class WebfluxConfig {
 		return (String... args) -> {
 			boolean collectionExists = mongo.collectionExists(Event.class);
 			if (!collectionExists) {
-				mongo.createCollection(Event.class, CollectionOptions.empty().size(5).capped());
+				mongo.createCollection(Event.class, CollectionOptions.empty().maxDocuments(5).size(500).capped());
 			}
 		};
     }
