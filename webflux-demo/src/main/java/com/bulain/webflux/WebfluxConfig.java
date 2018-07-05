@@ -29,10 +29,12 @@ public class WebfluxConfig {
     
     @Bean 
     public CommandLineRunner initData(MongoOperations mongo) {
-        return (String... args) -> {   
-            mongo.dropCollection(Event.class);    
-            mongo.createCollection(Event.class, CollectionOptions.empty().size(200).capped());   
-        };
+		return (String... args) -> {
+			boolean collectionExists = mongo.collectionExists(Event.class);
+			if (!collectionExists) {
+				mongo.createCollection(Event.class, CollectionOptions.empty().size(5).capped());
+			}
+		};
     }
     
 }

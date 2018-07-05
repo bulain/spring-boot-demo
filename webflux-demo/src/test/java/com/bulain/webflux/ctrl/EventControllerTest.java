@@ -15,7 +15,7 @@ public class EventControllerTest {
 	@Test
     public void testEvents() {
         Flux<Event> eventFlux = Flux.interval(Duration.ofSeconds(1))
-                .map(l -> new Event(System.currentTimeMillis(), "message-" + l)).take(5);
+                .map(l -> new Event(System.currentTimeMillis(), "message-" + l)).take(10);
         WebClient webClient = WebClient.create("http://localhost:8080");
         webClient
                 .post().uri("/events")

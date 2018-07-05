@@ -22,11 +22,11 @@ public class EventController {
 
     @PostMapping(path = "")
     public Mono<Void> loadEvents(@RequestBody Flux<Event> events) {
-        return this.eventRepository.insert(events).then();
+        return eventRepository.insert(events).then();
     }
 
     @GetMapping(path = "", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
     public Flux<Event> getEvents() {
-    	return this.eventRepository.findBy();
+    	return eventRepository.findBy();
     }
 }
