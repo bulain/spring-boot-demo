@@ -18,17 +18,23 @@
         <module>activemq-demo</module>
         <module>batch-demo</module>
         <module>cache-demo</module>
+        <module>cxf-demo</module>
         <module>elastic-demo</module>
-        <module>jpa-demo</module>
         <module>jetty-demo</module>
+        <module>jpa-demo</module>
+        <module>jsp-demo</module>
         <module>kafka-demo</module>
         <module>mail-demo</module>
         <module>mongo-demo</module>
         <module>mybatis-demo</module>
+        <module>mybatis-plus-demo</module>
         <module>rabbit-demo</module>
         <module>redis-demo</module>
         <module>rest-demo</module>
+        <module>swagger2-demo</module>
+        <module>thymeleaf-demo</module>
         <module>tomcat-demo</module>
+        <module>webflux-demo</module>
     </modules>
 
 </project>
