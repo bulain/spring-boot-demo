@@ -1,4 +1,4 @@
-package com.bulain.mybatis.demo.service;
+package com.bulain.mybatis.core.service;
 
 
 /**

@@ -1,7 +1,7 @@
-package com.bulain.mybatis.demo.service;
+package com.bulain.mybatis.core.service;
 
-import com.bulain.mybatis.demo.pojo.Paged;
-import com.bulain.mybatis.demo.pojo.Search;
+import com.bulain.mybatis.core.pojo.Paged;
+import com.bulain.mybatis.core.pojo.Search;
 
 /**
  * 分页服务，对分页查询提供支持。

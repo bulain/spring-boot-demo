@@ -1,4 +1,4 @@
-package com.bulain.mybatis.demo.pojo;
+package com.bulain.mybatis.core.pojo;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -1,9 +1,9 @@
-package com.bulain.mybatis.demo.service;
+package com.bulain.mybatis.core.service;
 
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 
-import com.bulain.mybatis.demo.dao.BasicMapper;
+import com.bulain.mybatis.core.dao.BasicMapper;
 
 /**
  *  基本服务实现，主要提供CRUD功能。

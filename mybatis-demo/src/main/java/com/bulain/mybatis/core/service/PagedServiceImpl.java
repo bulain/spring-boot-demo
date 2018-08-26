@@ -1,10 +1,10 @@
-package com.bulain.mybatis.demo.service;
+package com.bulain.mybatis.core.service;
 
 import java.util.List;
 
-import com.bulain.mybatis.demo.dao.PagedMapper;
-import com.bulain.mybatis.demo.pojo.Paged;
-import com.bulain.mybatis.demo.pojo.Search;
+import com.bulain.mybatis.core.dao.PagedMapper;
+import com.bulain.mybatis.core.pojo.Paged;
+import com.bulain.mybatis.core.pojo.Search;
 import com.github.pagehelper.ISelect;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;

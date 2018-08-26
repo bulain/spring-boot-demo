@@ -1,4 +1,4 @@
-package com.bulain.mybatis.demo.dao;
+package com.bulain.mybatis.core.dao;
 
 import java.util.List;
 

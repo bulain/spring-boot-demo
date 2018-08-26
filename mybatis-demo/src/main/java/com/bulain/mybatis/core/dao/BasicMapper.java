@@ -1,4 +1,4 @@
-package com.bulain.mybatis.demo.dao;
+package com.bulain.mybatis.core.dao;
 
 /**
  * 基本DAO，主要提供CRUD操作。

@@ -1,4 +1,4 @@
-package com.bulain.mybatis.demo.pojo;
+package com.bulain.mybatis.core.pojo;
 
 /**
  * 分页信息 
