@@ -36,9 +36,8 @@ public abstract class PagedServiceImpl<T, S extends Search> extends BasicService
 	public Paged<T> page(S search) {
 		PagedMapper<T, S> pagedMapper = getPagedMapper();
 
-		List<T> list = null;
 		Page<T> pagination = new Page<T>(search.getPage(), search.getPageSize());
-		list = pagedMapper.find(search, pagination);
+		List<T> list = pagedMapper.find(search, pagination);
 
 		Paged<T> paged = new Paged<T>();
 		paged.setPageSize(pagination.getSize());
