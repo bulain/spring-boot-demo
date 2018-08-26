@@ -1,0 +1,14 @@
+dubbo:
+   application:
+      id: dubbo-demo-provider
+      name: dubbo-demo-provider
+   protocol:
+      id: dubbo
+      name: dubbo
+      port: 12345
+   scan:
+      basePackages: com.bulain.dubbo.service
+   registry:
+      id: my-registry
+      address: N/A
+      

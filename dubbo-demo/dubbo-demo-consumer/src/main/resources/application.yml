@@ -1,0 +1,9 @@
+dubbo:
+   application:
+      id: dubbo-demo-consumer
+      name: dubbo-demo-consumer
+   protocol:
+      id: dubbo
+      name: dubbo
+      port: 12345
+      
