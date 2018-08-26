@@ -1,9 +1,13 @@
 package com.bulain.mybatis.demo.dao;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
@@ -25,6 +29,7 @@ public class OrderMapperTest {
 	@Autowired
 	private OrderMapper orderMapper;
 	private Long id;
+	private Long version = 1L;
 
 	@Before
 	public void setup() {
@@ -33,7 +38,7 @@ public class OrderMapperTest {
 		Order entity = new Order();
 		entity.setOrderNo("X00001");
 		entity.setExtnRefNo1("E00001");
-		entity.setVersion(id);
+		entity.setVersion(version);
 
 		orderMapper.insert(entity);
 		id = entity.getId();
@@ -44,21 +49,24 @@ public class OrderMapperTest {
 		Order entity = new Order();
 		entity.setOrderNo("T00001");
 		entity.setExtnRefNo1("T00001");
-		entity.setVersion(id);
+		entity.setVersion(version);
 
-		orderMapper.insert(entity);
+		Integer icnt = orderMapper.insert(entity);
+		assertEquals(Integer.valueOf(1), icnt);
 	}
 
 	@Test
 	public void testDeleteById() {
-		orderMapper.deleteById(id);
+		Integer dcnt = orderMapper.deleteById(id);
+		assertEquals(Integer.valueOf(1), dcnt);
 	}
 
 	@Test
 	public void testDeleteByMap() {
 		Map<String, Object> columnMap = new HashMap<String, Object>();
 		columnMap.put("ORDER_NO", "X00001");
-		orderMapper.deleteByMap(columnMap);
+		Integer dcnt = orderMapper.deleteByMap(columnMap);
+		assertEquals(Integer.valueOf(1), dcnt);
 	}
 
 	@Test
@@ -66,13 +74,15 @@ public class OrderMapperTest {
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
 
-		orderMapper.delete(new EntityWrapper<Order>(wrapper));
+		Integer dcnt = orderMapper.delete(new EntityWrapper<Order>(wrapper));
+		assertEquals(Integer.valueOf(1), dcnt);
 	}
 
 	@Test
 	public void testDeleteBatchIds() {
 		Collection<? extends Serializable> idList = Arrays.asList(new Long[]{id, 2L, 3L});
-		orderMapper.deleteBatchIds(idList);
+		Integer dcnt = orderMapper.deleteBatchIds(idList);
+		assertEquals(Integer.valueOf(1), dcnt);
 	}
 
 	@Test
@@ -81,8 +91,10 @@ public class OrderMapperTest {
 		entity.setId(id);
 		entity.setOrderNo("X00001");
 		entity.setExtnRefNo1("E00001");
+		entity.setVersion(version);
 
-		orderMapper.updateById(entity);
+		Integer ucnt = orderMapper.updateById(entity);
+		assertEquals(Integer.valueOf(1), ucnt);
 	}
 
 	@Test
@@ -91,19 +103,23 @@ public class OrderMapperTest {
 		entity.setId(id);
 		entity.setOrderNo("X00001");
 		entity.setExtnRefNo1("E00001");
+		entity.setVersion(version);
 
-		orderMapper.updateAllColumnById(entity);
+		Integer ucnt = orderMapper.updateAllColumnById(entity);
+		assertEquals(Integer.valueOf(1), ucnt);
 	}
 
 	@Test
 	public void testUpdate() {
+
 		Order entity = new Order();
-		entity.setOrderNo("X00001");
 		entity.setExtnRefNo1("E00002");
 
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
-		orderMapper.update(entity, new EntityWrapper<Order>(wrapper));
+		wrapper.setVersion(version);
+		Integer ucnt = orderMapper.update(entity, new EntityWrapper<Order>(wrapper));
+		assertEquals(Integer.valueOf(1), ucnt);
 	}
 
 	@Test
@@ -112,76 +128,87 @@ public class OrderMapperTest {
 
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
-		orderMapper.updateForSet(setStr, new EntityWrapper<Order>(wrapper));
+		Integer ucnt = orderMapper.updateForSet(setStr, new EntityWrapper<Order>(wrapper));
+		assertEquals(Integer.valueOf(1), ucnt);
 	}
 
 	@Test
 	public void testSelectById() {
-		orderMapper.selectById(id);
+		Order ret = orderMapper.selectById(id);
+		assertNotNull(ret);
 	}
 
 	@Test
 	public void testSelectBatchIds() {
 		Collection<? extends Serializable> idList = Arrays.asList(new Long[]{id, 2L, 3L});
-		orderMapper.selectBatchIds(idList);
+		List<Order> list = orderMapper.selectBatchIds(idList);
+		assertEquals(1, list.size());
 	}
 
 	@Test
 	public void testSelectByMap() {
 		Map<String, Object> columnMap = new HashMap<String, Object>();
 		columnMap.put("ORDER_NO", "X00001");
-		orderMapper.selectByMap(columnMap);
+		List<Order> list = orderMapper.selectByMap(columnMap);
+		assertEquals(1, list.size());
 	}
 
 	@Test
 	public void testSelectOne() {
 		Order entity = new Order();
 		entity.setOrderNo("X00001");
-		orderMapper.selectOne(entity);
+		Order ret = orderMapper.selectOne(entity);
+		assertNotNull(ret);
 	}
 
 	@Test
 	public void testSelectCount() {
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
-		orderMapper.selectCount(new EntityWrapper<Order>(wrapper));
+		Integer cnt = orderMapper.selectCount(new EntityWrapper<Order>(wrapper));
+		assertEquals(Integer.valueOf(1), cnt);
 	}
 
 	@Test
 	public void testSelectList() {
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
-		orderMapper.selectList(new EntityWrapper<Order>(wrapper));
+		List<Order> list = orderMapper.selectList(new EntityWrapper<Order>(wrapper));
+		assertEquals(1, list.size());
 	}
 
 	@Test
 	public void testSelectMaps() {
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
-		orderMapper.selectMaps(new EntityWrapper<Order>(wrapper));
+		List<Map<String, Object>> list = orderMapper.selectMaps(new EntityWrapper<Order>(wrapper));
+		assertEquals(1, list.size());
 	}
 
 	@Test
 	public void testSelectObjs() {
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
-		orderMapper.selectObjs(new EntityWrapper<Order>(wrapper));
+		List<Object> list = orderMapper.selectObjs(new EntityWrapper<Order>(wrapper));
+		assertEquals(1, list.size());
 	}
 
 	@Test
 	public void testSelectPage() {
+		RowBounds rowBounds = new RowBounds(0, 2);
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
-		RowBounds rowBounds = new RowBounds(0, 2);
-		orderMapper.selectPage(rowBounds, new EntityWrapper<Order>(wrapper));
+		List<Order> list = orderMapper.selectPage(rowBounds, new EntityWrapper<Order>(wrapper));
+		assertEquals(1, list.size());
 	}
 
 	@Test
 	public void testSelectMapsPage() {
+		RowBounds rowBounds = new RowBounds(0, 2);
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
-		RowBounds rowBounds = new RowBounds(0, 2);
-		orderMapper.selectMapsPage(rowBounds, new EntityWrapper<Order>(wrapper));
+		List<Map<String, Object>> list = orderMapper.selectMapsPage(rowBounds, new EntityWrapper<Order>(wrapper));
+		assertEquals(1, list.size());
 	}
 
 }
