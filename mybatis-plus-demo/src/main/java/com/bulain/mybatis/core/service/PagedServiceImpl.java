@@ -3,7 +3,6 @@ package com.bulain.mybatis.core.service;
 import java.util.List;
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.plugins.pagination.PageHelper;
 import com.bulain.mybatis.core.dao.PagedMapper;
 import com.bulain.mybatis.core.pojo.Paged;
 import com.bulain.mybatis.core.pojo.Search;
@@ -39,11 +38,7 @@ public abstract class PagedServiceImpl<T, S extends Search> extends BasicService
 
 		List<T> list = null;
 		Page<T> pagination = new Page<T>(search.getPage(), search.getPageSize());
-		try {
-			list = pagedMapper.find(search, pagination);
-		} finally {
-			PageHelper.remove();
-		}
+		list = pagedMapper.find(search, pagination);
 
 		Paged<T> paged = new Paged<T>();
 		paged.setPageSize(pagination.getSize());
