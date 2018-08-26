@@ -16,7 +16,7 @@ import com.bulain.mybatis.demo.pojo.BlogSearch;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = MybatisPlusApplication.class)
-public class BlogServiceTest {
+public class BlogServiceImplTest {
 
 	@Autowired
 	private BlogService blogService;
