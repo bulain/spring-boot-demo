@@ -44,7 +44,6 @@ public class ShiroCtrl {
 	}
 
 	@RequestMapping("/logout")
-	
 	@ResponseBody
 	public BaseResp logout() {
 		Subject subject = SecurityUtils.getSubject();
