@@ -1,18 +1,19 @@
 package com.bulain.shiro.ctrl;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.util.SavedRequest;
+import org.apache.shiro.web.util.WebUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.bulain.shiro.pojo.BaseResp;
-import com.bulain.shiro.pojo.DataResp;
 import com.bulain.shiro.util.ShiroUtil;
 
 @Controller
@@ -24,8 +25,7 @@ public class ShiroCtrl {
 	}
 
 	@PostMapping("/login")
-	@ResponseBody
-	public DataResp logon(HttpServletRequest request) {
+	public String logon(HttpServletRequest request, HttpServletResponse response) {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String host = ShiroUtil.getUserAddr(request);
@@ -35,22 +35,22 @@ public class ShiroCtrl {
 		try {
 			subject.login(upt);
 		} catch (Exception e) {
-			return DataResp.fail(e);
+			return "login";
 		}
 
-		Object principal = subject.getPrincipal();
+		SavedRequest savedRequest = WebUtils.getSavedRequest(request);
+		String requestUrl = savedRequest.getRequestUrl();
 
-		return DataResp.ok(principal);
+		return "redirect:" + (StringUtils.hasLength(requestUrl) ? requestUrl : "index");
 	}
 
 	@RequestMapping("/logout")
-	@ResponseBody
-	public BaseResp logout() {
+	public String logout() {
 		Subject subject = SecurityUtils.getSubject();
 		if (subject.isAuthenticated()) {
 			subject.logout();
 		}
-		return BaseResp.ok();
+		return "redirect:index";
 	}
 
 }
