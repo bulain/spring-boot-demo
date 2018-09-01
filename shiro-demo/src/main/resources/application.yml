@@ -1,0 +1,11 @@
+server: 
+   servlet:
+      session: 
+         tracking-modes: cookie
+   tomcat:
+      uri-encoding: UTF-8
+spring:
+   mvc:
+      view:
+         prefix: /WEB-INF/jsp/
+         suffix: .jsp

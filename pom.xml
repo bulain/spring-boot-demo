@@ -19,6 +19,7 @@
         <module>batch-demo</module>
         <module>cache-demo</module>
         <module>cxf-demo</module>
+        <module>dubbo-demo</module>
         <module>elastic-demo</module>
         <module>jetty-demo</module>
         <module>jpa-demo</module>
@@ -31,6 +32,7 @@
         <module>rabbit-demo</module>
         <module>redis-demo</module>
         <module>rest-demo</module>
+        <module>shiro-demo</module>
         <module>swagger-demo</module>
         <module>thymeleaf-demo</module>
         <module>tomcat-demo</module>
