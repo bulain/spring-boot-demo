@@ -10,19 +10,22 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.mgt.WebSecurityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
+@EnableRedisHttpSession
 @Configuration
 public class ShiroConfig {
 
 	@Bean
 	public ShiroRealm shiroRealm() {
-		CredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher("md5"); 
+		CredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher("md5");
 		ShiroRealm shiroRealm = new ShiroRealm();
 		shiroRealm.setCredentialsMatcher(credentialsMatcher);
 		return shiroRealm;
 	}
 
 	@Bean
+	
 	public DefaultWebSecurityManager securityManager() {
 		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
 		securityManager.setRealm(shiroRealm());
@@ -45,7 +48,7 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/**", "authc");
 		filterChainDefinitionMap.put("/*.*", "authc");
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
-		
+
 		return shiroFilterFactoryBean;
 	}
 

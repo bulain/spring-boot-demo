@@ -39,7 +39,10 @@ public class ShiroCtrl {
 		}
 
 		SavedRequest savedRequest = WebUtils.getSavedRequest(request);
-		String requestUrl = savedRequest.getRequestUrl();
+		String requestUrl = null;
+		if (savedRequest != null) {
+			requestUrl = savedRequest.getRequestUrl();
+		}
 
 		return "redirect:" + (StringUtils.hasLength(requestUrl) ? requestUrl : "index");
 	}

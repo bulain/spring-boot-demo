@@ -28,8 +28,8 @@
 		</div>
 	</div>
 <jsscript>
-	<script src="//cdn.bootcss.com/jquery-validate/1.17.0/jquery.validate.min.js?1535796120647"></script>
-	<script src="//cdn.bootcss.com/jquery-validate/1.17.0/additional-methods.min.js?1535796120647"></script>
+	<script src="//cdn.bootcss.com/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+	<script src="//cdn.bootcss.com/jquery-validate/1.17.0/additional-methods.min.js"></script>
 	<script type="text/javascript" src="<c:url value='/static/js/login.js?1535796154772'/>" ></script>
 </jsscript>
 </body>
