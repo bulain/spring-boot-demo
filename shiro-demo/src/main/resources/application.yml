@@ -9,3 +9,13 @@ spring:
       view:
          prefix: /WEB-INF/jsp/
          suffix: .jsp
+   cache:
+      type: redis
+   redis:
+      lettuce:
+         shutdown-timeout: 1000ms
+         pool:
+            max-active: 8
+            max-wait: 1000ms
+            min-idle: 0
+            max-idle: 8

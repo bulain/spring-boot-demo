@@ -1,12 +1,15 @@
 package com.bulain.shiro.pojo;
 
-public class User {
+import java.io.Serializable;
 
-	private String loginName;
-	private String passwordHash;
-	private String slat;
-	private String fullName;
-	private String activeFlag;
+public class User implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
+	private String loginName;//登录名
+	private String passwordHash;//哈希密码
+	private String slat;//盐
+	private String fullName;//姓名
+	private String activeFlag;//激活标志
 	
 	public String getLoginName() {
 		return loginName;

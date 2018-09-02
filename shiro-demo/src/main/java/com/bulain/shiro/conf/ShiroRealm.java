@@ -20,6 +20,7 @@ import org.apache.shiro.crypto.hash.Sha1Hash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.util.StringUtils;
 
 import com.bulain.shiro.pojo.User;
@@ -28,6 +29,7 @@ import com.bulain.shiro.service.UserService;
 public class ShiroRealm extends AuthorizingRealm {
 
 	@Autowired
+    @Lazy
 	private UserService userService;
 
 	@Override
