@@ -6,3 +6,4 @@
 0. 集成开发插件devtools
 0. session跟踪模式为cookie
 0. springboot集成shiro的坑，shiro初始化问题，依赖必须延迟加载，或直接配置
+0. redis缓存过期时间设置

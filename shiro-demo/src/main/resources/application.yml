@@ -11,6 +11,8 @@ spring:
          suffix: .jsp
    cache:
       type: redis
+      redis: 
+         timeToLive: 60s
    redis:
       lettuce:
          shutdown-timeout: 1000ms

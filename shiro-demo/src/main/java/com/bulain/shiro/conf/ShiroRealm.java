@@ -85,7 +85,7 @@ public class ShiroRealm extends AuthorizingRealm {
 
 		try {
 			List<String> roles = userService.findRoleByLoginName(username);
-			List<String> perms = userService.findRoleByLoginName(username);
+			List<String> perms = userService.findPermissionByLoginName(username);
 
 			roleNames.addAll(roles);
 			permissions.addAll(perms);
