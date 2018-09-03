@@ -4,6 +4,11 @@ server:
          tracking-modes: cookie
    tomcat:
       uri-encoding: UTF-8
+      
+management:
+   security:
+      enabled: false
+      
 spring:
    datasource:
       driver-class-name: com.mysql.jdbc.Driver

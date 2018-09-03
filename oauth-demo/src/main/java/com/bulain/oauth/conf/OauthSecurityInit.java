@@ -36,8 +36,7 @@ public class OauthSecurityInit extends WebSecurityConfigurerAdapter {
 		return super.authenticationManagerBean();
 	}
 
-	@Bean
-	public PasswordEncoder passwordEncoder(){
+	private PasswordEncoder passwordEncoder(){
 		return new BCryptPasswordEncoder();
 	}
 	
@@ -50,16 +49,9 @@ public class OauthSecurityInit extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		
 		http
-        .csrf()
-        	.disable()
-        .cors()
-        	.disable()
-        .formLogin()
-        	.loginPage("/login")
-        	.permitAll()
-        	.and()
-        .logout()
-        	.permitAll()
+        .authorizeRequests()
+        	.anyRequest()
+        	.authenticated()
         	.and()
 	    .requestMatchers()
 	        .requestMatchers(
@@ -73,12 +65,26 @@ public class OauthSecurityInit extends WebSecurityConfigurerAdapter {
 	                        new AntPathRequestMatcher("/oauth/confirm_access"),
 	                        new AntPathRequestMatcher("/oauth/error")
 	                )
-	        ).and()
-        .authorizeRequests()
+	        )
+	        .and()
+        /*.authorizeRequests()
         	.antMatchers("/swagger-ui.html", "/swagger-resources/**", "/v2/api-docs", "/webjars/**")
         	.permitAll()
+        	.and()*/
+        .formLogin()
+        	.loginPage("/login")
+        	.permitAll()
         	.and()
+        .logout()
+        	.logoutUrl("/logout")
+        	.permitAll()
+        	.and()
+        .csrf()
+        	.disable()
+        .cors()
+        	.disable()
         ;
-        }
+		
+    }
 
 }

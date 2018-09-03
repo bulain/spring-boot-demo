@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -31,8 +32,9 @@ public class OauthServerInit extends AuthorizationServerConfigurerAdapter {
 	@Autowired
 	private UserDetailsService userDetailsService;
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+	private PasswordEncoder passwordEncoder(){
+		return NoOpPasswordEncoder.getInstance();
+	}
 
 	@Bean
 	public TokenStore tokenStore() {
@@ -44,14 +46,13 @@ public class OauthServerInit extends AuthorizationServerConfigurerAdapter {
 		security
 			.tokenKeyAccess("permitAll()")
 			.checkTokenAccess("permitAll()")
-			.passwordEncoder(passwordEncoder);
+			.passwordEncoder(passwordEncoder());
 	}
 
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients
-			.jdbc(dataSource)
-			.passwordEncoder(passwordEncoder);
+			.jdbc(dataSource);
 	}
 
 	@Override
