@@ -14,3 +14,5 @@ spring:
       view:
          prefix: /WEB-INF/jsp/
          suffix: .jsp
+
+#logging.level.org.springframework.security: DEBUG
