@@ -15,8 +15,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.OrRequestMatcher;
 
 @EnableWebSecurity
 @Configuration
@@ -37,7 +35,8 @@ public class OauthSecurityInit extends WebSecurityConfigurerAdapter {
 		return super.authenticationManagerBean();
 	}
 
-	private PasswordEncoder passwordEncoder(){
+	@Bean
+	public PasswordEncoder passwordEncoder(){
 		return new BCryptPasswordEncoder();
 	}
 	
