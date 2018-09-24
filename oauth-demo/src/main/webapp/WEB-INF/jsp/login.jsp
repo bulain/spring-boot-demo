@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix='s' uri='http://www.springframework.org/security/tags' %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +16,7 @@
 					<div class="form-group">
 						<i class="fa fa-user fa-lg"></i>
 						<input class="form-control required" type="text" placeholder="请输入用户名" name="username" autofocus="autofocus" maxlength="20"/>
+						<s:csrfInput/>
 					</div>
 					<div class="form-group">
 						<i class="fa fa-lock fa-lg"></i>

@@ -10,5 +10,10 @@ public class HomeCtrl {
 	public String home() {
 		return "home";
 	}
-
+	
+	@RequestMapping("/csrf")
+	public String csrf() {
+		return "csrf";
+	}
+	
 }

@@ -79,14 +79,15 @@ public class OauthSecurityInit extends WebSecurityConfigurerAdapter {
         	.and()*/
         .formLogin()
         	.loginPage("/login")
+        	.defaultSuccessUrl("/home")
         	.permitAll()
         	.and()
         .logout()
         	.logoutUrl("/logout")
         	.permitAll()
         	.and()
-        .csrf()
-        	.disable()
+        /*.csrf()
+        	.disable()*/
         .cors()
         	.disable()
         ;
