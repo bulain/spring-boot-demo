@@ -7,7 +7,7 @@
     </appender>
 
     <logger name="org.springframework" level="INFO" />
-    <logger name="io.shardingsphere.core" level="DEBUG" />
+    <logger name="Sharding-Sphere-SQL" level="INFO" />
 
     <root level="WARN">
         <appender-ref ref="console" />

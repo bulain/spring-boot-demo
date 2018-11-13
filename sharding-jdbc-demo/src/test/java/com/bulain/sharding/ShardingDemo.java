@@ -26,8 +26,8 @@ public class ShardingDemo {
 		Connection conn = dataSource.getConnection();
 		conn.setAutoCommit(false);
 
-		for (int i = 1; i < 100; i++) {
-			PreparedStatement ps1 = conn.prepareStatement("insert into t_order(user_id,status) values (?,?)",
+		for (int i = 1; i < 10; i++) {
+			PreparedStatement ps1 = conn.prepareStatement("insert into t_order(user_id, status) values (?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 			ps1.setInt(1, i % 10);
 			ps1.setString(2, "Y");
@@ -36,8 +36,8 @@ public class ShardingDemo {
 			generatedKeys.next();
 			long orderId = generatedKeys.getLong(0);
 
-			for (int j = 1; j < 10; j++) {
-				PreparedStatement ps2 = conn.prepareStatement("insert into t_order_item(order_id,user_id) values (?,?)");
+			for (int j = 1; j < 9; j++) {
+				PreparedStatement ps2 = conn.prepareStatement("insert into t_order_item(order_id, user_id) values (?, ?)");
 				ps2.setLong(1, orderId);
 				ps2.setInt(2, i % 10);
 				ps2.executeUpdate();
