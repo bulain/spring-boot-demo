@@ -27,6 +27,7 @@ public class BlogMapperTest {
         search.setDescr("descr");
         search.setActiveFlag("Y");
         search.setCreatedVia("Thread");
+        search.addOrderBy("id", "desc");
     }
 
     @Test
