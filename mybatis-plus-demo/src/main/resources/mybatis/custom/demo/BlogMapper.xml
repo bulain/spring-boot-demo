@@ -24,17 +24,17 @@
     </select>
     <sql id="where">
         <where>
-            <if test="title != null and title != '' ">
-                and t.title = #{title,jdbcType=VARCHAR}
+            <if test="s.title != null and s.title != '' ">
+                and t.title = #{s.title,jdbcType=VARCHAR}
             </if>
-            <if test="descr != null and descr != '' ">
-                and t.descr = #{descr,jdbcType=VARCHAR}
+            <if test="s.descr != null and s.descr != '' ">
+                and t.descr = #{s.descr,jdbcType=VARCHAR}
             </if>
-            <if test="activeFlag != null and activeFlag != '' ">
-                and t.active_flag = #{activeFlag,jdbcType=VARCHAR}
+            <if test="s.activeFlag != null and s.activeFlag != '' ">
+                and t.active_flag = #{s.activeFlag,jdbcType=VARCHAR}
             </if>
-            <if test="createdVia != null and createdVia != '' ">
-                and t.created_Via = #{createdVia,jdbcType=VARCHAR}
+            <if test="s.createdVia != null and s.createdVia != '' ">
+                and t.created_Via = #{s.createdVia,jdbcType=VARCHAR}
             </if>
         </where>
     </sql>

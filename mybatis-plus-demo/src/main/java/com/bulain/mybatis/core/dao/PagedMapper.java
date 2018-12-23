@@ -2,6 +2,8 @@ package com.bulain.mybatis.core.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.baomidou.mybatisplus.core.metadata.IPage;
 
 /**
@@ -9,13 +11,13 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
  * @author Bulain
  */
 public interface PagedMapper<T, S> {
-	/**
+    /**
      * 返回满足条件的所有记录。
      * 
      * @param search 查询条件
      * @return 满足条件的所有记录列表
      */
-    List<T> find(S search);
+    List<T> find(@Param("s") S search);
     /**
      * 返回满足条件的分页记录。
      * 
@@ -23,5 +25,5 @@ public interface PagedMapper<T, S> {
      * @param page 分页信息
      * @return 满足条件的所有记录列表
      */
-    List<T> find(S search, IPage<T> page);
+    List<T> find(@Param("s") S search, @Param("p") IPage<T> page);
 }
