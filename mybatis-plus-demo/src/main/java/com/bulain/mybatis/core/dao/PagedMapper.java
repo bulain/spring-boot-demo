@@ -2,7 +2,7 @@ package com.bulain.mybatis.core.dao;
 
 import java.util.List;
 
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 
 /**
  * 分页DAO，对分页查询提供支持。
@@ -23,5 +23,5 @@ public interface PagedMapper<T, S> {
      * @param page 分页信息
      * @return 满足条件的所有记录列表
      */
-    List<T> find(S search, Page<T> page);
+    List<T> find(S search, IPage<T> page);
 }

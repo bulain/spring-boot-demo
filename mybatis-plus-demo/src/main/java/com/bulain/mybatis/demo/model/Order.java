@@ -2,9 +2,9 @@ package com.bulain.mybatis.demo.model;
 
 import java.util.Date;
 
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
-import com.baomidou.mybatisplus.annotations.Version;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.Version;
 
 @TableName("ORDERS")
 public class Order {

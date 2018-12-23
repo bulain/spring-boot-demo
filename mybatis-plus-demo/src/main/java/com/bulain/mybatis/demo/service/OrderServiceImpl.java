@@ -2,7 +2,7 @@ package com.bulain.mybatis.demo.service;
 
 import org.springframework.stereotype.Service;
 
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bulain.mybatis.demo.dao.OrderMapper;
 import com.bulain.mybatis.demo.model.Order;
 

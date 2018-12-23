@@ -2,7 +2,7 @@ package com.bulain.mybatis.core.service;
 
 import java.util.List;
 
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bulain.mybatis.core.dao.PagedMapper;
 import com.bulain.mybatis.core.pojo.Paged;
 import com.bulain.mybatis.core.pojo.Search;
@@ -40,10 +40,10 @@ public abstract class PagedServiceImpl<T, S extends Search> extends BasicService
 		List<T> list = pagedMapper.find(search, pagination);
 
 		Paged<T> paged = new Paged<T>();
-		paged.setPageSize(pagination.getSize());
+		paged.setPageSize((int) pagination.getSize());
 		paged.setTotalPage((int) pagination.getPages());
 		paged.setTotalCount(pagination.getTotal());
-		paged.setPage(pagination.getCurrent());
+		paged.setPage((int) pagination.getCurrent());
 		paged.setData(list);
 
 		return paged;
