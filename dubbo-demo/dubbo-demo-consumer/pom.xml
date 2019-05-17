@@ -11,7 +11,8 @@
     <artifactId>dubbo-demo-consumer</artifactId>
 
     <properties>
-        <dubbo.spring.version>0.2.0</dubbo.spring.version>
+        <dubbo.spring.version>0.2.1.RELEASE</dubbo.spring.version>
+        <dubbo.version>2.6.5</dubbo.version>
     </properties>
 
     <dependencies>
@@ -24,6 +25,15 @@
             <groupId>com.alibaba.boot</groupId>
             <artifactId>dubbo-spring-boot-starter</artifactId>
             <version>${dubbo.spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>dubbo</artifactId>
+            <version>${dubbo.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
