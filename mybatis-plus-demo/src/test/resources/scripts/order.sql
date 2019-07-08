@@ -1,19 +1,21 @@
-CREATE TABLE ORDERS(
-        ID                      BIGINT(20) NOT NULL AUTO_INCREMENT,
+create table orders(
+        id                      bigint(20) not null auto_increment,
                 
-        ORDER_NO                VARCHAR(50) NOT NULL,
-        EXTN_REF_NO1            VARCHAR(50),
-        EXTN_REF_NO2            VARCHAR(50),
-        EXTN_REF_NO3            VARCHAR(50),
+        order_no                varchar(50) not null,
+        extn_ref_no1            varchar(50),
+        extn_ref_no2            varchar(50),
+        extn_ref_no3            varchar(50),
         
-        CREATED_VIA             VARCHAR(50),
-        REMARKS                 VARCHAR(500),
-        CREATED_AT              DATETIME,
-        CREATED_BY              VARCHAR(50),
-        UPDATED_AT              DATETIME,
-        UPDATED_BY              VARCHAR(50),
-        VERSION                 BIGINT(20),
+        created_via             varchar(50),
+        remarks                 varchar(500),
+        created_at              datetime,
+        created_by              varchar(50),
+        updated_at              datetime,
+        updated_by              varchar(50),
+        version                 bigint(20) default 0,
+        deleted                 int(1) unsigned default 0,
+        archived                char(1),
         
-        PRIMARY KEY (ID)
-)ENGINE=INNODB DEFAULT CHARSET=UTF8;
-CREATE UNIQUE INDEX IDX_ORDERS_1 ON ORDERS(ORDER_NO);
+        primary key (id)
+)engine=innodb default charset=utf8;
+create unique index idx_orders_1 on orders(order_no);

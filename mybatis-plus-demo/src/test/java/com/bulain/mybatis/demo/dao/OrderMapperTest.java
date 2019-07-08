@@ -29,17 +29,17 @@ public class OrderMapperTest {
 
     @Autowired
     private OrderMapper orderMapper;
+    
     private Long id;
-    private Long version = 1L;
+    private Long version = 0L;
 
     @Before
     public void setup() {
-        orderMapper.delete(new QueryWrapper<Order>());
+        orderMapper.deleteAll();
 
         Order entity = new Order();
         entity.setOrderNo("X00001");
         entity.setExtnRefNo1("E00001");
-        entity.setVersion(version);
 
         orderMapper.insert(entity);
         id = entity.getId();
@@ -50,7 +50,6 @@ public class OrderMapperTest {
         Order entity = new Order();
         entity.setOrderNo("T00001");
         entity.setExtnRefNo1("T00001");
-        entity.setVersion(version);
 
         Integer icnt = orderMapper.insert(entity);
         assertEquals(Integer.valueOf(1), icnt);

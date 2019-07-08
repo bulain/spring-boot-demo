@@ -9,4 +9,9 @@ import com.bulain.mybatis.demo.model.Order;
 @Service
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements OrderService {
 
+    @Override
+    public int deleteAll() {
+        return baseMapper.deleteAll();
+    }
+
 }

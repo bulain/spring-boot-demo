@@ -5,4 +5,6 @@ import com.bulain.mybatis.demo.model.Order;
 
 public interface OrderService extends IService<Order> {
 
+    int deleteAll();
+    
 }

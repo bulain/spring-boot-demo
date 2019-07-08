@@ -31,17 +31,16 @@ public class OrderServiceImplTest {
 	@Autowired
 	private OrderService orderService;
 
+	private Long version = 0L;
 	private Long id;
-	private Long version = 1L;
 
 	@Before
 	public void setup() {
-		orderService.remove(new QueryWrapper<Order>());
+        orderService.deleteAll();
 
 		Order entity = new Order();
 		entity.setOrderNo("X00001");
 		entity.setExtnRefNo1("E00001");
-		entity.setVersion(version);
 
 		orderService.save(entity);
 		id = entity.getId();
@@ -52,7 +51,6 @@ public class OrderServiceImplTest {
 		Order entity = new Order();
 		entity.setOrderNo("T00001");
 		entity.setExtnRefNo1("T00001");
-		entity.setVersion(version);
 
 		boolean bool = orderService.save(entity);
 		assertTrue(bool);
@@ -63,7 +61,6 @@ public class OrderServiceImplTest {
 		Order entity = new Order();
 		entity.setOrderNo("T00001");
 		entity.setExtnRefNo1("T00001");
-		entity.setVersion(version);
 
 		boolean bool = orderService.save(entity);
 		assertTrue(bool);
@@ -75,12 +72,10 @@ public class OrderServiceImplTest {
 		Order entity1 = new Order();
 		entity1.setOrderNo("T00001");
 		entity1.setExtnRefNo1("T00001");
-		entity1.setVersion(version);
 		
 		Order entity2 = new Order();
 		entity2.setOrderNo("T00002");
 		entity2.setExtnRefNo1("T00002");
-		entity2.setVersion(version);
 		
 		List<Order> entityList = Arrays.asList(entity1, entity2);
 		
@@ -93,12 +88,10 @@ public class OrderServiceImplTest {
 		Order entity1 = new Order();
 		entity1.setOrderNo("T00001");
 		entity1.setExtnRefNo1("T00001");
-		entity1.setVersion(version);
 		
 		Order entity2 = new Order();
 		entity2.setOrderNo("T00002");
 		entity2.setExtnRefNo1("T00002");
-		entity2.setVersion(version);
 		
 		List<Order> entityList = Arrays.asList(entity1, entity2);
 		
@@ -111,7 +104,6 @@ public class OrderServiceImplTest {
 		Order entity = new Order();
 		entity.setOrderNo("T00001");
 		entity.setExtnRefNo1("T00001");
-		entity.setVersion(version);
 		
 		boolean bool = orderService.saveOrUpdate(entity);
 		assertTrue(bool);
@@ -122,7 +114,6 @@ public class OrderServiceImplTest {
 		Order entity = new Order();
 		entity.setOrderNo("T00001");
 		entity.setExtnRefNo1("T00001");
-		entity.setVersion(version);
 		
 		boolean bool = orderService.saveOrUpdate(entity);
 		assertTrue(bool);
@@ -134,12 +125,10 @@ public class OrderServiceImplTest {
 		Order entity1 = new Order();
 		entity1.setOrderNo("T00001");
 		entity1.setExtnRefNo1("T00001");
-		entity1.setVersion(version);
 		
 		Order entity2 = new Order();
 		entity2.setOrderNo("T00002");
 		entity2.setExtnRefNo1("T00002");
-		entity2.setVersion(version);
 		
 		List<Order> entityList = Arrays.asList(entity1, entity2);
 		
@@ -154,12 +143,10 @@ public class OrderServiceImplTest {
 		Order entity1 = new Order();
 		entity1.setOrderNo("T00001");
 		entity1.setExtnRefNo1("T00001");
-		entity1.setVersion(version);
 		
 		Order entity2 = new Order();
 		entity2.setOrderNo("T00002");
 		entity2.setExtnRefNo1("T00002");
-		entity2.setVersion(version);
 		
 		List<Order> entityList = Arrays.asList(entity1, entity2);
 		
@@ -174,12 +161,10 @@ public class OrderServiceImplTest {
 		Order entity1 = new Order();
 		entity1.setOrderNo("T00001");
 		entity1.setExtnRefNo1("T00001");
-		entity1.setVersion(version);
 		
 		Order entity2 = new Order();
 		entity2.setOrderNo("T00002");
 		entity2.setExtnRefNo1("T00002");
-		entity2.setVersion(version);
 		
 		List<Order> entityList = Arrays.asList(entity1, entity2);
 		
@@ -194,12 +179,10 @@ public class OrderServiceImplTest {
 		Order entity1 = new Order();
 		entity1.setOrderNo("T00001");
 		entity1.setExtnRefNo1("T00001");
-		entity1.setVersion(version);
 		
 		Order entity2 = new Order();
 		entity2.setOrderNo("T00002");
 		entity2.setExtnRefNo1("T00002");
-		entity2.setVersion(version);
 		
 		List<Order> entityList = Arrays.asList(entity1, entity2);
 		
@@ -388,13 +371,13 @@ public class OrderServiceImplTest {
 		assertNotNull(ret);
 	}
 
-	@Test
+	/*@Test
 	public void testSelectObj() {
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
 		Object ret = orderService.getObj(new QueryWrapper<Order>(wrapper));
 		assertNotNull(ret);
-	}
+	}*/
 
 	@Test
 	public void testSelectCount() {
