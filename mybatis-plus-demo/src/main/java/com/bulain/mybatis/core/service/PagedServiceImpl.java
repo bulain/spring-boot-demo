@@ -38,14 +38,14 @@ public abstract class PagedServiceImpl<T, S extends Search<T>> extends BasicServ
 		PagedMapper<T, S> pagedMapper = getPagedMapper();
 
 		IPage<T> pagination = new Page<T>(search.getPage(), search.getPageSize());
-		List<T> list = pagedMapper.find(search, pagination);
+		IPage<T> ret = pagedMapper.find(pagination, search);
 
 		Paged<T> paged = new Paged<T>();
-		paged.setPageSize((int) pagination.getSize());
-		paged.setTotalPage((int) pagination.getPages());
-		paged.setTotalCount(pagination.getTotal());
-		paged.setPage((int) pagination.getCurrent());
-		paged.setData(list);
+        paged.setPageSize((int) ret.getSize());
+        paged.setTotalPage((int) ret.getPages());
+        paged.setTotalCount(ret.getTotal());
+        paged.setPage((int) ret.getCurrent());
+        paged.setData(ret.getRecords());
 
 		return paged;
 	}

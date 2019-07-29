@@ -38,7 +38,7 @@ public class BlogMapperTest {
     @Test
     public void testFindPage() {
         Page<Blog> page = new Page<Blog>(1, 2);
-        blogMapper.find(search, page);
+        blogMapper.find(page, search);
     }
 
 }

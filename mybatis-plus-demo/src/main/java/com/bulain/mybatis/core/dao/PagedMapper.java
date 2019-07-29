@@ -25,5 +25,6 @@ public interface PagedMapper<T, S> {
      * @param page 分页信息
      * @return 满足条件的所有记录列表
      */
-    List<T> find(@Param("s") S search, @Param("p") IPage<T> page);
+    IPage<T> find(@Param("p") IPage<T> page, @Param("s") S search);
+    
 }

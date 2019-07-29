@@ -22,6 +22,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bulain.mybatis.MybatisPlusApplication;
 import com.bulain.mybatis.demo.model.Order;
+import com.bulain.mybatis.demo.pojo.OrderSearch;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = MybatisPlusApplication.class)
@@ -117,7 +118,7 @@ public class OrderMapperTest {
 
         Order wrapper = new Order();
         wrapper.setOrderNo("X00001");
-        wrapper.setVersion(version);
+        //wrapper.setVersion(version);
         Integer ucnt = orderMapper.update(entity, new QueryWrapper<Order>(wrapper));
         assertEquals(Integer.valueOf(1), ucnt);
     }
@@ -208,6 +209,38 @@ public class OrderMapperTest {
         Order entity = new Order();
         entity.setOrderNo("X00001");
         IPage<Map<String, Object>> paged = orderMapper.selectMapsPage(page, new QueryWrapper<Order>(entity));
+        assertEquals(1, paged.getTotal());
+        
+        page = new Page<Order>(1, 2);
+        paged = orderMapper.selectMapsPage(page, new QueryWrapper<Order>(entity));
+        assertEquals(1, paged.getTotal());
+    }
+    
+    @Test
+    public void testFind() {
+        OrderSearch search = new OrderSearch();
+        search.setOrderNo("X00001");
+        List<Order> list = orderMapper.find(search);
+        assertEquals(1, list.size());
+        
+        search = new OrderSearch();
+        search.setOrderNo("X00001");
+        list = orderMapper.find(search);
+        assertEquals(1, list.size());
+    }
+    
+    @Test
+    public void testFindWithPage() {
+        IPage<Order> page = new Page<Order>(1, 2);
+        OrderSearch search = new OrderSearch();
+        search.setOrderNo("X00001");
+        IPage<Order> paged = orderMapper.find(page, search);
+        assertEquals(1, paged.getTotal());
+        
+        page = new Page<Order>(1, 2);
+        search = new OrderSearch();
+        search.setOrderNo("X00001");
+        paged = orderMapper.find(page, search);
         assertEquals(1, paged.getTotal());
     }
 

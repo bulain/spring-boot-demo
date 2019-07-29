@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bulain.mybatis.demo.dao.OrderMapper">
-
+    <cache-ref namespace="com.bulain.mybatis.demo.dao.OrderMapper"/>
+    
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.bulain.mybatis.demo.model.Order">
         <id column="id" property="id" />
@@ -23,6 +24,21 @@
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, order_no, extn_ref_no1, extn_ref_no2, extn_ref_no3, created_via, remarks, created_at, created_by, updated_at, updated_by, version, deleted, archived
+    </sql>
+    
+    <select id="find" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from orders t
+        <include refid="where" />
+        <include refid="common.orderby" />
+    </select>
+     <sql id="where">
+        <where>
+            <if test="s.orderNo != null and s.orderNo != '' ">
+                and t.order_no = #{s.orderNo,jdbcType=VARCHAR}
+            </if>
+        </where>
     </sql>
 
     <delete id="deleteAll" >
