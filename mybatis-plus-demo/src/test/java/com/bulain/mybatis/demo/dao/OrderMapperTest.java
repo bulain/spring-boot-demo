@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bulain.mybatis.MybatisPlusApplication;
@@ -242,6 +243,18 @@ public class OrderMapperTest {
         search.setOrderNo("X00001");
         paged = orderMapper.find(page, search);
         assertEquals(1, paged.getTotal());
+    }
+    
+    @Test
+    public void testUpdateToNull() {
+        Order entity = new Order();
+        entity.setExtnRefNo1("E00002");
+
+        Order wrapper = new Order();
+        wrapper.setOrderNo("X00001");
+        UpdateWrapper<Order> updateWrapper = new UpdateWrapper<Order>(wrapper);
+        updateWrapper.lambda().set(Order::getExtnRefNo2, null);
+        orderMapper.update(entity, updateWrapper);
     }
 
 }
