@@ -8,6 +8,7 @@
 
     <logger name="org.springframework" level="INFO" />
     <logger name="com.bulain" level="DEBUG" />
+    <logger name="org.springframework.jdbc.datasource.DataSourceTransactionManager" level="DEBUG" />
 
     <root level="WARN">
         <appender-ref ref="console" />

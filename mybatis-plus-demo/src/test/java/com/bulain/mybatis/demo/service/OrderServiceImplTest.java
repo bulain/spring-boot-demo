@@ -47,7 +47,7 @@ public class OrderServiceImplTest {
 	}
 
 	@Test
-	public void testsave() {
+	public void testSave() {
 		Order entity = new Order();
 		entity.setOrderNo("T00001");
 		entity.setExtnRefNo1("T00001");
@@ -57,7 +57,7 @@ public class OrderServiceImplTest {
 	}
 
 	@Test
-	public void testsaveAllColumn() {
+	public void testSaveAllColumn() {
 		Order entity = new Order();
 		entity.setOrderNo("T00001");
 		entity.setExtnRefNo1("T00001");
@@ -67,7 +67,7 @@ public class OrderServiceImplTest {
 	}
 
 	@Test
-	public void testsaveBatchListOfT() {
+	public void testSaveBatchListOfT() {
 		
 		Order entity1 = new Order();
 		entity1.setOrderNo("T00001");
@@ -84,7 +84,7 @@ public class OrderServiceImplTest {
 	}
 
 	@Test
-	public void testsaveBatchListOfTInt() {
+	public void testSaveBatchListOfTInt() {
 		Order entity1 = new Order();
 		entity1.setOrderNo("T00001");
 		entity1.setExtnRefNo1("T00001");
@@ -100,7 +100,21 @@ public class OrderServiceImplTest {
 	}
 
 	@Test
-	public void testsaveOrUpdate() {
+	public void testSaveOrUpdate() {
+	    orderService.getById(id);
+	    
+		Order entity = new Order();
+		entity.setOrderNo("T00001");
+		entity.setExtnRefNo1("T00001");
+		
+		boolean bool = orderService.saveOrUpdate(entity);
+		assertTrue(bool);
+		
+		orderService.getById(id);
+	}
+
+	@Test
+	public void testSaveOrUpdateAllColumn() {
 		Order entity = new Order();
 		entity.setOrderNo("T00001");
 		entity.setExtnRefNo1("T00001");
@@ -110,18 +124,10 @@ public class OrderServiceImplTest {
 	}
 
 	@Test
-	public void testsaveOrUpdateAllColumn() {
-		Order entity = new Order();
-		entity.setOrderNo("T00001");
-		entity.setExtnRefNo1("T00001");
-		
-		boolean bool = orderService.saveOrUpdate(entity);
-		assertTrue(bool);
-	}
-
-	@Test
-	public void testsaveOrUpdateBatchListOfT() {
-		
+	public void testSaveOrUpdateBatchListOfT() {
+	    
+	    orderService.getById(id);
+	    
 		Order entity1 = new Order();
 		entity1.setOrderNo("T00001");
 		entity1.setExtnRefNo1("T00001");
@@ -135,10 +141,12 @@ public class OrderServiceImplTest {
 		boolean bool = orderService.saveOrUpdateBatch(entityList);
 		assertTrue(bool);
 	
+		orderService.getById(id);
+		
 	}
 
 	@Test
-	public void testsaveOrUpdateBatchListOfTInt() {
+	public void testSaveOrUpdateBatchListOfTInt() {
 		
 		Order entity1 = new Order();
 		entity1.setOrderNo("T00001");
@@ -156,7 +164,7 @@ public class OrderServiceImplTest {
 	}
 
 	@Test
-	public void testsaveOrUpdateAllColumnBatchListOfT() {
+	public void testSaveOrUpdateAllColumnBatchListOfT() {
 		
 		Order entity1 = new Order();
 		entity1.setOrderNo("T00001");
@@ -174,7 +182,7 @@ public class OrderServiceImplTest {
 	}
 
 	@Test
-	public void testsaveOrUpdateAllColumnBatchListOfTInt() {
+	public void testSaveOrUpdateAllColumnBatchListOfTInt() {
 		
 		Order entity1 = new Order();
 		entity1.setOrderNo("T00001");
@@ -192,13 +200,13 @@ public class OrderServiceImplTest {
 	}
 
 	@Test
-	public void testremoveById() {
+	public void testRemoveById() {
 		boolean bool = orderService.removeById(id);
 		assertTrue(bool);
 	}
 
 	@Test
-	public void testremoveByMap() {
+	public void testRemoveByMap() {
 		Map<String, Object> columnMap = new HashMap<String, Object>();
 		columnMap.put("ORDER_NO", "X00001");
 		boolean bool = orderService.removeByMap(columnMap);
@@ -206,7 +214,7 @@ public class OrderServiceImplTest {
 	}
 
 	@Test
-	public void testremove() {
+	public void testRemove() {
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
 		boolean bool = orderService.remove(new QueryWrapper<Order>(wrapper));
@@ -214,7 +222,7 @@ public class OrderServiceImplTest {
 	}
 
 	@Test
-	public void testremoveBatchIds() {
+	public void testRemoveBatchIds() {
 		Collection<? extends Serializable> idList = Arrays.asList(new Long[]{id, 2L, 3L});
 		boolean bool = orderService.removeByIds(idList);
 		assertTrue(bool);
