@@ -49,6 +49,9 @@ public class AwsS3Demo {
         PutObjectResult putObject = s3Client.putObject(bucketName, key, input, metadata);
         log.debug("{}", putObject);
         
+        ObjectMetadata objectMetadata = s3Client.getObjectMetadata(bucketName, key);
+        log.debug("{}", objectMetadata);
+        
         S3Object object = s3Client.getObject(bucketName, key);
         log.debug("{}", object);
         
