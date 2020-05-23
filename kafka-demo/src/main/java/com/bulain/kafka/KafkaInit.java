@@ -3,11 +3,10 @@ package com.bulain.kafka;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.ConsumerFactory;
-import org.springframework.kafka.listener.AbstractMessageListenerContainer.AckMode;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
+import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.listener.KafkaMessageListenerContainer;
 import org.springframework.kafka.listener.MessageListenerContainer;
-import org.springframework.kafka.listener.config.ContainerProperties;
 
 @Configuration
 public class KafkaInit {
@@ -25,7 +24,7 @@ public class KafkaInit {
 	@Bean
 	public MessageListenerContainer ackMessageListenerContainer(ConsumerFactory<String, Object> consumerFactory) {
 		ContainerProperties containerProperties = new ContainerProperties("ackTopic");
-		containerProperties.setAckMode(AckMode.MANUAL);
+		containerProperties.setAckMode(ContainerProperties.AckMode.MANUAL);
 		KafkaMessageListenerContainer<String, Object> container = new KafkaMessageListenerContainer<String, Object>(
 				consumerFactory, containerProperties);
 		container.setAutoStartup(false);

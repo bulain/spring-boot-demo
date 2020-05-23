@@ -206,13 +206,13 @@ public class OrderMapperTest {
 
     @Test
     public void testSelectMapsPage() {
-        IPage<Order> page = new Page<Order>(1, 2);
+        IPage<Map<String, Object>> page = new Page<>(1, 2);
         Order entity = new Order();
         entity.setOrderNo("X00001");
         IPage<Map<String, Object>> paged = orderMapper.selectMapsPage(page, new QueryWrapper<Order>(entity));
         assertEquals(1, paged.getTotal());
         
-        page = new Page<Order>(1, 2);
+        page = new Page<>(1, 2);
         paged = orderMapper.selectMapsPage(page, new QueryWrapper<Order>(entity));
         assertEquals(1, paged.getTotal());
     }

@@ -1,14 +1,13 @@
 package com.bulain.rabbit;
 
+import com.rabbitmq.client.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
-import org.springframework.amqp.rabbit.core.ChannelAwareMessageListener;
+import org.springframework.amqp.rabbit.listener.api.ChannelAwareMessageListener;
 
-import com.rabbitmq.client.Channel;
-
-public class RabbitAckMessageListener implements ChannelAwareMessageListener  {
+public class RabbitAckMessageListener implements ChannelAwareMessageListener {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Override

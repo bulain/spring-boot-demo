@@ -428,7 +428,7 @@ public class OrderServiceImplTest {
 
 	@Test
 	public void testSelectMapsPage() {
-		IPage<Order> page = new Page<Order>(0, 2);
+		IPage<Map<String, Object>> page = new Page<>(0, 2);
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
 		IPage<Map<String, Object>> paged = orderService.pageMaps(page, new QueryWrapper<Order>(wrapper));
