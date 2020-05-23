@@ -1,6 +1,8 @@
 .classpath
 .project
-*.jar
 target/
 .settings/
+.idea/
 elastic-demo/data/
+*.iml
+*.jar

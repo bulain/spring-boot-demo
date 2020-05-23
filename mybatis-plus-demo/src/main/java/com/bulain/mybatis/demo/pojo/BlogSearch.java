@@ -1,8 +1,9 @@
 package com.bulain.mybatis.demo.pojo;
 
 import com.bulain.mybatis.core.pojo.Search;
+import com.bulain.mybatis.demo.model.Blog;
 
-public class BlogSearch extends Search {
+public class BlogSearch extends Search<Blog> {
 	private static final long serialVersionUID = 1L;
 
 	private String title;

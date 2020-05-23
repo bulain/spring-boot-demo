@@ -1,100 +1,69 @@
 package com.bulain.mybatis.demo.model;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
-import com.baomidou.mybatisplus.annotations.Version;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.Version;
 
-@TableName("ORDERS")
-public class Order {
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
-	@TableId
-	private Long id;
-	private String orderNo;
-	private String extnRefNo1;
-	private String extnRefNo2;
-	private String extnRefNo3;
-	private String createdVia;
-	private String remarks;
-	private Date createdAt;
-	private String createdBy;
-	private Date updatedAt;
-	private String updatedBy;
-	@Version
-	private Long version;
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+@TableName("orders")
+public class Order implements Serializable {
 
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public String getOrderNo() {
-		return orderNo;
-	}
-	public void setOrderNo(String orderNo) {
-		this.orderNo = orderNo;
-	}
-	public String getExtnRefNo1() {
-		return extnRefNo1;
-	}
-	public void setExtnRefNo1(String extnRefNo1) {
-		this.extnRefNo1 = extnRefNo1;
-	}
-	public String getExtnRefNo2() {
-		return extnRefNo2;
-	}
-	public void setExtnRefNo2(String extnRefNo2) {
-		this.extnRefNo2 = extnRefNo2;
-	}
-	public String getExtnRefNo3() {
-		return extnRefNo3;
-	}
-	public void setExtnRefNo3(String extnRefNo3) {
-		this.extnRefNo3 = extnRefNo3;
-	}
-	public String getCreatedVia() {
-		return createdVia;
-	}
-	public void setCreatedVia(String createdVia) {
-		this.createdVia = createdVia;
-	}
-	public String getRemarks() {
-		return remarks;
-	}
-	public void setRemarks(String remarks) {
-		this.remarks = remarks;
-	}
-	public Date getCreatedAt() {
-		return createdAt;
-	}
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
-	public String getCreatedBy() {
-		return createdBy;
-	}
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-	public Date getUpdatedAt() {
-		return updatedAt;
-	}
-	public void setUpdatedAt(Date updatedAt) {
-		this.updatedAt = updatedAt;
-	}
-	public String getUpdatedBy() {
-		return updatedBy;
-	}
-	public void setUpdatedBy(String updatedBy) {
-		this.updatedBy = updatedBy;
-	}
-	public Long getVersion() {
-		return version;
-	}
-	public void setVersion(Long version) {
-		this.version = version;
-	}
+    private static final long serialVersionUID = 1L;
+
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
+
+    @TableField("order_no")
+    private String orderNo;
+
+    @TableField("extn_ref_no1")
+    private String extnRefNo1;
+
+    @TableField("extn_ref_no2")
+    private String extnRefNo2;
+
+    @TableField("extn_ref_no3")
+    private String extnRefNo3;
+
+    @TableField("created_via")
+    private String createdVia;
+
+    @TableField("remarks")
+    private String remarks;
+
+    @TableField("created_at")
+    private LocalDateTime createdAt;
+
+    @TableField("created_by")
+    private String createdBy;
+
+    @TableField("updated_at")
+    private LocalDateTime updatedAt;
+
+    @TableField("updated_by")
+    private String updatedBy;
+
+    @TableField("version")
+    @Version
+    private Long version;
+
+    @TableField("deleted")
+    @TableLogic
+    private Integer deleted;
+
+    @TableField("archived")
+    private String archived;
 
 }

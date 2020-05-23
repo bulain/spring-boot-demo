@@ -7,32 +7,81 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.3.RELEASE</version>
-        <relativePath />
-    </parent>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- spring-boot -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-parent</artifactId>
+                <version>2.2.7.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- spring-boot-admin -->
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-dependencies</artifactId>
+                <version>2.2.3</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- fasterxml -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.9.9.3</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>2.2.7.RELEASE</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
     <modules>
         <module>activemq-demo</module>
+        <!-- 
         <module>batch-demo</module>
         <module>cache-demo</module>
         <module>cxf-demo</module>
+        -->
         <module>dubbo-demo</module>
         <module>elastic-demo</module>
         <module>jetty-demo</module>
+        <!-- 
         <module>jpa-demo</module>
+         -->
         <module>jsp-demo</module>
         <module>kafka-demo</module>
+        <!-- 
         <module>mail-demo</module>
+        -->
         <module>mongo-demo</module>
         <module>mybatis-demo</module>
         <module>mybatis-plus-demo</module>
         <module>rabbit-demo</module>
+        <!-- 
         <module>redis-demo</module>
+         -->
         <module>rest-demo</module>
+        <!-- 
         <module>shiro-demo</module>
+         -->
         <module>swagger-demo</module>
         <module>thymeleaf-demo</module>
         <module>tomcat-demo</module>

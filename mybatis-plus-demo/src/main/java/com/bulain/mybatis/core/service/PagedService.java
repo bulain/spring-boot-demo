@@ -6,7 +6,7 @@ import com.bulain.mybatis.core.pojo.Search;
 /**
  * 分页服务，对分页查询提供支持。
  */
-public interface PagedService<T, S extends Search> {
+public interface PagedService<T, S extends Search<T>> {
     /**
      * 返回满足条件的所有记录。
      * 

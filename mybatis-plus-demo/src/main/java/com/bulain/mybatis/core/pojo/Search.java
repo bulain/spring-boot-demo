@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 查询基础类 
  */
-public class Search implements Serializable {
+public class Search<T> implements Serializable {
     private static final long serialVersionUID = 1L;
     private static final int PAGE_SIZE = 20;
 

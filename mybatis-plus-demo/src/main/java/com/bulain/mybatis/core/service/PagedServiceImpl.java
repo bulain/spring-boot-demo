@@ -2,7 +2,8 @@ package com.bulain.mybatis.core.service;
 
 import java.util.List;
 
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bulain.mybatis.core.dao.PagedMapper;
 import com.bulain.mybatis.core.pojo.Paged;
 import com.bulain.mybatis.core.pojo.Search;
@@ -12,7 +13,7 @@ import com.bulain.mybatis.core.pojo.Search;
  * 
  * @author Bulain
  */
-public abstract class PagedServiceImpl<T, S extends Search> extends BasicServiceImpl<T> implements PagedService<T, S> {
+public abstract class PagedServiceImpl<T, S extends Search<T>> extends BasicServiceImpl<T> implements PagedService<T, S> {
 
 	protected abstract PagedMapper<T, S> getPagedMapper();
 
@@ -36,15 +37,15 @@ public abstract class PagedServiceImpl<T, S extends Search> extends BasicService
 	public Paged<T> page(S search) {
 		PagedMapper<T, S> pagedMapper = getPagedMapper();
 
-		Page<T> pagination = new Page<T>(search.getPage(), search.getPageSize());
-		List<T> list = pagedMapper.find(search, pagination);
+		IPage<T> pagination = new Page<T>(search.getPage(), search.getPageSize());
+		IPage<T> ret = pagedMapper.find(pagination, search);
 
 		Paged<T> paged = new Paged<T>();
-		paged.setPageSize(pagination.getSize());
-		paged.setTotalPage((int) pagination.getPages());
-		paged.setTotalCount(pagination.getTotal());
-		paged.setPage(pagination.getCurrent());
-		paged.setData(list);
+        paged.setPageSize((int) ret.getSize());
+        paged.setTotalPage((int) ret.getPages());
+        paged.setTotalCount(ret.getTotal());
+        paged.setPage((int) ret.getCurrent());
+        paged.setData(ret.getRecords());
 
 		return paged;
 	}
