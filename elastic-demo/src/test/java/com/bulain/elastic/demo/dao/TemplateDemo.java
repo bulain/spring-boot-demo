@@ -9,7 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
+import org.springframework.data.elasticsearch.core.SearchHits;
+import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.data.elasticsearch.core.query.Criteria;
 import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
@@ -24,7 +26,7 @@ public class TemplateDemo {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Autowired
-	private ElasticsearchTemplate elasticsearchTemplate;
+	private ElasticsearchRestTemplate elasticsearchRestTemplate;
 
 	@Test
 	public void testSave(){
@@ -41,7 +43,9 @@ public class TemplateDemo {
 		IndexQuery query = new IndexQuery();
 		query.setId("2");
 		query.setObject(data);
-		elasticsearchTemplate.index(query );
+
+		IndexCoordinates coordinates = elasticsearchRestTemplate.getIndexCoordinatesFor(Blog.class);
+		elasticsearchRestTemplate.index(query, coordinates);
 	
 	}
 	
@@ -49,13 +53,13 @@ public class TemplateDemo {
 	public void testQueryForList() {
 		Criteria criteria = Criteria.where("id").is(1L);
 		CriteriaQuery query = new CriteriaQuery(criteria);
-		List<Blog> list = elasticsearchTemplate.queryForList(query, Blog.class);
-		logger.debug("{}", list);
+		SearchHits<Blog> search = elasticsearchRestTemplate.search(query, Blog.class);
+		logger.debug("{}", search.toList());
 	}
 	
 	@Test
 	public void testDelete(){
-		elasticsearchTemplate.delete(Blog.class, "2");
+		elasticsearchRestTemplate.delete("2", Blog.class);
 	}
 
 }
