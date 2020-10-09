@@ -76,6 +76,7 @@
         <module>thymeleaf-demo</module>
         <module>tomcat-demo</module>
         <module>webflux-demo</module>
+        <module>influxdb-demo</module>
     </modules>
 
 </project>
