@@ -70,7 +70,7 @@
         <module>rabbit-demo</module>
         <module>redis-demo</module>
         <module>rest-demo</module>
-        <module>sharding-jdbc-demo</module>
+        <module>sharding-demo</module>
         <module>shiro-demo</module>
         <module>swagger-demo</module>
         <module>thymeleaf-demo</module>

@@ -7,11 +7,12 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>sharding-jdbc-demo</artifactId>
+    <artifactId>sharding-demo</artifactId>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <sharding.version>4.1.1</sharding.version>
     </properties>
 
     <dependencies>
@@ -23,14 +24,14 @@
     
         <!-- shardingsphere -->
         <dependency>
-            <groupId>io.shardingsphere</groupId>
+            <groupId>org.apache.shardingsphere</groupId>
             <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
-            <version>3.0.0</version>
+            <version>${sharding.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.shardingsphere</groupId>
+            <groupId>org.apache.shardingsphere</groupId>
             <artifactId>sharding-jdbc-spring-namespace</artifactId>
-            <version>3.0.0</version>
+            <version>${sharding.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -40,6 +41,21 @@
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy</artifactId>
         </dependency>
+        
+        <!-- orchestration -->
+        <dependency>
+            <groupId>org.apache.shardingsphere</groupId>
+            <artifactId>sharding-orchestration-center-zookeeper-curator</artifactId>
+            <version>${sharding.version}</version>
+        </dependency>
+        
+        <!--
+        <dependency>
+          <groupId>org.apache.shardingsphere</groupId>
+          <artifactId>sharding-orchestration-center-nacos</artifactId>
+          <version>${sharding.version}</version>
+        </dependency>
+        -->
         
         <!-- mysql -->
         <dependency>
