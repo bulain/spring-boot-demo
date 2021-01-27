@@ -26,7 +26,7 @@ public class ProducerDemo {
     @Test
     public void testConvertAndSend() {
         for (int i = 0; i < 100; i++) {
-            rocketMQTemplate.convertAndSend("rocket:taga", "String Message " + i);
+            rocketMQTemplate.convertAndSend("rocketa:tag1", "String Message " + i);
         }
     }
 
@@ -34,14 +34,14 @@ public class ProducerDemo {
     public void testSend() {
         for (int i = 0; i < 100; i++) {
             Message<String> msg = MessageBuilder.withPayload("Payload Message " + i).build();
-            rocketMQTemplate.send("rocket:taga", msg);
+            rocketMQTemplate.send("rocketa:tag2", msg);
         }
     }
 
     @Test
     public void testAsyncSend() {
         for (int i = 0; i < 10; i++) {
-            rocketMQTemplate.asyncSend("rocket:tagb", new RocketEvent("E001" + i, new BigDecimal("50")),
+            rocketMQTemplate.asyncSend("rocketb:tag3", new RocketEvent("E001" + i, new BigDecimal("50")),
                     new SendCallback() {
                         @Override
                         public void onSuccess(SendResult r) {
@@ -63,7 +63,7 @@ public class ProducerDemo {
     public void testSyncSendOrderly() {
         for (int i = 0; i < 100; i++) {
             Message<String> msg = MessageBuilder.withPayload("Orderly Message " + i).build();
-            rocketMQTemplate.syncSendOrderly("rocket:taga", msg, "hashkey");
+            rocketMQTemplate.syncSendOrderly("rocketc:tag4", msg, "hashkey");
         }
     }
 
@@ -71,7 +71,7 @@ public class ProducerDemo {
     public void testSendMessageInTransaction() {
         for (int i = 0; i < 100; i++) {
             Message<String> msg = MessageBuilder.withPayload("Transaction Message " + i).build();
-            rocketMQTemplate.sendMessageInTransaction("rocket:taga", msg, null);
+            rocketMQTemplate.sendMessageInTransaction("rocketd:tag5", msg, null);
         }
     }
 
