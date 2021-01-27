@@ -12,7 +12,7 @@ public class RocketConsumer {
 
 @Slf4j
 @Service
-@RocketMQMessageListener(topic = "rocketa", selectorExpression = "tag1 | tag2", consumerGroup = "groupa")
+@RocketMQMessageListener(topic = "rocketa", selectorExpression = "tag1 || tag2", consumerGroup = "groupa")
 class RocketConsumer1a implements RocketMQListener<String> {
     public void onMessage(String message) {
         log.info("received message: {}", message);
@@ -21,7 +21,7 @@ class RocketConsumer1a implements RocketMQListener<String> {
 
 @Slf4j
 @Service
-@RocketMQMessageListener(topic = "rocketa", selectorExpression = "tag1 | tag2", consumerGroup = "groupb")
+@RocketMQMessageListener(topic = "rocketa", selectorExpression = "tag1 || tag2", consumerGroup = "groupb")
 class RocketConsumer1b implements RocketMQListener<String> {
     public void onMessage(String message) {
         log.info("received message: {}", message);
