@@ -1,15 +1,15 @@
 package com.bulain.active;
 
-import org.junit.AfterClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jms.listener.SimpleMessageListenerContainer;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = ActivemqApplication.class)
 public class ActivemqConsumer {
 
@@ -23,8 +23,7 @@ public class ActivemqConsumer {
 	@Qualifier("queueContainer3")
 	private SimpleMessageListenerContainer queueContainer3;
 
-	@SuppressWarnings("static-access")
-	@AfterClass
+	@AfterAll
 	public static void tearDownClass(){
 		try {
 			Thread.currentThread().sleep(2000L);

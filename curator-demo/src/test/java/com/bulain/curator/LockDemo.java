@@ -5,9 +5,9 @@ import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.locks.*;
 import org.apache.curator.retry.ExponentialBackoffRetry;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
@@ -15,7 +15,7 @@ public class LockDemo {
 
     private CuratorFramework client;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 1);
         client = CuratorFrameworkFactory.newClient("127.0.0.1:2181",
@@ -23,7 +23,7 @@ public class LockDemo {
         client.start();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         client.close();
     }

@@ -2,7 +2,7 @@ package com.bulain.webflux.ctrl;
 
 import java.time.Duration;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -10,7 +10,7 @@ import com.bulain.webflux.pojo.Event;
 
 import reactor.core.publisher.Flux;
 
-public class EventControllerTest {
+public class EventControllerDemo {
 
 	@Test
     public void testEvents() {

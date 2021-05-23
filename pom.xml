@@ -13,8 +13,8 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
         
-        <spring-boot.version>2.3.4.RELEASE</spring-boot.version>
-        <spring-boot-admin.version>2.3.0</spring-boot-admin.version>
+        <spring-boot.version>2.4.5</spring-boot.version>
+        <spring-boot-admin.version>2.4.1</spring-boot-admin.version>
     </properties>
 
     <dependencyManagement>
@@ -22,7 +22,7 @@
             <!-- spring-boot -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-parent</artifactId>
+                <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring-boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
@@ -30,8 +30,10 @@
             <!-- spring-boot-admin -->
             <dependency>
                 <groupId>de.codecentric</groupId>
-                <artifactId>spring-boot-admin-starter-server</artifactId>
+                <artifactId>spring-boot-admin-dependencies</artifactId>
                 <version>${spring-boot-admin.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -54,9 +56,11 @@
         <module>batch-demo</module>
         <module>cache-demo</module>
         <module>canal-demo</module>
+        <module>curator-demo</module>
         <module>cxf-demo</module>
         <module>dubbo-demo</module>
         <module>elastic-demo</module>
+        <module>influxdb-demo</module>
         <module>jetty-demo</module>
         <module>jpa-demo</module>
         <module>jsp-demo</module>
@@ -78,8 +82,7 @@
         <module>thymeleaf-demo</module>
         <module>tomcat-demo</module>
         <module>webflux-demo</module>
-        <module>influxdb-demo</module>
-        <module>curator-demo</module>
+        <module>xxljob-demo</module>
     </modules>
 
 </project>

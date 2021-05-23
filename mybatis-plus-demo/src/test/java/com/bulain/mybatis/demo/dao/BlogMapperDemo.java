@@ -1,26 +1,25 @@
 package com.bulain.mybatis.demo.dao;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bulain.mybatis.MybatisPlusApplication;
 import com.bulain.mybatis.demo.model.Blog;
 import com.bulain.mybatis.demo.pojo.BlogSearch;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = MybatisPlusApplication.class)
-public class BlogMapperTest {
+public class BlogMapperDemo {
     @Autowired
     private BlogMapper blogMapper;
 
     private BlogSearch search;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         search = new BlogSearch();
         search.setTitle("abd");

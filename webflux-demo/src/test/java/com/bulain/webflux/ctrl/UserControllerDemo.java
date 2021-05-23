@@ -1,12 +1,12 @@
 package com.bulain.webflux.ctrl;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.bulain.webflux.pojo.User;
 
-public class UserControllerTest {
+public class UserControllerDemo {
 
 	@Test
 	public void testUser() {

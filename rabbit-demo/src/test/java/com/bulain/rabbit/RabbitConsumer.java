@@ -1,14 +1,14 @@
 package com.bulain.rabbit;
 
-import org.junit.AfterClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = RabbitApplication.class)
 public class RabbitConsumer {
 
@@ -19,8 +19,7 @@ public class RabbitConsumer {
 	@Autowired
 	private SimpleMessageListenerContainer fanoutQueueContainer;
 
-	@SuppressWarnings("static-access")
-	@AfterClass
+	@AfterAll
 	public static void tearDownClass(){
 		try {
 			Thread.currentThread().sleep(2000L);

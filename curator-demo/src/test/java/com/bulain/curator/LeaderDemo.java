@@ -10,16 +10,16 @@ import org.apache.curator.framework.recipes.leader.LeaderSelector;
 import org.apache.curator.framework.recipes.leader.LeaderSelectorListener;
 import org.apache.curator.framework.state.ConnectionState;
 import org.apache.curator.retry.ExponentialBackoffRetry;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 @Slf4j
 public class LeaderDemo {
 
     private CuratorFramework client;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 1);
         client = CuratorFrameworkFactory.newClient("127.0.0.1:2181",
@@ -27,7 +27,7 @@ public class LeaderDemo {
         client.start();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         client.close();
     }

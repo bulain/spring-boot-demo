@@ -1,11 +1,11 @@
 package com.bulain.webflux.ctrl;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import reactor.core.publisher.Mono;
 
-public class HelloControllerTest {
+public class HelloControllerDemo {
 
 	@Test
 	public void testHello() throws InterruptedException {

@@ -1,10 +1,9 @@
 package com.bulain.elastic.demo.dao;
 
-import java.util.Date;
-import java.util.List;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import com.bulain.elastic.ElasticApplication;
+import com.bulain.elastic.demo.model.Blog;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +14,11 @@ import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.data.elasticsearch.core.query.Criteria;
 import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.bulain.elastic.ElasticApplication;
-import com.bulain.elastic.demo.model.Blog;
+import java.util.Date;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = ElasticApplication.class)
 public class TemplateDemo {
 	private Logger logger = LoggerFactory.getLogger(getClass());

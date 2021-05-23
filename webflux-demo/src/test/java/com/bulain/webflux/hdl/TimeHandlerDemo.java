@@ -1,10 +1,10 @@
 package com.bulain.webflux.hdl;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
-public class TimeHandlerTest {
+public class TimeHandlerDemo {
 
 	@Test
     public void testTimes() throws InterruptedException {
