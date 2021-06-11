@@ -5,7 +5,6 @@ spring:
     name: mime-demo
   jackson:
     default-property-inclusion: non_null
----
-spring:
-  profiles: prd
-logging.file: logs/mime-demo.log
+logging:
+  file:
+    name: logs/mime-demo.log

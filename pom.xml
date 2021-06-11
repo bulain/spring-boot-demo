@@ -58,7 +58,6 @@
         <module>curator-demo</module>
         <module>cxf-demo</module>
         <module>dubbo-demo</module>
-        <module>elastic-demo</module>
         <module>jsp-demo</module>
         <module>kafka-demo</module>
         <module>mime-demo</module>
@@ -67,7 +66,6 @@
         <module>mybatis-plus-demo</module>
         <module>oauth-demo</module>
         <module>rabbit-demo</module>
-        <module>rocket-demo</module>
         <module>sharding-demo</module>
         <module>shiro-demo</module>
 <!--        <module>swagger-demo</module>-->
