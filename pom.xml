@@ -72,7 +72,6 @@
         <module>oauth-demo</module>
         <module>rabbit-demo</module>
         <module>redis-demo</module>
-        <module>rest-demo</module>
         <module>rocket-demo</module>
         <module>sharding-demo</module>
         <module>shiro-demo</module>
