@@ -11,17 +11,21 @@
         <artifactId>spring-boot-demo</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
+    
+    <properties>
+        <cxf-spring-boot.version>3.4.4</cxf-spring-boot.version>
+    </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-spring-boot-starter-jaxrs</artifactId>
-            <version>3.2.14</version>
+            <version>${cxf-spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-spring-boot-starter-jaxws</artifactId>
-            <version>3.2.14</version>
+            <version>${cxf-spring-boot.version}</version>
         </dependency>
     </dependencies>
 

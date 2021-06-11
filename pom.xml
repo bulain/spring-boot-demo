@@ -53,7 +53,6 @@
     <modules>
         <module>activemq-demo</module>
         <module>admin-demo</module>
-        <module>batch-demo</module>
         <module>cache-demo</module>
         <module>canal-demo</module>
         <module>curator-demo</module>
@@ -61,7 +60,6 @@
         <module>dubbo-demo</module>
         <module>elastic-demo</module>
         <module>influxdb-demo</module>
-        <module>jetty-demo</module>
         <module>jpa-demo</module>
         <module>jsp-demo</module>
         <module>kafka-demo</module>
@@ -80,7 +78,6 @@
         <module>shiro-demo</module>
         <module>swagger-demo</module>
         <module>thymeleaf-demo</module>
-        <module>tomcat-demo</module>
         <module>webflux-demo</module>
         <module>xxljob-demo</module>
     </modules>
