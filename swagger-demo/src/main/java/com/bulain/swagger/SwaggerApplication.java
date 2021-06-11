@@ -3,9 +3,9 @@ package com.bulain.swagger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-@EnableSwagger2WebMvc
+@EnableSwagger2
 @SpringBootApplication
 public class SwaggerApplication {
 
