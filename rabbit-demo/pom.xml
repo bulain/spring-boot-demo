@@ -7,6 +7,11 @@
     <version>1.0.0-SNAPSHOT</version>
     
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        
         <rocketmq.version>2.2.0</rocketmq.version>
         <activemq.version>5.16.2</activemq.version>
     </properties>

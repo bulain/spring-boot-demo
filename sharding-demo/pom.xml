@@ -12,10 +12,20 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        
         <sharding.version>4.1.1</sharding.version>
     </properties>
 
     <dependencies>
+
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        
         <!-- spring-boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -34,10 +44,6 @@
             <version>${sharding.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy</artifactId>
         </dependency>
@@ -45,15 +51,14 @@
         <!-- orchestration -->
         <dependency>
             <groupId>org.apache.shardingsphere</groupId>
-            <artifactId>sharding-orchestration-center-zookeeper-curator</artifactId>
+            <artifactId>sharding-orchestration-center-nacos</artifactId>
             <version>${sharding.version}</version>
         </dependency>
-        
         <!--
         <dependency>
-          <groupId>org.apache.shardingsphere</groupId>
-          <artifactId>sharding-orchestration-center-nacos</artifactId>
-          <version>${sharding.version}</version>
+            <groupId>org.apache.shardingsphere</groupId>
+            <artifactId>sharding-orchestration-center-zookeeper-curator</artifactId>
+            <version>${sharding.version}</version>
         </dependency>
         -->
         
