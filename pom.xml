@@ -51,7 +51,6 @@
     </build>
 
     <modules>
-        <module>activemq-demo</module>
         <module>admin-demo</module>
         <module>cache-demo</module>
         <module>canal-demo</module>
