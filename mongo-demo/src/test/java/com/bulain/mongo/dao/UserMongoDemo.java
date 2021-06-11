@@ -1,5 +1,6 @@
-package com.bulain.mongo;
+package com.bulain.mongo.dao;
 
+import com.bulain.mongo.MongoApplication;
 import com.bulain.mongo.model.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,7 +11,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = MongoApplication.class)
-public class UserDemo {
+public class UserMongoDemo {
 
 	@Autowired
 	private MongoTemplate mongoTemplate;

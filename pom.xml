@@ -59,11 +59,8 @@
         <module>cxf-demo</module>
         <module>dubbo-demo</module>
         <module>elastic-demo</module>
-        <module>influxdb-demo</module>
-        <module>jpa-demo</module>
         <module>jsp-demo</module>
         <module>kafka-demo</module>
-        <module>mail-demo</module>
         <module>mime-demo</module>
         <module>mongo-demo</module>
         <module>mybatis-demo</module>
