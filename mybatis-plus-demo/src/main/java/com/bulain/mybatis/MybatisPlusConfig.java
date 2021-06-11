@@ -1,17 +1,16 @@
 package com.bulain.mybatis;
 
+import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import com.bulain.mybatis.plugin.PageNoCacheInterceptor;
+import com.bulain.mybatis.redis.RedisContextHolder;
+import com.bulain.mybatis.redis.RedisService;
+import com.bulain.mybatis.redis.RedisServiceImpl;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
-import com.bulain.mybatis.plugin.PageNoCacheInterceptor;
-import com.bulain.mybatis.redis.RedisContextHolder;
-import com.bulain.mybatis.redis.RedisService;
-import com.bulain.mybatis.redis.RedisServiceImpl;
 
 @Configuration
 @EnableTransactionManagement
@@ -29,8 +28,8 @@ public class MybatisPlusConfig {
     }
     
     @Bean
-    public PaginationInterceptor paginationInterceptor() {
-        return new PaginationInterceptor();
+    public PaginationInnerInterceptor paginationInterceptor() {
+        return new PaginationInnerInterceptor();
     }
 
     @Bean
@@ -39,8 +38,8 @@ public class MybatisPlusConfig {
     }
 
     @Bean
-    public OptimisticLockerInterceptor optimisticLockerInterceptor() {
-        return new OptimisticLockerInterceptor();
+    public OptimisticLockerInnerInterceptor optimisticLockerInterceptor() {
+        return new OptimisticLockerInnerInterceptor();
     }
 
 }
