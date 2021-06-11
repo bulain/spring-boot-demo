@@ -16,8 +16,8 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
         
-        <mybatis-plus-boot.version>3.4.3</mybatis-plus-boot.version>
-        <mybatis-plus-generator.version>3.5.0</mybatis-plus-generator.version>
+        <mybatis-plus-boot.version>3.3.1</mybatis-plus-boot.version>
+        <mybatis-plus-generator.version>3.4.1</mybatis-plus-generator.version>
         <mybatis-migrations.version>3.3.9</mybatis-migrations.version>
         <velocity.version>2.3</velocity.version>
     </properties>
