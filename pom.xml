@@ -58,7 +58,6 @@
         <module>cxf-demo</module>
         <module>dubbo-demo</module>
         <module>jsp-demo</module>
-        <module>kafka-demo</module>
         <module>mime-demo</module>
         <module>mongo-demo</module>
         <module>mybatis-demo</module>
@@ -67,8 +66,7 @@
         <module>rabbit-demo</module>
         <module>sharding-demo</module>
         <module>shiro-demo</module>
-<!--        <module>swagger-demo</module>-->
-        <module>thymeleaf-demo</module>
+        <!--<module>swagger-demo</module>-->
         <module>webflux-demo</module>
         <module>xxljob-demo</module>
     </modules>
