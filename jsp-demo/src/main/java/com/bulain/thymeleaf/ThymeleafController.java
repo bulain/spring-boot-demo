@@ -1,4 +1,4 @@
-package com.bulain.main;
+package com.bulain.thymeleaf;
 
 import java.util.Date;
 import java.util.Map;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class JspController {
+public class ThymeleafController {
 
 	@Value("${application.message:Hello World}")
 	private String message = "Hello World";

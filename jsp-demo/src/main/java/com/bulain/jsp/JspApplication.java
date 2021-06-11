@@ -1,13 +1,13 @@
-package com.bulain.main;
+package com.bulain.jsp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ThymeleafApplication {
+public class JspApplication {
 
 	public static void main(String[] args) throws Exception {
-		SpringApplication.run(ThymeleafApplication.class, args);
+		SpringApplication.run(JspApplication.class, args);
 	}
 
 }
