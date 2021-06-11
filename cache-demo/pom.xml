@@ -19,7 +19,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
         
-        <caffeine.version>3.0.2</caffeine.version>
+        <caffeine.version>2.9.1</caffeine.version>
         <redisson.version>3.15.0</redisson.version>
     </properties>
     
@@ -35,6 +35,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.lettuce</groupId>
+                    <artifactId>lettuce-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.redisson</groupId>

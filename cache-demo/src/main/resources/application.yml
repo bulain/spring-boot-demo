@@ -4,3 +4,14 @@ spring:
   redis:
     redisson: 
       file: classpath:redisson.yml
+  cache:
+    type: caffeine
+    cache-names:
+      - user
+    caffeine:
+      spec: maximumSize=500,expireAfterWrite=5s
+logging:
+  level: 
+    root: WARN
+    com:
+      bulain: DEBUG
