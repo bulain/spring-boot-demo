@@ -6,3 +6,5 @@ target/
 elastic-demo/data/
 *.iml
 *.jar
+*.ipr
+*.iws

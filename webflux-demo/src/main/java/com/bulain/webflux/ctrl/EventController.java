@@ -25,7 +25,7 @@ public class EventController {
         return eventRepository.insert(events).then();
     }
 
-    @GetMapping(path = "", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+    @GetMapping(path = "", produces = MediaType.APPLICATION_NDJSON_VALUE)
     public Flux<Event> getEvents() {
     	return eventRepository.findBy();
     }
