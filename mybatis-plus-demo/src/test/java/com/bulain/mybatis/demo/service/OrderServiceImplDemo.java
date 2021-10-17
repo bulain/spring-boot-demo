@@ -384,7 +384,7 @@ public class OrderServiceImplDemo {
 	public void testSelectCount() {
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
-		int cnt = orderService.count(new QueryWrapper<Order>(wrapper));
+		long cnt = orderService.count(new QueryWrapper<Order>(wrapper));
 		assertEquals(1, cnt);
 	}
 

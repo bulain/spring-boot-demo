@@ -12,9 +12,12 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
-        
-        <spring-boot.version>2.4.5</spring-boot.version>
-        <spring-boot-admin.version>2.4.1</spring-boot-admin.version>
+
+        <spring.version>5.3.10</spring.version>
+        <spring-boot.version>2.5.5</spring-boot.version>
+        <spring-boot-admin.version>2.5.2</spring-boot-admin.version>
+        <spring-security.version>5.3.11.RELEASE</spring-security.version>
+        <spring-security-boot.version>2.5.5</spring-security-boot.version>
     </properties>
 
     <dependencyManagement>
@@ -54,19 +57,14 @@
         <module>admin-demo</module>
         <module>cache-demo</module>
         <module>canal-demo</module>
-        <module>curator-demo</module>
         <module>cxf-demo</module>
-        <module>dubbo-demo</module>
-        <module>jsp-demo</module>
         <module>mime-demo</module>
         <module>mongo-demo</module>
-        <module>mybatis-demo</module>
         <module>mybatis-plus-demo</module>
         <module>oauth-demo</module>
         <module>rabbit-demo</module>
         <module>sharding-demo</module>
         <module>shiro-demo</module>
-        <!--<module>swagger-demo</module>-->
         <module>webflux-demo</module>
         <module>xxljob-demo</module>
     </modules>

@@ -162,8 +162,8 @@ public class OrderMapperDemo {
     public void testSelectCount() {
         Order entity = new Order();
         entity.setOrderNo("X00001");
-        Integer cnt = orderMapper.selectCount(new QueryWrapper<Order>(entity));
-        assertEquals(Integer.valueOf(1), cnt);
+        Long cnt = orderMapper.selectCount(new QueryWrapper<Order>(entity));
+        assertEquals(Long.valueOf(1), cnt);
     }
 
     @Test

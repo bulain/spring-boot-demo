@@ -19,7 +19,7 @@ public class EventControllerDemo {
         WebClient webClient = WebClient.create("http://localhost:8080");
         webClient
                 .post().uri("/events")
-                .contentType(MediaType.APPLICATION_STREAM_JSON) 
+                .contentType(MediaType.APPLICATION_NDJSON) 
                 .body(eventFlux, Event.class)
                 .retrieve()
                 .bodyToMono(Void.class)

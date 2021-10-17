@@ -17,8 +17,8 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         
         <mybatis.version>3.5.7</mybatis.version>
-        <mybatis-plus-boot.version>3.3.1</mybatis-plus-boot.version>
-        <mybatis-plus-generator.version>3.4.1</mybatis-plus-generator.version>
+        <mybatis-plus-boot.version>3.4.3.4</mybatis-plus-boot.version>
+        <mybatis-plus-generator.version>3.5.1</mybatis-plus-generator.version>
         <mybatis-migrations.version>3.3.9</mybatis-migrations.version>
         <velocity.version>2.3</velocity.version>
     </properties>
@@ -54,7 +54,7 @@
             <artifactId>mybatis-plus-generator</artifactId>
             <version>${mybatis-plus-generator.version}</version>
         </dependency>
-        <dependency>
+       <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
             <version>${mybatis.version}</version>
