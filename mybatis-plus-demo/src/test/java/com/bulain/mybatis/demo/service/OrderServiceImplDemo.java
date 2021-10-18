@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bulain.mybatis.MybatisPlusApplication;
-import com.bulain.mybatis.demo.model.Order;
+import com.bulain.mybatis.demo.entity.Order;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,8 +24,8 @@ public class OrderServiceImplDemo {
 	@Autowired
 	private OrderService orderService;
 
-	private Long version = 0L;
-	private Long id;
+	private final Long version = 0L;
+	private String id;
 
 	@BeforeEach
 	public void setup() {
@@ -200,7 +200,7 @@ public class OrderServiceImplDemo {
 
 	@Test
 	public void testRemoveByMap() {
-		Map<String, Object> columnMap = new HashMap<String, Object>();
+		Map<String, Object> columnMap = new HashMap<>();
 		columnMap.put("ORDER_NO", "X00001");
 		boolean bool = orderService.removeByMap(columnMap);
 		assertTrue(bool);
@@ -210,13 +210,13 @@ public class OrderServiceImplDemo {
 	public void testRemove() {
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
-		boolean bool = orderService.remove(new QueryWrapper<Order>(wrapper));
+		boolean bool = orderService.remove(new QueryWrapper<>(wrapper));
 		assertTrue(bool);
 	}
 
 	@Test
 	public void testRemoveBatchIds() {
-		Collection<? extends Serializable> idList = Arrays.asList(new Long[]{id, 2L, 3L});
+		Collection<? extends Serializable> idList = Arrays.asList(id, "2", "3");
 		boolean bool = orderService.removeByIds(idList);
 		assertTrue(bool);
 	}
@@ -253,19 +253,9 @@ public class OrderServiceImplDemo {
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
 		wrapper.setVersion(version);
-		boolean bool = orderService.update(entity, new QueryWrapper<Order>(wrapper));
+		boolean bool = orderService.update(entity, new QueryWrapper<>(wrapper));
 		assertTrue(bool);
 	}
-
-	/*@Test
-	public void testUpdateForSet() {
-		String setStr = "CREATED_VIA='MANUAL'";
-
-		Order wrapper = new Order();
-		wrapper.setOrderNo("X00001");
-		boolean bool = orderService.updateForSet(setStr, new QueryWrapper<Order>(wrapper));
-		assertTrue(bool);
-	}*/
 
 	@Test
 	public void testUpdateBatchByIdListOfT() {
@@ -343,14 +333,14 @@ public class OrderServiceImplDemo {
 
 	@Test
 	public void testSelectBatchIds() {
-		Collection<? extends Serializable> idList = Arrays.asList(new Long[]{id, 2L, 3L});
+		Collection<? extends Serializable> idList = Arrays.asList(id, "2", "3");
 		Collection<Order> list = orderService.listByIds(idList);
 		assertEquals(1, list.size());
 	}
 
 	@Test
 	public void testSelectByMap() {
-		Map<String, Object> columnMap = new HashMap<String, Object>();
+		Map<String, Object> columnMap = new HashMap<>();
 		columnMap.put("ORDER_NO", "X00001");
 		Collection<Order> list = orderService.listByMap(columnMap);
 		assertEquals(1, list.size());
@@ -360,7 +350,7 @@ public class OrderServiceImplDemo {
 	public void testSelectOne() {
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
-		Order ret = orderService.getOne(new QueryWrapper<Order>(wrapper));
+		Order ret = orderService.getOne(new QueryWrapper<>(wrapper));
 		assertNotNull(ret);
 	}
 
@@ -368,23 +358,15 @@ public class OrderServiceImplDemo {
 	public void testSelectMap() {
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
-		Map<String, Object> ret = orderService.getMap(new QueryWrapper<Order>(wrapper));
+		Map<String, Object> ret = orderService.getMap(new QueryWrapper<>(wrapper));
 		assertNotNull(ret);
 	}
-
-	/*@Test
-	public void testSelectObj() {
-		Order wrapper = new Order();
-		wrapper.setOrderNo("X00001");
-		Object ret = orderService.getObj(new QueryWrapper<Order>(wrapper));
-		assertNotNull(ret);
-	}*/
 
 	@Test
 	public void testSelectCount() {
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
-		long cnt = orderService.count(new QueryWrapper<Order>(wrapper));
+		long cnt = orderService.count(new QueryWrapper<>(wrapper));
 		assertEquals(1, cnt);
 	}
 
@@ -392,13 +374,13 @@ public class OrderServiceImplDemo {
 	public void testSelectList() {
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
-		List<Order> list = orderService.list(new QueryWrapper<Order>(wrapper));
+		List<Order> list = orderService.list(new QueryWrapper<>(wrapper));
 		assertEquals(1, list.size());
 	}
 
 	@Test
 	public void testSelectPagePageOfT() {
-		IPage<Order> page = new Page<Order>(0, 2);
+		IPage<Order> page = new Page<>(0, 2);
 		IPage<Order> paged = orderService.page(page);
 		assertEquals(1L, paged.getTotal());
 	}
@@ -407,7 +389,7 @@ public class OrderServiceImplDemo {
 	public void testSelectMaps() {
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
-		List<Map<String, Object>> list = orderService.listMaps(new QueryWrapper<Order>(wrapper));
+		List<Map<String, Object>> list = orderService.listMaps(new QueryWrapper<>(wrapper));
 		assertEquals(1, list.size());
 	}
 
@@ -415,7 +397,7 @@ public class OrderServiceImplDemo {
 	public void testSelectObjs() {
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
-		List<Object> list = orderService.listObjs(new QueryWrapper<Order>(wrapper));
+		List<Object> list = orderService.listObjs(new QueryWrapper<>(wrapper));
 		assertEquals(1, list.size());
 	}
 
@@ -424,16 +406,16 @@ public class OrderServiceImplDemo {
 		IPage<Map<String, Object>> page = new Page<>(0, 2);
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
-		IPage<Map<String, Object>> paged = orderService.pageMaps(page, new QueryWrapper<Order>(wrapper));
+		IPage<Map<String, Object>> paged = orderService.pageMaps(page, new QueryWrapper<>(wrapper));
 		assertEquals(1L, paged.getTotal());
 	}
 
 	@Test
 	public void testSelectPagePageOfTWrapperOfT() {
-		IPage<Order> page = new Page<Order>(0, 2);
+		IPage<Order> page = new Page<>(0, 2);
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
-		IPage<Order> paged = orderService.page(page, new QueryWrapper<Order>(wrapper));
+		IPage<Order> paged = orderService.page(page, new QueryWrapper<>(wrapper));
 		assertEquals(1L, paged.getTotal());
 	}
 

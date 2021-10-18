@@ -21,6 +21,7 @@
         <mybatis-plus-generator.version>3.5.1</mybatis-plus-generator.version>
         <mybatis-migrations.version>3.3.9</mybatis-migrations.version>
         <velocity.version>2.3</velocity.version>
+        <clickhouse.version>0.2.6</clickhouse.version>
     </properties>
 
     <dependencies>
@@ -39,6 +40,11 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ru.yandex.clickhouse</groupId>
+            <artifactId>clickhouse-jdbc</artifactId>
+            <version>${clickhouse.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bulain.mybatis.demo.dao.OrderMapper">
-    <cache-ref namespace="com.bulain.mybatis.demo.dao.OrderMapper"/>
     
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.bulain.mybatis.demo.model.Order">
+    <resultMap id="BaseResultMap" type="com.bulain.mybatis.demo.entity.Order">
         <id column="id" property="id" />
         <result column="order_no" property="orderNo" />
         <result column="extn_ref_no1" property="extnRefNo1" />
@@ -29,7 +28,7 @@
     <select id="find" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from orders t
+        from demo_order t
         <include refid="where" />
         <include refid="common.orderby" />
     </select>
@@ -42,7 +41,7 @@
     </sql>
 
     <delete id="deleteAll" >
-        delete from orders
+        delete from demo_order
     </delete>
 
 </mapper>

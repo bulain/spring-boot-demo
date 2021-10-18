@@ -21,10 +21,11 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.util.StringUtils;
 
 import com.bulain.shiro.pojo.User;
 import com.bulain.shiro.service.UserService;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 public class ShiroRealm extends AuthorizingRealm {
 
@@ -60,7 +61,7 @@ public class ShiroRealm extends AuthorizingRealm {
 
 		String passwordHash = user.getPasswordHash();
 		String slat = user.getSlat();
-		if (StringUtils.isEmpty(passwordHash) || StringUtils.isEmpty(slat)) {
+		if (ObjectUtils.isEmpty(passwordHash) || ObjectUtils.isEmpty(slat)) {
 			throw new DisabledAccountException("用户[" + username + "]无密码，不允许登录");
 		}
 

@@ -1,4 +1,4 @@
-package com.bulain.mybatis.demo.model;
+package com.bulain.mybatis.demo.entity;
 
 import java.util.Date;
 

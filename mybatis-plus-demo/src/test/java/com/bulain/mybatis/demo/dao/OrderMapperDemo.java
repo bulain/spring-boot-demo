@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bulain.mybatis.MybatisPlusApplication;
-import com.bulain.mybatis.demo.model.Order;
+import com.bulain.mybatis.demo.entity.Order;
 import com.bulain.mybatis.demo.pojo.OrderSearch;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,8 +27,7 @@ public class OrderMapperDemo {
     @Autowired
     private OrderMapper orderMapper;
     
-    private Long id;
-    private Long version = 0L;
+    private String id;
 
     @BeforeEach
     public void setup() {
@@ -77,7 +76,7 @@ public class OrderMapperDemo {
 
     @Test
     public void testDeleteBatchIds() {
-        Collection<? extends Serializable> idList = Arrays.asList(new Long[]{id, 2L, 3L});
+        Collection<? extends Serializable> idList = Arrays.asList(new String[]{id, "2", "3"});
         Integer dcnt = orderMapper.deleteBatchIds(idList);
         assertEquals(Integer.valueOf(1), dcnt);
     }
@@ -88,23 +87,11 @@ public class OrderMapperDemo {
         entity.setId(id);
         entity.setOrderNo("X00001");
         entity.setExtnRefNo1("E00001");
-        entity.setVersion(version);
+        entity.setVersion(0L);
 
         Integer ucnt = orderMapper.updateById(entity);
         assertEquals(Integer.valueOf(1), ucnt);
     }
-
-    /*@Test
-    public void testUpdateAllColumnById() {
-        Order entity = new Order();
-        entity.setId(id);
-        entity.setOrderNo("X00001");
-        entity.setExtnRefNo1("E00001");
-        entity.setVersion(version);
-
-        Integer ucnt = orderMapper.updateAllColumnById(entity);
-        assertEquals(Integer.valueOf(1), ucnt);
-    }*/
 
     @Test
     public void testUpdate() {
@@ -119,16 +106,6 @@ public class OrderMapperDemo {
         assertEquals(Integer.valueOf(1), ucnt);
     }
 
-    /*@Test
-    public void testUpdateForSet() {
-        String setStr = "CREATED_VIA='MANUAL'";
-
-        Order wrapper = new Order();
-        wrapper.setOrderNo("X00001");
-        Integer ucnt = orderMapper.updateForSet(setStr, new QueryWrapper<Order>(wrapper));
-        assertEquals(Integer.valueOf(1), ucnt);
-    }*/
-
     @Test
     public void testSelectById() {
         Order ret = orderMapper.selectById(id);
@@ -137,7 +114,7 @@ public class OrderMapperDemo {
 
     @Test
     public void testSelectBatchIds() {
-        Collection<? extends Serializable> idList = Arrays.asList(new Long[]{id, 2L, 3L});
+        Collection<? extends Serializable> idList = Arrays.asList(new String[]{id, "2", "3"});
         List<Order> list = orderMapper.selectBatchIds(idList);
         assertEquals(1, list.size());
     }

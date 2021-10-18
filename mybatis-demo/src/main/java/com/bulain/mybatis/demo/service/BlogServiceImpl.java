@@ -7,7 +7,7 @@ import com.bulain.mybatis.core.dao.BasicMapper;
 import com.bulain.mybatis.core.dao.PagedMapper;
 import com.bulain.mybatis.core.service.PagedServiceImpl;
 import com.bulain.mybatis.demo.dao.BlogMapper;
-import com.bulain.mybatis.demo.model.Blog;
+import com.bulain.mybatis.demo.entity.Blog;
 import com.bulain.mybatis.demo.pojo.BlogSearch;
 
 @Service

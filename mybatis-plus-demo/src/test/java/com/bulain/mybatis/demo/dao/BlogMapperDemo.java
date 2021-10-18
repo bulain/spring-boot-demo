@@ -2,7 +2,7 @@ package com.bulain.mybatis.demo.dao;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bulain.mybatis.MybatisPlusApplication;
-import com.bulain.mybatis.demo.model.Blog;
+import com.bulain.mybatis.demo.entity.Blog;
 import com.bulain.mybatis.demo.pojo.BlogSearch;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

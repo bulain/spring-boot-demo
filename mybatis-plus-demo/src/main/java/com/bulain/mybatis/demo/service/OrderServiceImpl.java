@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bulain.mybatis.demo.dao.OrderMapper;
-import com.bulain.mybatis.demo.model.Order;
+import com.bulain.mybatis.demo.entity.Order;
 
 @Service
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements OrderService {

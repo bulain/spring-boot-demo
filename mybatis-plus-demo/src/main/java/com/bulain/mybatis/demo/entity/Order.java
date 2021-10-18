@@ -1,29 +1,31 @@
-package com.bulain.mybatis.demo.model;
+package com.bulain.mybatis.demo.entity;
+
+import com.baomidou.mybatisplus.annotation.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.Version;
-
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
-
-@Data
-@EqualsAndHashCode(callSuper = false)
+/**
+ * <p>
+ * 
+ * </p>
+ *
+ * @author Bulain
+ * @since 2021-10-18
+ */
+@Getter
+@Setter
 @Accessors(chain = true)
-@TableName("orders")
+@TableName("demo_order")
 public class Order implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private String id;
 
     @TableField("order_no")
     private String orderNo;
@@ -60,10 +62,10 @@ public class Order implements Serializable {
     private Long version;
 
     @TableField("deleted")
-    @TableLogic
     private Integer deleted;
 
     @TableField("archived")
     private String archived;
+
 
 }

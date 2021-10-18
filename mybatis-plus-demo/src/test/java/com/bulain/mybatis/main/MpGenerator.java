@@ -1,79 +1,67 @@
 package com.bulain.mybatis.main;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.generator.FastAutoGenerator;
+import com.baomidou.mybatisplus.generator.config.OutputFile;
+import com.baomidou.mybatisplus.generator.config.rules.DateType;
+import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
+import org.springframework.boot.env.YamlPropertySourceLoader;
+import org.springframework.core.env.PropertySource;
+import org.springframework.core.io.ClassPathResource;
+
+import java.util.Collections;
+import java.util.List;
+
 public class MpGenerator {
     public static void main(String[] args) throws Exception {
 
-//        //用来获取Mybatis-Plus.properties文件的配置信息
+        YamlPropertySourceLoader yamlLoader = new YamlPropertySourceLoader();
+        List<PropertySource<?>> application = yamlLoader.load("application", new ClassPathResource("application.yml"));
+        PropertySource<?> propertySource = application.iterator().next();
+        String url = (String) propertySource.getProperty("spring.datasource.url");
+        String username = (String) propertySource.getProperty("spring.datasource.username");
+        String password = (String) propertySource.getProperty("spring.datasource.password");
+        
+        //用来获取mybatis-plus.properties文件的配置信息
 //        Properties rb = new Properties();
 //        rb.load(new FileInputStream("src/test/resources/mybatis-plus.properties"));
-//
-//        // 代码生成器
-//        AutoGenerator mpg = new AutoGenerator();
-//
-//        // 全局配置
-//        GlobalConfig gc = new GlobalConfig();
-//        gc.setOutputDir(rb.getProperty("mp.OutputDir"));
-//        gc.setOpen(false);
-//        gc.setBaseResultMap(true);
-//        gc.setBaseColumnList(true);
-//        gc.setDateType(DateType.ONLY_DATE);
-//        gc.setAuthor(null);
-//        gc.setMapperName("%sMapper");
-//        gc.setXmlName("%sMapper");
-//        gc.setServiceName(null);
-//        gc.setServiceImplName(null);
-//        gc.setControllerName(null);
-//        mpg.setGlobalConfig(gc);
-//
-//        // 数据源配置
-//        DataSourceConfig dsc = new DataSourceConfig();
-//        dsc.setDbType(DbType.MYSQL);
-//        dsc.setUrl(rb.getProperty("mp.url"));
-//        dsc.setDriverName(rb.getProperty("mp.driver"));
-//        dsc.setUsername(rb.getProperty("mp.username"));
-//        dsc.setPassword(rb.getProperty("mp.password"));
-//        mpg.setDataSource(dsc);
-//
-//        // 包配置
-//        PackageConfig pc = new PackageConfig();
-//        pc.setParent(rb.getProperty("mp.parent"));
-//        pc.setModuleName(rb.getProperty("mp.module"));
-//        pc.setMapper("dao");
-//        pc.setEntity("model");
-//        mpg.setPackageInfo(pc);
-//
-//        // 自定义配置
-//        InjectionConfig cfg = new InjectionConfig() {
-//            @Override
-//            public void initMap() {
-//            }
-//        };
-//        List<FileOutConfig> focList = new ArrayList<>();
-//        focList.add(new FileOutConfig("/templates/mapper.xml.vm") {
-//            @Override
-//            public String outputFile(TableInfo tableInfo) {
-//                tableInfo.getEntityName();
-//                return rb.getProperty("mp.OutputDirXml")  + "/" + rb.getProperty("mp.module") + "/"
-//                        + tableInfo.getMapperName() + StringPool.DOT_XML;
-//            }
-//        });
-//        cfg.setFileOutConfigList(focList);
-//        mpg.setCfg(cfg);
-//        mpg.setTemplate(new TemplateConfig().setXml(null));
-//
-//        // 策略配置
-//        StrategyConfig sc = new StrategyConfig();
-//        sc.setNaming(NamingStrategy.underline_to_camel);
-//        sc.setColumnNaming(NamingStrategy.underline_to_camel);
-//        sc.setEntityLombokModel(true);
-//        sc.setEntityTableFieldAnnotationEnable(true);
-//        sc.setVersionFieldName(rb.getProperty("mp.versionField"));
-//        sc.setLogicDeleteFieldName(rb.getProperty("mp.logicDeleteField"));
-//        sc.setInclude(new String[]{"orders"});
-//        sc.setTablePrefix(rb.getProperty("mp.module"));
-//        mpg.setStrategy(sc);
-//        mpg.setTemplateEngine(new VelocityTemplateEngine());
-//        mpg.execute();
+
+        FastAutoGenerator.create(url, username, password)
+                .globalConfig(builder -> {
+                    builder.author("Bulain") //设置作者
+                            .dateType(DateType.TIME_PACK) //时间类型
+                            .enableSwagger() //开启swagger模式
+                            .fileOverride() //覆盖已生成文件
+                            .disableOpenDir() //打开输出目录
+                            .outputDir("target/mybatis-mysql"); //指定输出目录
+                })
+                .packageConfig(builder -> {
+                    builder.parent("com.bulain.mybatis") //设置父包名
+                            .moduleName("demo") //设置父包模块名
+                            .pathInfo(Collections.singletonMap(OutputFile.mapperXml, "target/mybatis-mysql/mapper")); //设置mapperXml生成路径
+                })
+                .strategyConfig(builder -> {
+                    builder.addInclude("demo_blog", "demo_order") //设置需要生成的表名
+                            .addTablePrefix("demo") //设置过滤表前缀
+                            .entityBuilder()
+                            .enableChainModel() //开启链式模型
+                            .enableLombok() //开启lombok模型
+                            .enableTableFieldAnnotation() //开启生成实体时生成字段注解
+                            .idType(IdType.ASSIGN_ID) //主键的ID类型
+                            //.superClass() //自定义继承的Entity类全称
+                            .versionColumnName("version")//乐观锁字段
+                            //.logicDeleteColumnName("deleted") //逻辑删除字段
+                            .mapperBuilder()
+                            .enableMapperAnnotation() //开启 @Mapper 注解
+                            .enableBaseResultMap() //开启baseResultMap
+                            .enableBaseColumnList() //开启baseColumnList
+                            .serviceBuilder()
+                            .formatServiceFileName("%sService") //服务接口
+                            .controllerBuilder()
+                            .formatFileName("%sCtrl"); //控制器
+                })
+                .templateEngine(new VelocityTemplateEngine()) //使用Velocity引擎模板
+                .execute();
 
     }
 }

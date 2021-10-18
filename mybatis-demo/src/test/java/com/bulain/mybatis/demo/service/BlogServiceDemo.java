@@ -1,7 +1,7 @@
 package com.bulain.mybatis.demo.service;
 
 import com.bulain.mybatis.MybatisApplication;
-import com.bulain.mybatis.demo.model.Blog;
+import com.bulain.mybatis.demo.entity.Blog;
 import com.bulain.mybatis.demo.pojo.BlogSearch;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

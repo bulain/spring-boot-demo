@@ -2,21 +2,40 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.bulain.mybatis.demo.dao.BlogMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.bulain.mybatis.demo.entity.Blog">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="descr" property="descr" />
+        <result column="active_flag" property="activeFlag" />
+        <result column="created_via" property="createdVia" />
+        <result column="remarks" property="remarks" />
+        <result column="created_at" property="createdAt" />
+        <result column="created_by" property="createdBy" />
+        <result column="updated_at" property="updatedAt" />
+        <result column="updated_by" property="updatedBy" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, title, descr, active_flag, created_via, remarks, created_at, created_by, updated_at, updated_by
+    </sql>
+
     <select id="find" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from blog t
+        from demo_blog t
         <include refid="where" />
         <include refid="common.orderby" />
     </select>
     <select id="selectByBizKey" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from blog t
+        from demo_blog t
         <include refid="whereByBizKey" />
     </select>
     <select id="countByDuplicate" resultType="java.lang.Long">
-        select count(*) from blog t
+        select count(*) from demo_blog t
         <include refid="whereByBizKey" />
         <if test="id != null">
             and t.id != #{id}

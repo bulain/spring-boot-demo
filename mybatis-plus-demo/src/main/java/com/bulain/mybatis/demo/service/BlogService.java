@@ -1,11 +1,8 @@
 package com.bulain.mybatis.demo.service;
 
-import com.bulain.mybatis.core.service.BasicService;
-import com.bulain.mybatis.core.service.PagedService;
-import com.bulain.mybatis.demo.model.Blog;
-import com.bulain.mybatis.demo.pojo.BlogSearch;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.bulain.mybatis.demo.entity.Blog;
 
-public interface BlogService extends PagedService<Blog, BlogSearch>,
-		BasicService<Blog> {
-
+public interface BlogService extends IService<Blog> {
+	
 }

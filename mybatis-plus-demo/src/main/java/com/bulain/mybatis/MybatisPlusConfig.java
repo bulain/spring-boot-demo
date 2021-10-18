@@ -1,8 +1,9 @@
 package com.bulain.mybatis;
 
+import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-import com.bulain.mybatis.plugin.PageNoCacheInterceptor;
 import com.bulain.mybatis.redis.RedisContextHolder;
 import com.bulain.mybatis.redis.RedisService;
 import com.bulain.mybatis.redis.RedisServiceImpl;
@@ -26,20 +27,13 @@ public class MybatisPlusConfig {
     public RedisContextHolder redisContextHolder(RedisService redisService) {
         return new RedisContextHolder(redisService);
     }
-    
-    @Bean
-    public PaginationInnerInterceptor paginationInterceptor() {
-        return new PaginationInnerInterceptor();
-    }
 
     @Bean
-    public PageNoCacheInterceptor cachePaginationInterceptor() {
-        return new PageNoCacheInterceptor();
-    }
-
-    @Bean
-    public OptimisticLockerInnerInterceptor optimisticLockerInterceptor() {
-        return new OptimisticLockerInnerInterceptor();
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
+        mybatisPlusInterceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
+        mybatisPlusInterceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
+        return mybatisPlusInterceptor;
     }
 
 }
