@@ -1,7 +1,8 @@
-package com.bulain.mybatis.demo.service;
+package com.bulain.mybatis.demo.service.impl;
 
 import java.util.Collection;
 
+import com.bulain.mybatis.demo.service.OrderService;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
