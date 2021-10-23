@@ -22,10 +22,6 @@ public class MpGenerator {
         String username = (String) propertySource.getProperty("spring.datasource.username");
         String password = (String) propertySource.getProperty("spring.datasource.password");
         
-        //用来获取mybatis-plus.properties文件的配置信息
-//        Properties rb = new Properties();
-//        rb.load(new FileInputStream("src/test/resources/mybatis-plus.properties"));
-
         FastAutoGenerator.create(url, username, password)
                 .globalConfig(builder -> {
                     builder.author("Bulain") //设置作者

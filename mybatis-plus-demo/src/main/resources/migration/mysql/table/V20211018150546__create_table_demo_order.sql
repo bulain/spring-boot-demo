@@ -21,9 +21,6 @@ create table demo_order
 
     primary key (id)
 );
-create unique index idx_demo_order_1 on demo_order (order_no);
 
--- //@UNDO
--- SQL to undo the change goes here.
-drop table demo_order;
+create unique index idx_demo_order_1 on demo_order (order_no);
 

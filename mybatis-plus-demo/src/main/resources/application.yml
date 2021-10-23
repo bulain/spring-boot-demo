@@ -1,13 +1,19 @@
+server:
+  port: 8081
 spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/mybatis_dev
+    url: jdbc:mysql://localhost:3307/mybatis_dev
     username: mybatis
     password: mybatis
   redis:
     host: 127.0.0.1
     port: 6379
+    password: dev
+  flyway:
+    locations: classpath:/migration/mysql/
+    baseline-on-migrate: true
 mybatis-plus:
   mapper-locations: classpath:mybatis/xml/Common.xml,classpath:mybatis/custom/**/*.xml
   typeAliasesPackage: com.bulain.mybatis.*.model

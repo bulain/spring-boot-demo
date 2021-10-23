@@ -17,8 +17,3 @@ create table demo_blog
 
     primary key (id)
 );
-
--- //@UNDO
--- SQL to undo the change goes here.
-drop table demo_blog;
-

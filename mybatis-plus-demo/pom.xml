@@ -19,7 +19,7 @@
         <mybatis.version>3.5.7</mybatis.version>
         <mybatis-plus-boot.version>3.4.3.4</mybatis-plus-boot.version>
         <mybatis-plus-generator.version>3.5.1</mybatis-plus-generator.version>
-        <mybatis-migrations.version>3.3.9</mybatis-migrations.version>
+        <flyway.version>7.15.0</flyway.version>
         <velocity.version>2.3</velocity.version>
         <clickhouse.version>0.2.6</clickhouse.version>
     </properties>
@@ -66,15 +66,9 @@
             <version>${mybatis.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis-migrations</artifactId>
-            <version>${mybatis-migrations.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.mybatis</groupId>
-                    <artifactId>mybatis</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>${flyway.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.velocity</groupId>
@@ -89,18 +83,6 @@
     </dependencies>
 
     <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-            <resource>
-                <directory>src/migration</directory>
-                <filtering>true</filtering>
-                <excludes>
-                    <exclude>**/*.jar</exclude>
-                </excludes>
-            </resource>
-        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
