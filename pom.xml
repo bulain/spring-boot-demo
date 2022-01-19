@@ -66,6 +66,7 @@
         <module>sharding-demo</module>
         <module>webflux-demo</module>
         <module>xxljob-demo</module>
+        <module>dapr-demo</module>
     </modules>
 
 </project>
