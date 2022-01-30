@@ -13,15 +13,23 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
 
-        <spring.version>5.3.13</spring.version>
-        <spring-boot.version>2.6.1</spring-boot.version>
-        <spring-boot-admin.version>2.5.4</spring-boot-admin.version>
-        <spring-security.version>5.6.0</spring-security.version>
-        <spring-security-boot.version>2.6.1</spring-security-boot.version>
+        <fastjson.version>1.2.79</fastjson.version>
+        <commons-io.version>2.11.0</commons-io.version>
+        <spring-boot.version>2.6.3</spring-boot.version>
+        <spring-boot-admin.version>2.6.2</spring-boot-admin.version>
+        <mybatis-plus-boot.version>3.5.1</mybatis-plus-boot.version>
+        <mybatis-plus-generator.version>3.5.1</mybatis-plus-generator.version>
+
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!-- fastjson -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
             <!-- spring-boot -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -37,6 +45,29 @@
                 <version>${spring-boot-admin.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <!-- spring-security -->
+            <dependency>
+                <groupId>org.springframework.security.oauth.boot</groupId>
+                <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <!-- mybatis-plus -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis-plus-generator.version}</version>
+            </dependency>
+            <!-- commons -->
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -1,46 +1,59 @@
 package com.bulain.minio;
 
-import java.io.InputStream;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import io.minio.*;
+import io.minio.messages.Bucket;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FilenameUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
 
-import io.minio.MinioClient;
-import io.minio.ObjectStat;
-import io.minio.ServerSideEncryption;
-import io.minio.messages.Bucket;
-import lombok.extern.slf4j.Slf4j;
+import java.io.File;
+import java.util.Date;
+import java.util.List;
 
 @Slf4j
 public class MinioClientDemo {
 
     @Test
     public void testMinioClient() throws Exception {
-        MinioClient client = new MinioClient("http://127.0.0.1:9000", "2QXZRL605WFR1RTU9BNE",
-                "2vGGELyPnfyjV+4roYTMlvKMlK+KpaG7VGBku+GR");
+        MinioClient client = MinioClient.builder()
+                .endpoint("http://127.0.0.1:9000")
+                .credentials("2QXZRL605WFR1RTU9BNE", "2vGGELyPnfyjV+4roYTMlvKMlK+KpaG7VGBku+GR")
+                .build();
 
         List<Bucket> listBuckets = client.listBuckets();
         log.debug("{}", listBuckets);
 
         String bucketName = "mime";
-        String objectName = Long.toString(new Date().getTime());
-        InputStream stream = new ClassPathResource("images/test.jpg").getInputStream();
-        Long size = null;
-        Map<String, String> headerMap = new HashMap<String, String>();
-        ServerSideEncryption sse = null;
+        String fileName = "images/test.jpg";
+        String extension = FilenameUtils.getExtension(fileName);
+        String objectName = new Date().getTime() + "." + extension;
+        File file = new ClassPathResource(fileName).getFile();
         String contentType = "image/jpeg";
-        client.putObject(bucketName, objectName, stream, size, headerMap, sse, contentType);
 
-        ObjectStat statObject = client.statObject(bucketName, objectName);
+        ObjectWriteResponse uploadObject = client.uploadObject(
+                UploadObjectArgs.builder()
+                        .contentType(contentType)
+                        .bucket(bucketName)
+                        .object(objectName)
+                        .filename(file.getAbsolutePath())
+                        .build());
+        log.debug("{}", uploadObject);
+
+        StatObjectResponse statObject = client.statObject(
+                StatObjectArgs.builder()
+                        .bucket(bucketName)
+                        .object(objectName)
+                        .build());
         log.debug("{}", statObject);
-        
-        InputStream object = client.getObject(bucketName, objectName);
-        log.debug("{}", object);
-        
+
+        GetObjectResponse getObject = client.getObject(
+                GetObjectArgs.builder()
+                        .bucket(bucketName)
+                        .bucket(objectName)
+                        .build());
+        log.debug("{}", getObject);
+
     }
-    
+
 }

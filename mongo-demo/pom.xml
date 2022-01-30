@@ -16,7 +16,8 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
         
-        <influxdb.version>1.11.0</influxdb.version>
+        <influxdb.version>4.1.0</influxdb.version>
+
     </properties>
     
     <dependencies>
@@ -43,7 +44,6 @@
         <dependency>
             <groupId>com.influxdb</groupId>
             <artifactId>influxdb-spring</artifactId>
-            <version>${influxdb.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -51,6 +51,16 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.influxdb</groupId>
+                <artifactId>influxdb-spring</artifactId>
+                <version>${influxdb.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>
