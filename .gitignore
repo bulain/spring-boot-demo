@@ -4,3 +4,7 @@ target/
 .settings/
 elastic-demo/data/
 *.jar
+
+#idea
+.idea/
+*.iml
