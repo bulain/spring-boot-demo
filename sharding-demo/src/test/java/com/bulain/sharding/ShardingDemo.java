@@ -1,14 +1,20 @@
 package com.bulain.sharding;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Date;
+
 import javax.sql.DataSource;
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
+@Slf4j
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = ShardingApplication.class)
 public class ShardingDemo {
@@ -41,6 +47,71 @@ public class ShardingDemo {
 		}
 
 		conn.close();
+
+	}
+
+	@Test
+	public void testShardingYear() throws SQLException {
+
+		try (Connection conn = dataSource.getConnection()) {
+			conn.setAutoCommit(false);
+
+			long dt = LocalDateTime.now().minusYears(1).toInstant(ZoneOffset.ofHours(8)).toEpochMilli();
+//			long dt = LocalDateTime.now().toInstant(ZoneOffset.ofHours(8)).toEpochMilli();
+			long hu = new Date().getTime() % (365 * 24 * 3600);
+			for (int i = 0; i < 10; i++) {
+				long dn = new Date().getTime() % (365 * 24 * 3600);
+				for (int j = 0; j < 5; j++) {
+					String husql = "insert into t_hu (hu, dn, pgi) values (?, ?, ?)";
+					try (PreparedStatement ps = conn.prepareStatement(husql)) {
+						ps.setString(1, Long.toString(hu));
+						ps.setString(2, Long.toString(dn));
+						ps.setTimestamp(3, new Timestamp(dt));
+						ps.executeUpdate();
+					}
+					hu++;
+				}
+				conn.commit();
+				dn++;
+			}
+		}
+
+	}
+
+	@Test
+	public void testShardingSearch() throws SQLException {
+
+		String sql = "SELECT * from t_hu WHERE dn = ?";
+		try (Connection conn = dataSource.getConnection();
+			 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, "26716058");
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+				int count = 0;
+				while (rs.next()) {
+					count ++;
+				}
+				log.info("count: {}", count);
+			}
+		}
+
+        sql = "SELECT * from t_hu WHERE pgi > ? and pgi < ?";
+		//sql = "SELECT * from t_hu WHERE pgi between ? and ?";
+		long prev = LocalDateTime.now().minusYears(2).toInstant(ZoneOffset.ofHours(8)).toEpochMilli();
+		long curr = LocalDateTime.now().plusYears(2).toInstant(ZoneOffset.ofHours(8)).toEpochMilli();
+		try (Connection conn = dataSource.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setTimestamp(1, new Timestamp(prev));
+			ps.setTimestamp(2, new Timestamp(curr));
+
+			try (ResultSet rs = ps.executeQuery()) {
+				int count = 0;
+				while (rs.next()) {
+					count ++;
+				}
+				log.info("count: {}", count);
+			}
+		}
 
 	}
 

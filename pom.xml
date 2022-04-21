@@ -85,6 +85,7 @@
     </build>
 
     <modules>
+        <!--
         <module>admin-demo</module>
         <module>cache-demo</module>
         <module>canal-demo</module>
@@ -94,10 +95,13 @@
         <module>mybatis-plus-demo</module>
         <module>oauth-demo</module>
         <module>rabbit-demo</module>
+        -->
         <module>sharding-demo</module>
+        <!--
         <module>webflux-demo</module>
         <module>xxljob-demo</module>
         <module>dapr-demo</module>
+        -->
     </modules>
 
 </project>
