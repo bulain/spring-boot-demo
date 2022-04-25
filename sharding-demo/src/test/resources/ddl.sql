@@ -19,6 +19,14 @@ create table if not exists db1.t_hu2022 (hu varchar(50) not null, dn varchar(50)
 create table if not exists db1.t_hu2023 (hu varchar(50) not null, dn varchar(50) not null, pgi datetime, primary key (hu));
 create table if not exists db1.t_hu2024 (hu varchar(50) not null, dn varchar(50) not null, pgi datetime, primary key (hu));
 
+create table if not exists db1.t_hint (hu varchar(50) not null, dn varchar(50) not null, pgi datetime, primary key (hu));
+create table if not exists db1.t_hint2021 (hu varchar(50) not null, dn varchar(50) not null, pgi datetime, primary key (hu));
+create table if not exists db1.t_hint2022 (hu varchar(50) not null, dn varchar(50) not null, pgi datetime, primary key (hu));
+create table if not exists db1.t_hint2023 (hu varchar(50) not null, dn varchar(50) not null, pgi datetime, primary key (hu));
+create table if not exists db1.t_hint2024 (hu varchar(50) not null, dn varchar(50) not null, pgi datetime, primary key (hu));
+
+create table if not exists db1.t_dn (dn varchar(50) not null, pgi datetime, primary key (dn));
+
 create table if not exists t_config (config_id bigint not null auto_increment, code int not null, value varchar(50), primary key (config_id));
 
 
