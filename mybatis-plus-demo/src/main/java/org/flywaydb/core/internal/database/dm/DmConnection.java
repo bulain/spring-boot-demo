@@ -6,7 +6,7 @@ import org.flywaydb.core.internal.database.base.Schema;
 import java.sql.SQLException;
 
 /**
- * Oracle connection.
+ * DM connection.
  */
 public class DmConnection extends Connection<DmDatabase> {
     DmConnection(DmDatabase database, java.sql.Connection connection) {

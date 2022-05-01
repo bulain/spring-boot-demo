@@ -6,11 +6,11 @@ import org.flywaydb.core.internal.jdbc.JdbcTemplate;
 import java.sql.SQLException;
 
 /**
- * Oracle-specific table.
+ * DM-specific table.
  */
 public class DmTable extends Table<DmDatabase, DmSchema> {
     /**
-     * Creates a new Oracle table.
+     * Creates a new DM table.
      *
      * @param jdbcTemplate The Jdbc Template for communicating with the DB.
      * @param database     The database-specific support.

@@ -4,7 +4,7 @@ package org.flywaydb.core.internal.database.dm;
 import org.flywaydb.core.internal.jdbc.Results;
 
 /**
- * Oracle-specific results and side-effects.
+ * DM-specific results and side-effects.
  */
 public class DmResults extends Results {
 

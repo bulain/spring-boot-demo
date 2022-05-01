@@ -216,7 +216,7 @@ public class DmSchema extends Schema<DmDatabase, DmTable> {
     }
 
     /**
-     * Checks whether Oracle Locator metadata exists for the schema.
+     * Checks whether DM Locator metadata exists for the schema.
      *
      * @return {@code true} if it exists, {@code false} if not.
      * @throws SQLException when checking metadata existence failed.
@@ -226,7 +226,7 @@ public class DmSchema extends Schema<DmDatabase, DmTable> {
     }
 
     /**
-     * Clean Oracle Locator metadata for the schema. Works only for the user's default schema, prints a warning message
+     * Clean DM Locator metadata for the schema. Works only for the user's default schema, prints a warning message
      * to log otherwise.
      *
      * @throws SQLException when performing cleaning failed.
@@ -237,7 +237,7 @@ public class DmSchema extends Schema<DmDatabase, DmTable> {
         }
 
         if (!isDefaultSchemaForUser()) {
-            LOG.warn("Unable to clean Oracle Locator metadata for schema " + database.quote(name) +
+            LOG.warn("Unable to clean DM Locator metadata for schema " + database.quote(name) +
                     " by user \"" + database.doGetCurrentUser() + "\": unsupported operation");
             return;
         }
@@ -265,7 +265,7 @@ public class DmSchema extends Schema<DmDatabase, DmTable> {
 
 
     /**
-     * Oracle object types.
+     * DM object types.
      */
     public enum ObjectType {
         // Tables, including XML tables, except for nested tables, IOT overflow tables and other secondary objects.

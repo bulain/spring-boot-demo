@@ -416,7 +416,7 @@ public class DmParser extends Parser {
             return true;
         }
 
-        // In Oracle, symbols { } affect the block depth in embedded Java code
+        // In DM, symbols { } affect the block depth in embedded Java code
         if (token.getType() == TokenType.SYMBOL && context.getStatementType() == PLSQL_JAVA_STATEMENT) {
             return true;
         }
@@ -580,7 +580,7 @@ public class DmParser extends Parser {
         if (peek.length() < 3) {
             return false;
         }
-        // Oracle's quoted-literal syntax is introduced by q (case-insensitive) followed by a literal surrounded by
+        // DM's quoted-literal syntax is introduced by q (case-insensitive) followed by a literal surrounded by
         // any of !!, [], {}, (), <> provided the selected pair do not appear in the literal string; the others may do.
         char firstChar = peek.charAt(0);
         return (firstChar == 'q' || firstChar == 'Q') && peek.charAt(1) == '\'';

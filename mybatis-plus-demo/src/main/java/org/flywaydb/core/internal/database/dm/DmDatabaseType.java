@@ -26,7 +26,7 @@ import java.util.Properties;
 import java.util.regex.Pattern;
 
 public class DmDatabaseType extends BaseDatabaseType {
-    // Oracle usernames/passwords can be 1-30 chars, can only contain alphanumerics and # _ $
+    // DM usernames/passwords can be 1-30 chars, can only contain alphanumerics and # _ $
     // The first (and only) capture group represents the password
     private static final Pattern usernamePasswordPattern = Pattern.compile("^jdbc:dm:[a-zA-Z0-9#_$]+/([a-zA-Z0-9#_$]+)@.*");
 
@@ -78,7 +78,7 @@ public class DmDatabaseType extends BaseDatabaseType {
 
     @Override
     public Database createDatabase(Configuration configuration, JdbcConnectionFactory jdbcConnectionFactory, StatementInterceptor statementInterceptor) {
-        org.flywaydb.core.internal.database.oracle.OracleDatabase.enableTnsnamesOraSupport();
+        DmDatabase.enableTnsnamesOraSupport();
 
         return new DmDatabase(configuration, jdbcConnectionFactory, statementInterceptor);
     }
@@ -136,7 +136,7 @@ public class DmDatabaseType extends BaseDatabaseType {
         String osUser = System.getProperty("user.name");
         props.put("v$session.osuser", osUser.substring(0, Math.min(osUser.length(), 30)));
         props.put("v$session.program", APPLICATION_NAME);
-        props.put("oracle.net.keepAlive", "true");
+        props.put("DM.net.keepAlive", "true");
 
         String oobb = ClassUtils.getStaticFieldValue("dm.jdbc.driver.DmdbConnection", "CONNECTION_PROPERTY_THIN_NET_DISABLE_OUT_OF_BAND_BREAK", classLoader);
         props.put(oobb, "true");
