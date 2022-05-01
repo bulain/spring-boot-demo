@@ -19,6 +19,7 @@
         <flyway.version>7.15.0</flyway.version>
         <clickhouse.version>0.3.2</clickhouse.version>
         <velocity.version>2.3</velocity.version>
+        <dameng.version>8.1.2.79</dameng.version>
 
     </properties>
 
@@ -34,6 +35,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.dameng</groupId>
+            <artifactId>DmJdbcDriver18</artifactId>
+            <version>${dameng.version}</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>

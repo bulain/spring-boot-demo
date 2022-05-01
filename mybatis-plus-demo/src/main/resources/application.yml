@@ -1,19 +1,9 @@
 server:
   port: 8081
 spring:
-  datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3307/mybatis_dev
-    username: mybatis
-    password: mybatis
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    password: dev
-  flyway:
-    locations: classpath:/migration/mysql/
-    baseline-on-migrate: true
+  profiles:
+    active: dm
+
 mybatis-plus:
   mapper-locations: classpath:mybatis/xml/Common.xml,classpath:mybatis/custom/**/*.xml
   typeAliasesPackage: com.bulain.mybatis.*.model
@@ -27,3 +17,36 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     cache-enabled: true
     jdbc-type-for-null: 'null'
+
+---
+spring:
+  profiles: mysql
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mybatis_dev
+    username: mybatis
+    password: mybatis
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: dev
+  flyway:
+    locations: classpath:/migration/mysql/
+    baseline-on-migrate: true
+---
+spring:
+  profiles: dm
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: dm.jdbc.driver.DmDriver
+    url: jdbc:dm://localhost:5236?comOracle=true
+    username: mybatis
+    password: mybatis@123
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: dev
+  flyway:
+    locations: classpath:/migration/dm/
+    baseline-on-migrate: true
