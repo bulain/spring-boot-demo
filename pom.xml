@@ -16,8 +16,9 @@
         <fastjson.version>1.2.83</fastjson.version>
         <commons-io.version>2.11.0</commons-io.version>
         <commons-collections4.version>4.4</commons-collections4.version>
-        <spring-boot.version>2.6.6</spring-boot.version>
-        <spring-boot-admin.version>2.6.6</spring-boot-admin.version>
+        <spring-boot.version>2.7.0</spring-boot.version>
+        <spring-oauth-boot.version>2.6.8</spring-oauth-boot.version>
+        <spring-boot-admin.version>2.6.8</spring-boot-admin.version>
         <spring-boot-thin.version>1.0.28.RELEASE</spring-boot-thin.version>
         <mybatis-plus-boot.version>3.5.1</mybatis-plus-boot.version>
         <mybatis-plus-generator.version>3.5.1</mybatis-plus-generator.version>
@@ -52,7 +53,7 @@
             <dependency>
                 <groupId>org.springframework.security.oauth.boot</groupId>
                 <artifactId>spring-security-oauth2-autoconfigure</artifactId>
-                <version>${spring-boot.version}</version>
+                <version>${spring-oauth-boot.version}</version>
             </dependency>
             <!-- mybatis-plus -->
             <dependency>
