@@ -82,6 +82,7 @@
         <module>admin-demo</module>
         <module>cache-demo</module>
         <module>canal-demo</module>
+        <module>curator-demo</module>
         <module>cxf-demo</module>
         <module>dapr-demo</module>
         <module>mime-demo</module>
@@ -91,10 +92,10 @@
         <module>rabbit-demo</module>
         <module>sharding-demo</module>
         <module>shiro-demo</module>
-        <!--
+        <module>swagger-demo</module>
         <module>webflux-demo</module>
         <module>xxljob-demo</module>
-        -->
+
     </modules>
 
 </project>
