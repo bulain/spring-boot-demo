@@ -30,11 +30,15 @@ public class XxljobPool {
     public void demoJobHandler() {
         XxlJobHelper.log("XXL-JOB, Hello World.");
 
+        String jobParam = XxlJobHelper.getJobParam();
+        XxlJobHelper.log("XXL-JOB, Param: {}", jobParam);
+
         for (int i = 0; i < 5; i++) {
             XxlJobHelper.log("beat at:" + i);
         }
 
-        String ret = xxljobHandler.handle("call xxljobHandler");
+
+        String ret = xxljobHandler.handle("call xxljobHandler: {}");
 
         XxlJobHelper.handleSuccess(ret);
 
