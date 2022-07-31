@@ -34,7 +34,7 @@ public class MpGenerator {
                 .packageConfig(builder -> {
                     builder.parent("com.bulain.mybatis") //设置父包名
                             .moduleName("demo") //设置父包模块名
-                            .pathInfo(Collections.singletonMap(OutputFile.mapperXml, "target/mybatis-mysql/mapper")); //设置mapperXml生成路径
+                            .pathInfo(Collections.singletonMap(OutputFile.xml, "target/mybatis-mysql/mapper")); //设置mapperXml生成路径
                 })
                 .strategyConfig(builder -> {
                     builder.addInclude("demo_blog", "demo_order") //设置需要生成的表名

@@ -13,13 +13,14 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
 
+        <mybatis-plus-generator.version>3.5.2</mybatis-plus-generator.version>
         <flyway.version>7.15.0</flyway.version>
         <clickhouse.version>0.3.2</clickhouse.version>
-        <velocity.version>2.3</velocity.version>
         <dameng.version>8.1.2.79</dameng.version>
+        <velocity.version>2.3</velocity.version>
 
     </properties>
 
@@ -39,7 +40,6 @@
         <dependency>
             <groupId>com.dameng</groupId>
             <artifactId>DmJdbcDriver18</artifactId>
-            <version>${dameng.version}</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -78,6 +78,12 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- mybatis-plus-generator -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis-plus-generator.version}</version>
+            </dependency>
             <!-- flyway -->
             <dependency>
                 <groupId>org.flywaydb</groupId>
@@ -89,6 +95,12 @@
                 <groupId>ru.yandex.clickhouse</groupId>
                 <artifactId>clickhouse-jdbc</artifactId>
                 <version>${clickhouse.version}</version>
+            </dependency>
+            <!-- dameng -->
+            <dependency>
+                <groupId>com.dameng</groupId>
+                <artifactId>DmJdbcDriver18</artifactId>
+                <version>${dameng.version}</version>
             </dependency>
             <!-- velocity -->
             <dependency>

@@ -10,18 +10,15 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
 
         <fastjson.version>1.2.83</fastjson.version>
         <commons-io.version>2.11.0</commons-io.version>
         <commons-collections4.version>4.4</commons-collections4.version>
-        <spring-boot.version>2.7.0</spring-boot.version>
-        <spring-boot-oauth.version>2.6.8</spring-boot-oauth.version>
-        <spring-boot-admin.version>2.6.8</spring-boot-admin.version>
+        <spring-boot.version>2.7.2</spring-boot.version>
         <spring-boot-thin.version>1.0.28.RELEASE</spring-boot-thin.version>
-        <mybatis-plus-boot.version>3.5.1</mybatis-plus-boot.version>
-        <mybatis-plus-generator.version>3.5.1</mybatis-plus-generator.version>
+        <mybatis-plus-boot.version>3.5.2</mybatis-plus-boot.version>
 
     </properties>
 
@@ -41,30 +38,11 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- spring-boot-admin -->
-            <dependency>
-                <groupId>de.codecentric</groupId>
-                <artifactId>spring-boot-admin-dependencies</artifactId>
-                <version>${spring-boot-admin.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <!-- spring-security -->
-            <dependency>
-                <groupId>org.springframework.security.oauth.boot</groupId>
-                <artifactId>spring-security-oauth2-autoconfigure</artifactId>
-                <version>${spring-boot-oauth.version}</version>
-            </dependency>
             <!-- mybatis-plus -->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus-boot.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-generator</artifactId>
-                <version>${mybatis-plus-generator.version}</version>
             </dependency>
             <!-- commons -->
             <dependency>
@@ -77,6 +55,7 @@
                 <artifactId>commons-collections4</artifactId>
                 <version>${commons-collections4.version}</version>
             </dependency>
+            <!-- spring-boot-thin -->
             <dependency>
                 <groupId>org.springframework.boot.experimental</groupId>
                 <artifactId>spring-boot-thin-layout</artifactId>
@@ -88,6 +67,7 @@
     <build>
         <pluginManagement>
             <plugins>
+                <!-- spring-boot -->
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
@@ -98,24 +78,22 @@
     </build>
 
     <modules>
-        <!--
+
         <module>admin-demo</module>
         <module>cache-demo</module>
         <module>canal-demo</module>
         <module>cxf-demo</module>
+        <module>dapr-demo</module>
         <module>mime-demo</module>
         <module>mongo-demo</module>
-        -->
         <module>mybatis-plus-demo</module>
-        <!--
         <module>oauth-demo</module>
         <module>rabbit-demo</module>
-        -->
         <module>sharding-demo</module>
+        <module>shiro-demo</module>
         <!--
         <module>webflux-demo</module>
         <module>xxljob-demo</module>
-        <module>dapr-demo</module>
         -->
     </modules>
 
