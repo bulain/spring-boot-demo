@@ -27,7 +27,6 @@ public class MpGenerator {
                     builder.author("Bulain") //设置作者
                             .dateType(DateType.TIME_PACK) //时间类型
                             .enableSwagger() //开启swagger模式
-                            .fileOverride() //覆盖已生成文件
                             .disableOpenDir() //打开输出目录
                             .outputDir("target/mybatis-mysql"); //指定输出目录
                 })

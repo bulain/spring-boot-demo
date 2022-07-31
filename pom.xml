@@ -87,7 +87,7 @@
         <module>dapr-demo</module>
         <module>mime-demo</module>
         <module>mongo-demo</module>
-        <module>mybatis-plus-demo</module>
+        <module>mybatis-demo</module>
         <module>oauth-demo</module>
         <module>rabbit-demo</module>
         <module>sharding-demo</module>
