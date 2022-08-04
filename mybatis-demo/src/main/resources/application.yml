@@ -2,7 +2,7 @@ server:
   port: 8081
 spring:
   profiles:
-    active: dm
+    active: mysql
 
 mybatis-plus:
   mapper-locations: classpath:mybatis/xml/Common.xml,classpath:mybatis/custom/**/*.xml
@@ -20,7 +20,9 @@ mybatis-plus:
 
 ---
 spring:
-  profiles: mysql
+  config:
+    activate:
+      on-profile: mysql
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -36,7 +38,9 @@ spring:
     baseline-on-migrate: true
 ---
 spring:
-  profiles: dm
+  config:
+    activate:
+      on-profile: dm
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: dm.jdbc.driver.DmDriver
