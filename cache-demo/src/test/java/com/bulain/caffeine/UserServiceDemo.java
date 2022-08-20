@@ -1,7 +1,7 @@
-package com.bulain.caffeine.service;
+package com.bulain.caffeine;
 
-import com.bulain.caffeine.CaffeineApplication;
 import com.bulain.caffeine.pojo.User;
+import com.bulain.caffeine.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

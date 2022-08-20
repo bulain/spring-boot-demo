@@ -1,42 +1,80 @@
 package com.bulain.redis.config;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
+import com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
+import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * 缓存配置
+ */
+@EnableCaching
 @Configuration
 public class RedisConfig {
 
+    // Redis客户端
     @Bean
-    @Primary
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
-        RedisSerializer<String> string = RedisSerializer.string();
 
-        ObjectMapper mapper = new ObjectMapper();
-        GenericJackson2JsonRedisSerializer.registerNullValueSerializer(mapper, null);
-        mapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL,
-                JsonTypeInfo.As.PROPERTY);
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        GenericJackson2JsonRedisSerializer json = new GenericJackson2JsonRedisSerializer(mapper);
+        //序列化方式
+        RedisSerializer<String> keySerializer = RedisSerializer.string();
+        RedisSerializer<Object> jsonSerializer = jsonSerializer();
 
-        RedisTemplate<String, Object> template = new RedisTemplate<String, Object>();
-        template.setConnectionFactory(factory);
-        template.setKeySerializer(string);
-        template.setValueSerializer(json);
-        template.setHashKeySerializer(string);
-        template.setHashValueSerializer(json);
-        template.setEnableDefaultSerializer(true);
-        template.setDefaultSerializer(json);
+        //Redis客户端
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(factory);
+        redisTemplate.setKeySerializer(keySerializer);
+        redisTemplate.setValueSerializer(jsonSerializer);
+        redisTemplate.setHashKeySerializer(keySerializer);
+        redisTemplate.setHashValueSerializer(jsonSerializer);
+        redisTemplate.afterPropertiesSet();
 
-        return template;
+        return redisTemplate;
+    }
+
+    @Value("${spring.cache.redis.time-to-live:2m}")
+    private Duration redisTimeToLive;
+
+    // Redis缓存管理器
+    @Bean
+    public CacheManager redisCacheManager(RedisConnectionFactory factory) {
+
+        //序列化方式
+        RedisSerializer<String> keySerializer = RedisSerializer.string();
+        RedisSerializer<Object> jsonSerializer = jsonSerializer();
+
+        //缓存配置
+        RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
+                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(keySerializer))
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(jsonSerializer))
+                .entryTtl(redisTimeToLive);
+        Map<String, RedisCacheConfiguration> map = new HashMap<>();
+
+        //生成缓存管理器
+        return RedisCacheManager
+                .builder(factory)
+                .cacheDefaults(config)
+                .withInitialCacheConfigurations(map)
+                .build();
+    }
+
+    /**
+     * JSON序列化方式
+     */
+    private RedisSerializer<Object> jsonSerializer() {
+        return new GenericFastJsonRedisSerializer();
     }
 
 }
