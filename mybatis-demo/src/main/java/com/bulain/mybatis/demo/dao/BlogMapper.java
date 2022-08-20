@@ -7,6 +7,6 @@ import com.bulain.mybatis.demo.pojo.BlogSearch;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface BlogMapper extends BaseMapper<Blog>, PagedMapper<Blog, BlogSearch> {
+public interface BlogMapper extends PagedMapper<Blog> {
 
 }
