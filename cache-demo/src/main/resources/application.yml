@@ -2,7 +2,7 @@ server:
   port: 8081
 spring:
   redis:
-    redisson: 
+    redisson:
       file: classpath:redisson.yml
   cache:
     type: caffeine

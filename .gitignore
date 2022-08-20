@@ -1,9 +1,9 @@
 .classpath
 .project
-target/
 .settings/
+target/
 .idea/
-elastic-demo/data/
+.run/
 *.iml
 *.jar
 *.ipr
