@@ -3,6 +3,7 @@ package com.bulain.mybatis.demo.dao;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.SystemClock;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bulain.mybatis.MybatisPlusApplication;
 import com.bulain.mybatis.demo.entity.Order;
@@ -26,7 +27,7 @@ public class OrderMapperDemo {
 
     @Autowired
     private OrderMapper orderMapper;
-    
+
     private String id;
 
     @BeforeEach
@@ -183,25 +184,25 @@ public class OrderMapperDemo {
         entity.setOrderNo("X00001");
         IPage<Map<String, Object>> paged = orderMapper.selectMapsPage(page, new QueryWrapper<Order>(entity));
         assertEquals(1, paged.getTotal());
-        
+
         page = new Page<>(1, 2);
         paged = orderMapper.selectMapsPage(page, new QueryWrapper<Order>(entity));
         assertEquals(1, paged.getTotal());
     }
-    
+
     @Test
     public void testFind() {
         OrderSearch search = new OrderSearch();
         search.setOrderNo("X00001");
         List<Order> list = orderMapper.find(search);
         assertEquals(1, list.size());
-        
+
         search = new OrderSearch();
         search.setOrderNo("X00001");
         list = orderMapper.find(search);
         assertEquals(1, list.size());
     }
-    
+
     @Test
     public void testFindWithPage() {
         IPage<Order> page = new Page<Order>(1, 2);
@@ -209,14 +210,14 @@ public class OrderMapperDemo {
         search.setOrderNo("X00001");
         IPage<Order> paged = orderMapper.find(page, search);
         assertEquals(1, paged.getTotal());
-        
+
         page = new Page<Order>(1, 2);
         search = new OrderSearch();
         search.setOrderNo("X00001");
         paged = orderMapper.find(page, search);
         assertEquals(1, paged.getTotal());
     }
-    
+
     @Test
     public void testUpdateToNull() {
         Order entity = new Order();
@@ -227,6 +228,15 @@ public class OrderMapperDemo {
         UpdateWrapper<Order> updateWrapper = new UpdateWrapper<Order>(wrapper);
         updateWrapper.lambda().set(Order::getExtnRefNo2, null);
         orderMapper.update(entity, updateWrapper);
+    }
+
+    @Test
+    public void testUpdateToLogic() {
+        UpdateWrapper<Order> updateWrapper = new UpdateWrapper<Order>()
+                .set("deleted", "1")
+                .set("version", SystemClock.now())
+                .eq("id", id);
+        orderMapper.update(null, updateWrapper);
     }
 
 }

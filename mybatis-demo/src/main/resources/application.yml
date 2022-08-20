@@ -18,6 +18,12 @@ mybatis-plus:
     cache-enabled: true
     jdbc-type-for-null: 'null'
 
+logging:
+  level:
+    root: WARN
+    org.springframework: INFO
+    com.bulain: DEBUG
+
 ---
 spring:
   config:

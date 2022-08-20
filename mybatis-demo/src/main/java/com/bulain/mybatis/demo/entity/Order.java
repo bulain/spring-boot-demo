@@ -62,6 +62,7 @@ public class Order implements Serializable {
     private Long version;
 
     @TableField("deleted")
+    @TableLogic
     private Integer deleted;
 
     @TableField("archived")
