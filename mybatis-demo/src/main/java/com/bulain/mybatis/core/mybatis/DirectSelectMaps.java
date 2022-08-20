@@ -7,6 +7,9 @@ import org.apache.ibatis.mapping.SqlSource;
 
 import java.util.Map;
 
+/**
+ * 查询满足条件所有数据
+ */
 public class DirectSelectMaps extends DirectMethod {
 
     public DirectSelectMaps() {

@@ -5,6 +5,9 @@ import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlSource;
 
+/**
+ * 根据 whereEntity 条件，更新记录
+ */
 public class DirectUpdate extends DirectMethod {
 
     public DirectUpdate() {

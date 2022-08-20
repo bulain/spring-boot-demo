@@ -5,6 +5,9 @@ import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlSource;
 
+/**
+ * 查询满足条件总记录数
+ */
 public class DirectSelectCount extends DirectMethod {
 
     public DirectSelectCount() {

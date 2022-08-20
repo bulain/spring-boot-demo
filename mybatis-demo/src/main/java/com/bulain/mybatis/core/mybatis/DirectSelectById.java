@@ -6,6 +6,9 @@ import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlSource;
 import org.apache.ibatis.scripting.defaults.RawSqlSource;
 
+/**
+ * 根据ID查询一条数据
+ */
 public class DirectSelectById extends DirectMethod {
 
     public DirectSelectById() {

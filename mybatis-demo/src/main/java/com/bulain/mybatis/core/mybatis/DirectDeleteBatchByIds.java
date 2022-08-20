@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.core.toolkit.sql.SqlScriptUtils;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlSource;
 
+/**
+ * 根据 ID 集合删除
+ */
 public class DirectDeleteBatchByIds extends DirectMethod {
 
     public DirectDeleteBatchByIds() {

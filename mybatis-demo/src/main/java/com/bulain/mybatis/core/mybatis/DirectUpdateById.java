@@ -5,6 +5,9 @@ import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlSource;
 
+/**
+ * 根据 ID 更新有值字段
+ */
 public class DirectUpdateById extends DirectMethod {
 
     public DirectUpdateById() {

@@ -5,6 +5,9 @@ import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlSource;
 
+/**
+ * 查询满足条件所有数据（并翻页）
+ */
 public class DirectSelectPage extends DirectMethod {
 
     public DirectSelectPage() {
