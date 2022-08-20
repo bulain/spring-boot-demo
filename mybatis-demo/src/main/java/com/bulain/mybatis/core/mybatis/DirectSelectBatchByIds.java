@@ -6,7 +6,9 @@ import com.baomidou.mybatisplus.core.toolkit.sql.SqlScriptUtils;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlSource;
 
-/**根据ID集合，批量查询数据*/
+/**
+ * 根据ID集合，批量查询数据
+ */
 public class DirectSelectBatchByIds extends DirectMethod {
 
     public DirectSelectBatchByIds() {

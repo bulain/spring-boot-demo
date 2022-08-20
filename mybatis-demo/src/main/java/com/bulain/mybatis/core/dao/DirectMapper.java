@@ -1,4 +1,4 @@
-package com.bulain.mybatis.demo.dao;
+package com.bulain.mybatis.core.dao;
 
 /**
  * 公共类（无视逻辑删除字段）
