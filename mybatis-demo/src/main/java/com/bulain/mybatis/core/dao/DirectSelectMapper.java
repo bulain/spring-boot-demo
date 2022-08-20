@@ -12,7 +12,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-/**公共类（无视逻辑删除字段）*/
+/**
+ * 公共类（无视逻辑删除字段）
+ */
 @SuppressWarnings("ALL")
 public interface DirectSelectMapper<T> {
 
