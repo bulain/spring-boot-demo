@@ -6,7 +6,7 @@ import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlSource;
 
 /**
- * 根据 whereEntity 条件，更新记录
+ * 根据 whereEntity 条件，更新记录（无视逻辑删除字段）
  */
 public class DirectUpdate extends DirectMethod {
 

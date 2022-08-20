@@ -7,7 +7,7 @@ import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlSource;
 
 /**
- * 根据ID集合，批量查询数据
+ * 根据ID集合，批量查询数据（无视逻辑删除字段）
  */
 public class DirectSelectBatchByIds extends DirectMethod {
 

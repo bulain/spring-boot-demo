@@ -6,7 +6,7 @@ import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlSource;
 
 /**
- * 根据 ID 删除
+ * 根据ID删除（无视逻辑删除字段）
  */
 public class DirectDeleteById extends DirectMethod {
 

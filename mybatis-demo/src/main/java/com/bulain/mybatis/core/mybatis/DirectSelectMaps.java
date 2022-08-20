@@ -8,7 +8,7 @@ import org.apache.ibatis.mapping.SqlSource;
 import java.util.Map;
 
 /**
- * 查询满足条件所有数据
+ * 查询满足条件所有数据（无视逻辑删除字段）
  */
 public class DirectSelectMaps extends DirectMethod {
 

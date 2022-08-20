@@ -6,7 +6,7 @@ import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlSource;
 
 /**
- * 根据 ID 更新有值字段
+ * 根据 ID 更新有值字段（无视逻辑删除字段）
  */
 public class DirectUpdateById extends DirectMethod {
 

@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.toolkit.sql.SqlScriptUtils;
 
 /**
- * 忽略逻辑删除字段
+ * 忽略逻辑删除字段（无视逻辑删除字段）
  */
 public abstract class DirectMethod extends AbstractMethod {
 

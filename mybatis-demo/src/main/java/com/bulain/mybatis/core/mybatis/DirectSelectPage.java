@@ -6,7 +6,7 @@ import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlSource;
 
 /**
- * 查询满足条件所有数据（并翻页）
+ * 查询满足条件所有数据（并翻页）（无视逻辑删除字段）
  */
 public class DirectSelectPage extends DirectMethod {
 

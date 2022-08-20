@@ -7,7 +7,7 @@ import org.apache.ibatis.mapping.SqlSource;
 import org.apache.ibatis.scripting.defaults.RawSqlSource;
 
 /**
- * 根据ID查询一条数据
+ * 根据ID查询一条数据（无视逻辑删除字段）
  */
 public class DirectSelectById extends DirectMethod {
 

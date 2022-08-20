@@ -6,7 +6,7 @@ import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlSource;
 
 /**
- * 查询满足条件总记录数
+ * 查询满足条件总记录数（无视逻辑删除字段）
  */
 public class DirectSelectCount extends DirectMethod {
 
