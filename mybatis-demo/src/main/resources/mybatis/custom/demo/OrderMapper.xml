@@ -40,8 +40,4 @@
         </where>
     </sql>
 
-    <delete id="deleteAll" >
-        delete from demo_order
-    </delete>
-
 </mapper>

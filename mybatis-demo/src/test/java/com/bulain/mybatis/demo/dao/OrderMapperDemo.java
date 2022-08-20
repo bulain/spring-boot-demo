@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.core.toolkit.SystemClock;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bulain.mybatis.MybatisPlusApplication;
 import com.bulain.mybatis.demo.entity.Order;
-import com.bulain.mybatis.demo.pojo.OrderSearch;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,7 +31,7 @@ public class OrderMapperDemo {
 
     @BeforeEach
     public void setup() {
-        orderMapper.deleteAll();
+        orderMapper.directDelete(new QueryWrapper<>());
 
         Order entity = new Order();
         entity.setOrderNo("X00001");
@@ -183,38 +182,6 @@ public class OrderMapperDemo {
         Order entity = new Order();
         entity.setOrderNo("X00001");
         IPage<Map<String, Object>> paged = orderMapper.selectMapsPage(page, new QueryWrapper<Order>(entity));
-        assertEquals(1, paged.getTotal());
-
-        page = new Page<>(1, 2);
-        paged = orderMapper.selectMapsPage(page, new QueryWrapper<Order>(entity));
-        assertEquals(1, paged.getTotal());
-    }
-
-    @Test
-    public void testFind() {
-        OrderSearch search = new OrderSearch();
-        search.setOrderNo("X00001");
-        List<Order> list = orderMapper.find(search);
-        assertEquals(1, list.size());
-
-        search = new OrderSearch();
-        search.setOrderNo("X00001");
-        list = orderMapper.find(search);
-        assertEquals(1, list.size());
-    }
-
-    @Test
-    public void testFindWithPage() {
-        IPage<Order> page = new Page<Order>(1, 2);
-        OrderSearch search = new OrderSearch();
-        search.setOrderNo("X00001");
-        IPage<Order> paged = orderMapper.find(page, search);
-        assertEquals(1, paged.getTotal());
-
-        page = new Page<Order>(1, 2);
-        search = new OrderSearch();
-        search.setOrderNo("X00001");
-        paged = orderMapper.find(page, search);
         assertEquals(1, paged.getTotal());
     }
 

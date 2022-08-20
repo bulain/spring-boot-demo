@@ -15,7 +15,7 @@ mybatis-plus:
       update-strategy: not_null
   configuration:
     map-underscore-to-camel-case: true
-    cache-enabled: true
+    cache-enabled: false
     jdbc-type-for-null: 'null'
 
 logging:

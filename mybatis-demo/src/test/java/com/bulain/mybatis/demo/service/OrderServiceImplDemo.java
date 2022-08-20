@@ -29,7 +29,7 @@ public class OrderServiceImplDemo {
 
 	@BeforeEach
 	public void setup() {
-        orderService.deleteAll();
+        orderService.directRemove(new QueryWrapper<>());
 
 		Order entity = new Order();
 		entity.setOrderNo("X00001");
