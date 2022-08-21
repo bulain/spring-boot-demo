@@ -3,6 +3,9 @@ package com.bulain.mybatis;
 import com.baomidou.mybatisplus.core.injector.AbstractMethod;
 import com.baomidou.mybatisplus.core.injector.DefaultSqlInjector;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
+import com.baomidou.mybatisplus.extension.injector.methods.AlwaysUpdateSomeColumnById;
+import com.baomidou.mybatisplus.extension.injector.methods.InsertBatchSomeColumn;
+import com.baomidou.mybatisplus.extension.injector.methods.Upsert;
 import com.bulain.mybatis.core.mybatis.*;
 
 import java.util.List;
@@ -16,6 +19,8 @@ public class MybatisPlusSqlInjector extends DefaultSqlInjector {
     public List<AbstractMethod> getMethodList(Class<?> mapperClass, TableInfo tableInfo) {
         List<AbstractMethod> methodList = super.getMethodList(mapperClass, tableInfo);
         Stream.Builder<AbstractMethod> builder = Stream.<AbstractMethod>builder()
+                .add(new Upsert())
+                .add(new InsertBatchSomeColumn())
                 .add(new DirectDelete())
                 .add(new DirectUpdate())
                 .add(new DirectSelectCount())
@@ -24,7 +29,8 @@ public class MybatisPlusSqlInjector extends DefaultSqlInjector {
                 .add(new DirectSelectList())
                 .add(new DirectSelectPage());
         if (tableInfo.havePK()) {
-            builder.add(new DirectDeleteById())
+            builder.add(new AlwaysUpdateSomeColumnById())
+                    .add(new DirectDeleteById())
                     .add(new DirectDeleteBatchByIds())
                     .add(new DirectUpdateById())
                     .add(new DirectSelectById())

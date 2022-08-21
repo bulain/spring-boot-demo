@@ -72,7 +72,7 @@ public interface RedisService {
          * 得到对应的缓存值列表
      * @param <T> 缓存数据类型
      * @param key 缓存键列表
-     * @param field 哈希键
+     * @param fields 哈希键
      * @return 缓存数据
      */
     <T> List<T> hmget(String key, Collection<String> fields);
