@@ -21,9 +21,9 @@ public class DirectUpdateById extends DirectMethod {
     @Override
     public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo) {
         SqlMethod sqlMethod = SqlMethod.UPDATE_BY_ID;
-        final String additional = optlockVersion(tableInfo);
+        final String additional = "";
         String sql = String.format(sqlMethod.getSql(), tableInfo.getTableName(),
-                sqlSet(tableInfo.isWithLogicDelete(), false, tableInfo, false, ENTITY, ENTITY_DOT),
+                sqlSet(false, false, tableInfo, false, ENTITY, ENTITY_DOT),
                 tableInfo.getKeyColumn(), ENTITY_DOT + tableInfo.getKeyProperty(), additional);
         SqlSource sqlSource = languageDriver.createSqlSource(configuration, sql, modelClass);
         return addUpdateMappedStatement(mapperClass, modelClass, methodName, sqlSource);
