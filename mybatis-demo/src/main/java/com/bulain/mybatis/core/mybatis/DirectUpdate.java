@@ -22,7 +22,7 @@ public class DirectUpdate extends DirectMethod {
     public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo) {
         SqlMethod sqlMethod = SqlMethod.UPDATE;
         String sql = String.format(sqlMethod.getSql(), tableInfo.getTableName(),
-                sqlSet(true, true, tableInfo, true, ENTITY, ENTITY_DOT),
+                sqlSet(false, true, tableInfo, true, ENTITY, ENTITY_DOT),
                 sqlWhereEntityWrapper(true, tableInfo), sqlComment());
         SqlSource sqlSource = languageDriver.createSqlSource(configuration, sql, modelClass);
         return this.addUpdateMappedStatement(mapperClass, modelClass, methodName, sqlSource);
