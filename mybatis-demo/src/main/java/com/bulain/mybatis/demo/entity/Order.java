@@ -1,8 +1,7 @@
 package com.bulain.mybatis.demo.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
@@ -16,8 +15,7 @@ import java.time.LocalDateTime;
  * @author Bulain
  * @since 2021-10-18
  */
-@Getter
-@Setter
+@Data
 @Accessors(chain = true)
 @TableName("demo_order")
 public class Order implements Serializable {
