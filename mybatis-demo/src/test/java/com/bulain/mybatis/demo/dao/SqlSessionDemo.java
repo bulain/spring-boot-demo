@@ -1,7 +1,7 @@
 package com.bulain.mybatis.demo.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.StringPool;
+import com.baomidou.mybatisplus.core.enums.SqlMethod;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.bulain.mybatis.MybatisPlusApplication;
 import com.bulain.mybatis.demo.entity.Order;
@@ -30,15 +30,18 @@ public class SqlSessionDemo {
 
     @Test
     public void testSqlSession() {
-        Class<Order> entityClass = Order.class;
-        Class<OrderMapper> mapperClass = OrderMapper.class;
-        SqlSession sqlSession = SqlHelper.sqlSession(entityClass);
+        SqlSessionFactory sessionFactory = SqlHelper.sqlSessionFactory(Order.class);
+        SqlSession sqlSession = SqlSessionUtils.getSqlSession(sessionFactory);
 
         Assertions.assertNotNull(sqlSession);
 
-        String sqlStatement = getSqlStatement(mapperClass, "selectList");
-        List<Order> orders = sqlSession.selectList(sqlStatement);
-        Assertions.assertNotNull(orders);
+        String sqlStatement = SqlHelper.getSqlStatement(OrderMapper.class, SqlMethod.SELECT_LIST);
+        try {
+            List<Order> orders = sqlSession.selectList(sqlStatement);
+            Assertions.assertNotNull(orders);
+        } finally {
+            SqlSessionUtils.closeSqlSession(sqlSession, sessionFactory);
+        }
 
     }
 
@@ -47,7 +50,7 @@ public class SqlSessionDemo {
         SqlSessionFactory sessionFactory = SqlHelper.sqlSessionFactory(Order.class);
         SqlSession sqlSession = SqlSessionUtils.getSqlSession(sessionFactory);
 
-        String sqlStatement = getSqlStatement(OrderMapper.class, "selectList");
+        String sqlStatement = SqlHelper.getSqlStatement(OrderMapper.class, SqlMethod.SELECT_LIST);
         QueryWrapper<Order> queryWrapper = new QueryWrapper<>();
         Map<String, Object> param = buildParam(queryWrapper);
 
@@ -70,13 +73,12 @@ public class SqlSessionDemo {
         SqlSessionFactory sessionFactory = SqlHelper.sqlSessionFactory(Order.class);
         SqlSession sqlSession = SqlSessionUtils.getSqlSession(sessionFactory);
 
-        String sqlStatement = getSqlStatement(OrderMapper.class, "selectList");
+        String sqlStatement = SqlHelper.getSqlStatement(OrderMapper.class, SqlMethod.SELECT_LIST);
         QueryWrapper<Order> queryWrapper = new QueryWrapper<>();
         Map<String, Object> param = buildParam(queryWrapper);
 
         try {
-            sqlSession.select(sqlStatement,
-                    param,
+            sqlSession.select(sqlStatement, param,
                     (ResultHandler<Order>) resultContext -> {
                         Order order = resultContext.getResultObject();
                         log.debug("data: {}", order);
@@ -85,10 +87,6 @@ public class SqlSessionDemo {
             SqlSessionUtils.closeSqlSession(sqlSession, sessionFactory);
         }
 
-    }
-
-    private static String getSqlStatement(Class<?> mapper, String methodName) {
-        return mapper.getName() + StringPool.DOT + methodName;
     }
 
     private static Map<String, Object> buildParam(QueryWrapper<?> queryWrapper) {
