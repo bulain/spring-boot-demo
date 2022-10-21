@@ -206,4 +206,12 @@ public class OrderMapperDemo {
         orderMapper.update(null, updateWrapper);
     }
 
+    @Test
+    public void testSelectByCustomSql() {
+        QueryWrapper<Order> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("order_no", "X00001");
+        List<Order> list = orderMapper.selectByCustomSql(queryWrapper);
+        assertEquals(1, list.size());
+    }
+
 }
