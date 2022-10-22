@@ -212,6 +212,15 @@ public class OrderMapperDemo {
         queryWrapper.eq("order_no", "X00001");
         List<Order> list = orderMapper.selectByCustomSql(queryWrapper);
         assertEquals(1, list.size());
+
+        queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("order_no", "X00001");
+        queryWrapper.eq("deleted", 0);
+        queryWrapper.select("order_no");
+        queryWrapper.orderByAsc("order_no");
+        list = orderMapper.selectByCustomSql(queryWrapper);
+        assertEquals(1, list.size());
+
     }
 
 }
