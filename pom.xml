@@ -12,14 +12,6 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.source>11</maven.compiler.source>
-
-        <fastjson.version>1.2.83</fastjson.version>
-        <commons-io.version>2.11.0</commons-io.version>
-        <commons-collections4.version>4.4</commons-collections4.version>
-        <spring-boot.version>2.7.5</spring-boot.version>
-        <spring-boot-thin.version>1.0.27.RELEASE</spring-boot-thin.version>
-        <mybatis-plus-boot.version>3.5.2</mybatis-plus-boot.version>
-
     </properties>
 
     <dependencyManagement>
@@ -28,13 +20,13 @@
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
-                <version>${fastjson.version}</version>
+                <version>1.2.83</version>
             </dependency>
             <!-- spring-boot -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
+                <version>2.7.5</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -42,7 +34,7 @@
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${mybatis-plus-boot.version}</version>
+                <version>3.5.2</version>
             </dependency>
             <dependency>
                 <groupId>ognl</groupId>
@@ -53,12 +45,12 @@
             <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
-                <version>${commons-io.version}</version>
+                <version>2.11.0</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-collections4</artifactId>
-                <version>${commons-collections4.version}</version>
+                <version>4.4</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -70,13 +62,13 @@
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>${spring-boot.version}</version>
+                    <version>2.7.5</version>
                 </plugin>
                 <!-- spring-boot-thin -->
                 <plugin>
                     <groupId>org.springframework.boot.experimental</groupId>
                     <artifactId>spring-boot-thin-maven-plugin</artifactId>
-                    <version>${spring-boot-thin.version}</version>
+                    <version>1.0.27.RELEASE</version>
                 </plugin>
             </plugins>
         </pluginManagement>
