@@ -12,11 +12,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compiler.target>11</maven.compiler.target>
-        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
         
-        <sharding.version>4.1.1</sharding.version>
-
     </properties>
 
     <dependencies>
@@ -65,13 +63,13 @@
         <dependency>
             <groupId>org.apache.shardingsphere</groupId>
             <artifactId>sharding-orchestration-center-zookeeper-curator</artifactId>
-            <version>${sharding.version}</version>
+            <version>4.1.1</version>
         </dependency>
         -->
 
         <!-- groovy -->
         <dependency>
-            <groupId>org.codehaus.groovy</groupId>
+            <groupId>org.apache.groovy</groupId>
             <artifactId>groovy</artifactId>
         </dependency>
 
@@ -115,22 +113,22 @@
             <dependency>
                 <groupId>org.apache.shardingsphere</groupId>
                 <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
-                <version>${sharding.version}</version>
+                <version>4.1.1</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.shardingsphere</groupId>
                 <artifactId>sharding-jdbc-spring-namespace</artifactId>
-                <version>${sharding.version}</version>
+                <version>4.1.1</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.shardingsphere</groupId>
                 <artifactId>sharding-orchestration-center-nacos</artifactId>
-                <version>${sharding.version}</version>
+                <version>4.1.1</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.shardingsphere</groupId>
                 <artifactId>sharding-jdbc-core</artifactId>
-                <version>${sharding.version}</version>
+                <version>4.1.1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

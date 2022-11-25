@@ -1,9 +1,8 @@
 package com.bulain.mime.ctrl;
 
-import java.util.Arrays;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.bulain.mime.pojo.DataResp;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,9 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.bulain.mime.pojo.DataResp;
-
-import lombok.extern.slf4j.Slf4j;
+import java.util.Arrays;
 
 @Controller
 @RequestMapping("/mime")

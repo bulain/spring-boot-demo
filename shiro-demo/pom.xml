@@ -12,11 +12,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compiler.target>11</maven.compiler.target>
-        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
 
-        <shiro.version>1.9.1</shiro.version>
-        <sitemesh.version>3.0.1</sitemesh.version>
     </properties>
 
     <dependencies>
@@ -29,12 +27,12 @@
             <artifactId>tomcat-embed-jasper</artifactId>
         </dependency>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
+            <groupId>javax.servlet.jsp.jstl</groupId>
+            <artifactId>javax.servlet.jsp.jstl-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.sitemesh</groupId>
-            <artifactId>sitemesh</artifactId>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.shiro</groupId>
@@ -85,12 +83,17 @@
             <dependency>
                 <groupId>org.apache.shiro</groupId>
                 <artifactId>shiro-spring-boot-starter</artifactId>
-                <version>${shiro.version}</version>
+                <version>1.10.1</version>
             </dependency>
             <dependency>
-                <groupId>org.sitemesh</groupId>
-                <artifactId>sitemesh</artifactId>
-                <version>${sitemesh.version}</version>
+                <groupId>javax.servlet.jsp.jstl</groupId>
+                <artifactId>javax.servlet.jsp.jstl-api</artifactId>
+                <version>1.2.2</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>4.0.1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

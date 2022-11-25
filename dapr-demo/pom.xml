@@ -14,11 +14,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compiler.target>11</maven.compiler.target>
-        <maven.compiler.source>11</maven.compiler.source>
-
-        <dapr.version>1.7.0</dapr.version>
-        <binarywang.version>4.4.4.B</binarywang.version>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
 
     </properties>
 
@@ -74,43 +71,43 @@
             <dependency>
                 <groupId>io.dapr</groupId>
                 <artifactId>dapr-sdk</artifactId>
-                <version>${dapr.version}</version>
+                <version>1.7.1</version>
             </dependency>
             <dependency>
                 <groupId>io.dapr</groupId>
                 <artifactId>dapr-sdk-actors</artifactId>
-                <version>${dapr.version}</version>
+                <version>1.7.1</version>
             </dependency>
             <dependency>
                 <groupId>io.dapr</groupId>
                 <artifactId>dapr-sdk-springboot</artifactId>
-                <version>${dapr.version}</version>
+                <version>1.7.1</version>
             </dependency>
 
             <dependency>
                 <groupId>com.github.binarywang</groupId>
                 <artifactId>weixin-java-miniapp</artifactId>
-                <version>${binarywang.version}</version>
+                <version>4.4.5.B</version>
             </dependency>
             <dependency>
                 <groupId>com.github.binarywang</groupId>
                 <artifactId>weixin-java-pay</artifactId>
-                <version>${binarywang.version}</version>
+                <version>4.4.5.B</version>
             </dependency>
             <dependency>
                 <groupId>com.github.binarywang</groupId>
                 <artifactId>weixin-java-open</artifactId>
-                <version>${binarywang.version}</version>
+                <version>4.4.5.B</version>
             </dependency>
             <dependency>
                 <groupId>com.github.binarywang</groupId>
                 <artifactId>weixin-java-mp</artifactId>
-                <version>${binarywang.version}</version>
+                <version>4.4.5.B</version>
             </dependency>
             <dependency>
                 <groupId>com.github.binarywang</groupId>
                 <artifactId>weixin-java-cp</artifactId>
-                <version>${binarywang.version}</version>
+                <version>4.4.5.B</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

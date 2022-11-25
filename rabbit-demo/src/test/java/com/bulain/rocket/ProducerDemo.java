@@ -1,5 +1,6 @@
 package com.bulain.rocket;
 
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
@@ -11,25 +12,24 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import javax.annotation.Resource;
 import java.math.BigDecimal;
 
 @Slf4j
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = RocketApplication.class)
-public class ProducerDemo {
+class ProducerDemo {
     @Resource
     private RocketMQTemplate rocketMQTemplate;
 
     @Test
-    public void testConvertAndSend() {
+    void testConvertAndSend() {
         for (int i = 0; i < 100; i++) {
             rocketMQTemplate.convertAndSend("rocketa:tag1", "String Message " + i);
         }
     }
 
     @Test
-    public void testSend() {
+    void testSend() {
         for (int i = 0; i < 100; i++) {
             Message<String> msg = MessageBuilder.withPayload("Payload Message " + i).build();
             rocketMQTemplate.send("rocketa:tag2", msg);
@@ -37,7 +37,7 @@ public class ProducerDemo {
     }
 
     @Test
-    public void testAsyncSend() {
+    void testAsyncSend() {
         for (int i = 0; i < 10; i++) {
             rocketMQTemplate.asyncSend("rocketb:tag3", new RocketEvent("E001" + i, new BigDecimal("50")),
                     new SendCallback() {
@@ -45,6 +45,7 @@ public class ProducerDemo {
                         public void onSuccess(SendResult r) {
                             log.info("async onSucess SendResult={}", r);
                         }
+
                         @Override
                         public void onException(Throwable t) {
                             log.info("async onException Throwable={}", t);
@@ -58,7 +59,7 @@ public class ProducerDemo {
     }
 
     @Test
-    public void testSyncSendOrderly() {
+    void testSyncSendOrderly() {
         for (int i = 0; i < 100; i++) {
             Message<String> msg = MessageBuilder.withPayload("Orderly Message " + i).build();
             rocketMQTemplate.syncSendOrderly("rocketc:tag4", msg, "hashkey");
@@ -66,7 +67,7 @@ public class ProducerDemo {
     }
 
     @Test
-    public void testSendMessageInTransaction() {
+    void testSendMessageInTransaction() {
         for (int i = 0; i < 100; i++) {
             Message<String> msg = MessageBuilder.withPayload("Transaction Message " + i).build();
             rocketMQTemplate.sendMessageInTransaction("rocketd:tag5", msg, null);

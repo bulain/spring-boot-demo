@@ -10,69 +10,13 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compiler.target>11</maven.compiler.target>
-        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+
+        <spring-boot-thin.version>1.0.27.RELEASE</spring-boot-thin.version>
+
     </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <!-- fastjson -->
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>1.2.83</version>
-            </dependency>
-            <!-- spring-boot -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>2.7.5</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <!-- mybatis-plus -->
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>3.5.2</version>
-            </dependency>
-            <dependency>
-                <groupId>ognl</groupId>
-                <artifactId>ognl</artifactId>
-                <version>3.3.2</version>
-            </dependency>
-            <!-- commons -->
-            <dependency>
-                <groupId>commons-io</groupId>
-                <artifactId>commons-io</artifactId>
-                <version>2.11.0</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-collections4</artifactId>
-                <version>4.4</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
-    <build>
-        <pluginManagement>
-            <plugins>
-                <!-- spring-boot -->
-                <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>2.7.5</version>
-                </plugin>
-                <!-- spring-boot-thin -->
-                <plugin>
-                    <groupId>org.springframework.boot.experimental</groupId>
-                    <artifactId>spring-boot-thin-maven-plugin</artifactId>
-                    <version>1.0.27.RELEASE</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
 
     <modules>
 
@@ -94,5 +38,88 @@
         <module>xxljob-demo</module>
 
     </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- fastjson -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>2.0.19</version>
+            </dependency>
+            <!-- spring-boot -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>3.0.0</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- mybatis-plus -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>3.5.2</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>3.5.2</version>
+            </dependency>
+            <dependency>
+                <groupId>ognl</groupId>
+                <artifactId>ognl</artifactId>
+                <version>3.3.2</version>
+            </dependency>
+            <!-- commons -->
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>2.11.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>4.4</version>
+            </dependency>
+            <!-- groovy -->
+            <dependency>
+                <groupId>org.apache.groovy</groupId>
+                <artifactId>groovy</artifactId>
+                <version>4.0.6</version>
+            </dependency>
+            <!-- swagger -->
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>2.2.7</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>1.6.13</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- spring-boot -->
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>3.0.0</version>
+                </plugin>
+                <!-- spring-boot-thin -->
+                <plugin>
+                    <groupId>org.springframework.boot.experimental</groupId>
+                    <artifactId>spring-boot-thin-maven-plugin</artifactId>
+                    <version>1.0.27.RELEASE</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
 
 </project>

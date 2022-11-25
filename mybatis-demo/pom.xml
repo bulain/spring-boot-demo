@@ -14,8 +14,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compiler.target>11</maven.compiler.target>
-        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
 
         <mybatis-plus-generator.version>3.5.2</mybatis-plus-generator.version>
         <flyway.version>7.15.0</flyway.version>
@@ -39,6 +39,10 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.dameng</groupId>
             <artifactId>DmJdbcDriver18</artifactId>
         </dependency>
@@ -53,10 +57,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ognl</groupId>
-            <artifactId>ognl</artifactId>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -78,12 +78,6 @@
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity-engine-core</artifactId>
         </dependency>
-        <!--
-        <dependency>
-            <groupId>com.github.yulichang</groupId>
-            <artifactId>mybatis-plus-join</artifactId>
-        </dependency>
-        -->
         <dependency>
             <groupId>org.javers</groupId>
             <artifactId>javers-core</artifactId>
@@ -101,12 +95,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- mybatis-plus-generator -->
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-generator</artifactId>
-                <version>${mybatis-plus-generator.version}</version>
-            </dependency>
             <!-- flyway -->
             <dependency>
                 <groupId>org.flywaydb</groupId>
@@ -130,12 +118,6 @@
                 <groupId>org.apache.velocity</groupId>
                 <artifactId>velocity-engine-core</artifactId>
                 <version>${velocity.version}</version>
-            </dependency>
-            <!-- mybatis-plus-join -->
-            <dependency>
-                <groupId>com.github.yulichang</groupId>
-                <artifactId>mybatis-plus-join</artifactId>
-                <version>1.2.4</version>
             </dependency>
             <!-- javers -->
             <dependency>
