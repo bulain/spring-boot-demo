@@ -29,6 +29,7 @@
         <module>mime-demo</module>
         <module>mongo-demo</module>
         <module>mybatis-demo</module>
+        <module>native-demo</module>
         <module>oauth-demo</module>
         <module>rabbit-demo</module>
         <module>sharding-demo</module>
