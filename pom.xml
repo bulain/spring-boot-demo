@@ -34,7 +34,6 @@
         <module>rabbit-demo</module>
         <module>sharding-demo</module>
         <module>shiro-demo</module>
-        <module>swagger-demo</module>
         <module>webflux-demo</module>
         <module>xxljob-demo</module>
 
@@ -42,17 +41,19 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- fastjson -->
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>2.0.19</version>
-            </dependency>
             <!-- spring-boot -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>3.0.0</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- springdoc -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi</artifactId>
+                <version>2.0.0</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -72,6 +73,12 @@
                 <artifactId>ognl</artifactId>
                 <version>3.3.2</version>
             </dependency>
+            <!-- fastjson -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>2.0.19</version>
+            </dependency>
             <!-- commons -->
             <dependency>
                 <groupId>commons-io</groupId>
@@ -88,17 +95,6 @@
                 <groupId>org.apache.groovy</groupId>
                 <artifactId>groovy</artifactId>
                 <version>4.0.6</version>
-            </dependency>
-            <!-- swagger -->
-            <dependency>
-                <groupId>io.swagger.core.v3</groupId>
-                <artifactId>swagger-annotations</artifactId>
-                <version>2.2.7</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-ui</artifactId>
-                <version>1.6.13</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
