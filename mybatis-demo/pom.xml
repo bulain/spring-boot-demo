@@ -17,10 +17,10 @@
         <maven.compiler.target>17</maven.compiler.target>
         <maven.compiler.source>17</maven.compiler.source>
 
-        <mybatis-plus-generator.version>3.5.2</mybatis-plus-generator.version>
+        <mybatis-plus-generator.version>3.5.3.1</mybatis-plus-generator.version>
         <flyway.version>7.15.0</flyway.version>
-        <clickhouse.version>0.3.2</clickhouse.version>
-        <dameng.version>8.1.2.79</dameng.version>
+        <clickhouse.version>0.4.2</clickhouse.version>
+        <dameng.version>8.1.2.192</dameng.version>
         <velocity.version>2.3</velocity.version>
 
     </properties>
@@ -47,11 +47,11 @@
             <artifactId>DmJdbcDriver18</artifactId>
         </dependency>
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
         </dependency>
         <dependency>
-            <groupId>ru.yandex.clickhouse</groupId>
+            <groupId>com.clickhouse</groupId>
             <artifactId>clickhouse-jdbc</artifactId>
         </dependency>
         <dependency>
@@ -103,7 +103,7 @@
             </dependency>
             <!-- clickhouse -->
             <dependency>
-                <groupId>ru.yandex.clickhouse</groupId>
+                <groupId>com.clickhouse</groupId>
                 <artifactId>clickhouse-jdbc</artifactId>
                 <version>${clickhouse.version}</version>
             </dependency>

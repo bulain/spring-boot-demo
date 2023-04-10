@@ -2,6 +2,7 @@
 .project
 .settings/
 target/
+logs/
 .idea/
 .run/
 *.iml

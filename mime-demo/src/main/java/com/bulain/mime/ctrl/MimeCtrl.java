@@ -1,24 +1,24 @@
 package com.bulain.mime.ctrl;
 
 import com.bulain.mime.pojo.DataResp;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
 
-@Controller
-@RequestMapping("/mime")
 @Slf4j
+@RestController
+@RequestMapping("/mime")
+@Tag(name = "REST - 附件管理")
 public class MimeCtrl {
 
     @PostMapping(value = "update")
-    @ResponseBody
+    @Operation(method = "POST", summary = "更新")
     public DataResp<String> update(HttpServletRequest httpServletRequest) {
 
         log.info("update()-start");
@@ -38,7 +38,7 @@ public class MimeCtrl {
     }
 
     @PostMapping(value = "upload")
-    @ResponseBody
+    @Operation(method = "POST", summary = "上传")
     public DataResp<String> upload(@RequestParam("file") MultipartFile file, HttpServletRequest httpServletRequest) {
 
         log.info("upload()-start");
