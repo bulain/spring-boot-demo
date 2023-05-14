@@ -90,6 +90,19 @@
                 <artifactId>fastjson2-extension</artifactId>
                 <version>2.0.31</version>
             </dependency>
+            <!-- guava -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>31.1-jre</version>
+            </dependency>
+            <!-- groovy -->
+            <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy</artifactId>
+                <classifier>indy</classifier>
+                <version>2.5.22</version>
+            </dependency>
             <!-- bouncycastle -->
             <dependency>
                 <groupId>org.bouncycastle</groupId>
@@ -150,7 +163,7 @@
                 <plugin>
                     <groupId>org.springframework.boot.experimental</groupId>
                     <artifactId>spring-boot-thin-maven-plugin</artifactId>
-                    <version>${spring-boot-thin.version}</version>
+                    <version>1.0.27.RELEASE</version>
                 </plugin>
             </plugins>
         </pluginManagement>
