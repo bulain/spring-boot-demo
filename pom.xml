@@ -135,6 +135,16 @@
                 <artifactId>commons-collections4</artifactId>
                 <version>4.4</version>
             </dependency>
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>1.9.4</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>1.2</version>
+            </dependency>
             <!-- groovy -->
             <dependency>
                 <groupId>org.apache.groovy</groupId>
@@ -146,6 +156,12 @@
                 <groupId>io.micrometer</groupId>
                 <artifactId>micrometer-registry-prometheus</artifactId>
                 <version>1.11.0</version>
+            </dependency>
+            <!-- joda -->
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>2.9.4</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
