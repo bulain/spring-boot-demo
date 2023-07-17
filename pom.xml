@@ -89,6 +89,7 @@
         <module>curator-demo</module>
         <module>cxf-demo</module>
         <module>dapr-demo</module>
+        <module>flowable-demo</module>
         <module>mime-demo</module>
         <module>mongo-demo</module>
         <module>mybatis-demo</module>
