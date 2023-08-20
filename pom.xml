@@ -27,6 +27,7 @@
         <module>curator-demo</module>
         <module>cxf-demo</module>
         <module>dapr-demo</module>
+        <module>flowable-demo</module>
         <module>mime-demo</module>
         <module>mongo-demo</module>
         <module>mybatis-demo</module>
@@ -94,7 +95,7 @@
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>32.0.0-jre</version>
+                <version>32.1.2-jre</version>
             </dependency>
             <!-- groovy -->
             <dependency>
