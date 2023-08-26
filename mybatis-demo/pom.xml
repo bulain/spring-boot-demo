@@ -17,12 +17,6 @@
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.source>11</maven.compiler.source>
 
-        <mybatis-plus-generator.version>3.5.2</mybatis-plus-generator.version>
-        <flyway.version>7.15.0</flyway.version>
-        <clickhouse.version>0.3.2</clickhouse.version>
-        <dameng.version>8.1.2.79</dameng.version>
-        <velocity.version>2.3</velocity.version>
-
     </properties>
 
     <dependencies>
@@ -101,35 +95,29 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- mybatis-plus-generator -->
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-generator</artifactId>
-                <version>${mybatis-plus-generator.version}</version>
-            </dependency>
             <!-- flyway -->
             <dependency>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-core</artifactId>
-                <version>${flyway.version}</version>
+                <version>7.15.0</version>
             </dependency>
             <!-- clickhouse -->
             <dependency>
                 <groupId>ru.yandex.clickhouse</groupId>
                 <artifactId>clickhouse-jdbc</artifactId>
-                <version>${clickhouse.version}</version>
+                <version>0.3.2</version>
             </dependency>
             <!-- dameng -->
             <dependency>
                 <groupId>com.dameng</groupId>
                 <artifactId>DmJdbcDriver18</artifactId>
-                <version>${dameng.version}</version>
+                <version>8.1.2.192</version>
             </dependency>
             <!-- velocity -->
             <dependency>
                 <groupId>org.apache.velocity</groupId>
                 <artifactId>velocity-engine-core</artifactId>
-                <version>${velocity.version}</version>
+                <version>2.3</version>
             </dependency>
             <!-- mybatis-plus-join -->
             <dependency>

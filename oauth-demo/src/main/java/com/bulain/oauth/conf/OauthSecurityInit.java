@@ -24,6 +24,7 @@ public class OauthSecurityInit extends WebSecurityConfigurerAdapter {
 	private DataSource dataSource;
 
 	@Bean
+	@Override
 	public UserDetailsService userDetailsService() {
 		JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager();
 		jdbcUserDetailsManager.setDataSource(dataSource);
@@ -31,6 +32,7 @@ public class OauthSecurityInit extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
+	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
 	}
