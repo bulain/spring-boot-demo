@@ -17,7 +17,6 @@
         <maven.compiler.target>17</maven.compiler.target>
         <maven.compiler.source>17</maven.compiler.source>
 
-        <mybatis-plus-generator.version>3.5.3.1</mybatis-plus-generator.version>
         <flyway.version>7.15.0</flyway.version>
         <clickhouse.version>0.4.6</clickhouse.version>
         <dameng.version>8.1.2.192</dameng.version>

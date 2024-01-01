@@ -25,9 +25,8 @@ public class MybatisPlusSqlInjector extends DefaultSqlInjector {
                 .add(new DirectUpdate())
                 .add(new DirectSelectCount())
                 .add(new DirectSelectMaps())
-                .add(new DirectSelectMapsPage())
                 .add(new DirectSelectList())
-                .add(new DirectSelectPage());
+                ;
         if (tableInfo.havePK()) {
             builder.add(new AlwaysUpdateSomeColumnById())
                     .add(new DirectDeleteById())
