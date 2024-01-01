@@ -2,9 +2,6 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rabbit="http://www.springframework.org/schema/rabbit" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
 
     <!-- 消息配置 -->
-    <rabbit:connection-factory id="connectionFactory" host="${rabbit.host}" port="${rabbit.port}" username="${rabbit.username}" password="${rabbit.password}" virtual-host="${rabbit.virtualHost}" requested-heartbeat="60" />
-    <!-- <rabbit:connection-factory id="connectionFactory" username="${rabbit.username}" password="${rabbit.password}" virtual-host="${rabbit.virtualHost}" addresses="${rabbit.addresses}" requested-heartbeat="60" /> -->
-    <rabbit:admin connection-factory="connectionFactory" />
     <rabbit:queue name="${rabbit.queue.1}" />
     <rabbit:queue name="${rabbit.queue.2}">
         <rabbit:queue-arguments>
@@ -14,14 +11,16 @@
     </rabbit:queue>
     <rabbit:queue name="${rabbit.queue.3}" />
     <rabbit:queue name="${rabbit.queue.4}" />
+    <rabbit:queue name="${rabbit.queue.5}" />
+
     <rabbit:topic-exchange name="${rabbit.exchange.1}">
         <rabbit:bindings>
             <rabbit:binding queue="${rabbit.queue.1}" pattern="${rabbit.routingKey.1}" />
             <rabbit:binding queue="${rabbit.queue.2}" pattern="${rabbit.routingKey.2}" />
             <rabbit:binding queue="${rabbit.queue.3}" pattern="${rabbit.routingKey.3}" />
             <rabbit:binding queue="${rabbit.queue.4}" pattern="${rabbit.routingKey.4}" />
+            <rabbit:binding queue="${rabbit.queue.5}" pattern="${rabbit.routingKey.5}" />
         </rabbit:bindings>
     </rabbit:topic-exchange>
-
 
 </beans>

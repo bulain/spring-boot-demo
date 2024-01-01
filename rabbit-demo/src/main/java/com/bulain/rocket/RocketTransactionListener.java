@@ -5,9 +5,8 @@ import org.apache.rocketmq.spring.core.RocketMQLocalTransactionListener;
 import org.apache.rocketmq.spring.core.RocketMQLocalTransactionState;
 import org.springframework.messaging.Message;
 
-@SuppressWarnings("rawtypes")
 @RocketMQTransactionListener
-class TransactionListenerImpl implements RocketMQLocalTransactionListener {
+class RocketTransactionListener implements RocketMQLocalTransactionListener {
     @Override
     public RocketMQLocalTransactionState executeLocalTransaction(Message msg, Object arg) {
         return RocketMQLocalTransactionState.UNKNOWN;
