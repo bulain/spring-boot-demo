@@ -16,8 +16,6 @@
         <maven.compiler.target>17</maven.compiler.target>
         <maven.compiler.source>17</maven.compiler.source>
 
-        <sitemesh.version>3.0.1</sitemesh.version>
-
     </properties>
 
     <dependencies>
