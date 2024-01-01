@@ -68,46 +68,47 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- dapr -->
             <dependency>
                 <groupId>io.dapr</groupId>
                 <artifactId>dapr-sdk</artifactId>
-                <version>1.8.0</version>
+                <version>1.10.0</version>
             </dependency>
             <dependency>
                 <groupId>io.dapr</groupId>
                 <artifactId>dapr-sdk-actors</artifactId>
-                <version>1.8.0</version>
+                <version>1.10.0</version>
             </dependency>
             <dependency>
                 <groupId>io.dapr</groupId>
                 <artifactId>dapr-sdk-springboot</artifactId>
-                <version>1.8.0</version>
+                <version>1.10.0</version>
             </dependency>
-
+            <!-- binarywang -->
             <dependency>
                 <groupId>com.github.binarywang</groupId>
                 <artifactId>weixin-java-miniapp</artifactId>
-                <version>4.4.9.B</version>
+                <version>4.6.0</version>
             </dependency>
             <dependency>
                 <groupId>com.github.binarywang</groupId>
                 <artifactId>weixin-java-pay</artifactId>
-                <version>4.4.9.B</version>
+                <version>4.6.0</version>
             </dependency>
             <dependency>
                 <groupId>com.github.binarywang</groupId>
                 <artifactId>weixin-java-open</artifactId>
-                <version>4.4.9.B</version>
+                <version>4.6.0</version>
             </dependency>
             <dependency>
                 <groupId>com.github.binarywang</groupId>
                 <artifactId>weixin-java-mp</artifactId>
-                <version>4.4.9.B</version>
+                <version>4.6.0</version>
             </dependency>
             <dependency>
                 <groupId>com.github.binarywang</groupId>
                 <artifactId>weixin-java-cp</artifactId>
-                <version>4.4.9.B</version>
+                <version>4.6.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

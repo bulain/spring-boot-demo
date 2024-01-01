@@ -61,7 +61,7 @@
             <dependency>
                 <groupId>com.influxdb</groupId>
                 <artifactId>influxdb-spring</artifactId>
-                <version>${influxdb.version}</version>
+                <version>6.12.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
