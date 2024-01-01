@@ -61,18 +61,34 @@ public interface DirectSelectMapper<T> {
     List<T> directSelectList(@Param(Constants.WRAPPER) Wrapper<T> queryWrapper);
 
     /**
+     * 根据 entity 条件 - 无视逻辑删除字段
+     */
+    List<T> directSelectList(IPage<T> page, @Param(Constants.WRAPPER) Wrapper<T> queryWrapper);
+
+    /**
      * 根据 Wrapper 条件，查询全部记录 - 无视逻辑删除字段
      */
     List<Map<String, Object>> directSelectMaps(@Param(Constants.WRAPPER) Wrapper<T> queryWrapper);
 
     /**
+     * 根据 Wrapper 条件，查询全部记录 - 无视逻辑删除字段
+     */
+    List<Map<String, Object>> directSelectMaps(IPage<? extends Map<String, Object>> page, @Param(Constants.WRAPPER) Wrapper<T> queryWrapper);
+
+    /**
      * 根据 entity 条件，查询全部记录（并翻页）无视逻辑删除字段分页查询 - 无视逻辑删除字段
      */
-    <P extends IPage<T>> P directSelectPage(P page, @Param(Constants.WRAPPER) Wrapper<T> queryWrapper);
+    default <P extends IPage<T>> P directSelectPage(P page, @Param(Constants.WRAPPER) Wrapper<T> queryWrapper) {
+        page.setRecords(directSelectList(page, queryWrapper));
+        return page;
+    }
 
     /**
      * 根据 Wrapper 条件，查询全部记录（并翻页） - 无视逻辑删除字段
      */
-    <P extends IPage<Map<String, Object>>> P directSelectMapsPage(P page, @Param(Constants.WRAPPER) Wrapper<T> queryWrapper);
+    default <P extends IPage<Map<String, Object>>> P directSelectMapsPage(P page, @Param(Constants.WRAPPER) Wrapper<T> queryWrapper) {
+        page.setRecords(directSelectMaps(page, queryWrapper));
+        return page;
+    }
 
 }

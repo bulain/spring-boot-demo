@@ -1,6 +1,7 @@
 package org.flywaydb.core.internal.database.dm;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.flywaydb.core.api.FlywayException;
 import org.flywaydb.core.api.ResourceProvider;
 import org.flywaydb.core.api.configuration.Configuration;
@@ -25,6 +26,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
+@Slf4j
 public class DmDatabaseType extends BaseDatabaseType {
     // DM usernames/passwords can be 1-30 chars, can only contain alphanumerics and # _ $
     // The first (and only) capture group represents the password
@@ -216,7 +218,7 @@ public class DmDatabaseType extends BaseDatabaseType {
                     dmConnection.openProxySession(DmConnection.PROXYTYPE_USER_NAME, props);
                 }*/
             } catch (FlywayException e) {
-                LOG.warn(e.getMessage());
+                log.warn(e.getMessage());
             /*} catch (SQLException e) {
                 throw new FlywayException("Unable to open proxy session: " + e.getMessage(), e);*/
             }

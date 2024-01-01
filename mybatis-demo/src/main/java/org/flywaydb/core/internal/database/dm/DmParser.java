@@ -302,7 +302,7 @@ public class DmParser extends Parser {
     }
 
     @Override
-    protected StatementType detectStatementType(String simplifiedStatement, ParserContext context) {
+    protected StatementType detectStatementType(String simplifiedStatement, ParserContext context, PeekingReader reader) {
         if (PLSQL_PACKAGE_BODY_WRAPPED_REGEX.matcher(simplifiedStatement).matches()
                 || PLSQL_PACKAGE_DEFINITION_WRAPPED_REGEX.matcher(simplifiedStatement).matches()
                 || PLSQL_WRAPPED_REGEX.matcher(simplifiedStatement).matches()) {
@@ -368,7 +368,7 @@ public class DmParser extends Parser {
 
 
 
-        return super.detectStatementType(simplifiedStatement, context);
+        return super.detectStatementType(simplifiedStatement, context, reader);
     }
 
     @Override

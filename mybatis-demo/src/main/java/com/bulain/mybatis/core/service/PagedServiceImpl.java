@@ -1,16 +1,13 @@
 package com.bulain.mybatis.core.service;
 
-import java.util.List;
-
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bulain.mybatis.core.dao.PagedMapper;
 import com.bulain.mybatis.core.pojo.Paged;
 import com.bulain.mybatis.core.pojo.Search;
-import com.bulain.mybatis.demo.dao.BlogMapper;
-import com.bulain.mybatis.demo.entity.Blog;
+
+import java.util.List;
 
 /**
  * 分页服务的实现类。
