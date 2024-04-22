@@ -17,3 +17,6 @@ create table demo_blog
 
     primary key (id)
 );
+
+create index idx_demo_blog_1 on demo_blog (title);
+create index idx_demo_blog_2 on demo_blog (descr);

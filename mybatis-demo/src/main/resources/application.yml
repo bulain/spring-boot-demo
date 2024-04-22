@@ -3,11 +3,14 @@ server:
 spring:
   profiles:
     active: mysql
+  main:
+    banner-mode: off
 
 mybatis-plus:
   mapper-locations: classpath:mybatis/xml/Common.xml,classpath:mybatis/custom/**/*.xml
   typeAliasesPackage: com.bulain.mybatis.*.model
   global-config:
+    banner: false
     db-config:
       id-type: assign_id
       capital-mode: false
@@ -22,7 +25,7 @@ logging:
   level:
     root: WARN
     org.springframework: INFO
-    com.bulain: DEBUG
+    com.bulain: INFO
 
 ---
 spring:
@@ -32,7 +35,7 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3307/mybatis_dev
+    url: jdbc:mysql://localhost:3307/mybatis_dev?useSSL=false&autoReconnect=true&serverTimezone=PRC&useUnicode=true&characterEncoding=utf-8&nullCatalogMeansCurrent=true&rewriteBatchedStatements=true
     username: mybatis
     password: mybatis
   redis:
