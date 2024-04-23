@@ -1,0 +1,10 @@
+server:
+  port: 8081
+
+logging:
+  level:
+    root: WARN
+    org.springframework: INFO
+    org.apache.axis: INFO
+    com.bulain: DEBUG
+
