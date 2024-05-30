@@ -1,0 +1,28 @@
+{
+  "dets": [
+    {
+      "fields": [
+        {
+          "fname": "字段A",
+          "value": ""
+        },
+        {
+          "fname": "字段B",
+          "value": ""
+        }
+      ]
+    },
+    {
+      "fields": [
+        {
+          "fname": "字段C",
+          "value": ""
+        },
+        {
+          "fname": "字段D",
+          "value": ""
+        }
+      ]
+    }
+  ]
+}
