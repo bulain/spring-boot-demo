@@ -16,7 +16,7 @@ public class UserServiceImpl implements UserService {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Override
-	@Cacheable(value = "service:user:loginName", key = "#loginName")
+	@Cacheable(value = "service:user:loginName", key = "#root.args[0]")
 	public User getUserByLoginName(String loginName) {
 
 		logger.info("getUserByLoginName({})", loginName);
@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@Cacheable(value = "service:roles:loginName", key = "#loginName")
+	@Cacheable(value = "service:roles:loginName", key = "#root.args[0]")
 	public List<String> findRoleByLoginName(String loginName) {
 
 		logger.info("findRoleByLoginName({})", loginName);
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@Cacheable(value = "service:permissions:loginName", key = "#loginName")
+	@Cacheable(value = "service:permissions:loginName", key = "#root.args[0]")
 	public List<String> findPermissionByLoginName(String loginName) {
 
 		logger.info("findPermissionByLoginName({})", loginName);

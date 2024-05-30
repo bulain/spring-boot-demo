@@ -14,19 +14,19 @@ import java.util.concurrent.ConcurrentHashMap;
 public class UserService {
     private Map<String, User> mapUser = new ConcurrentHashMap<>();
 
-    @Cacheable(value = "user", key = "#id")
+    @Cacheable(value = "user", key = "#root.args[0]")
     public User getUser(String id) {
         log.info("getUser({})", id);
         return mapUser.get(id);
     }
 
-    @CacheEvict(value = "user", key = "#user.id")
+    @CacheEvict(value = "user", key = "#root.args[0].id")
     public void saveUser(User user) {
         log.info("saveUser({})", user.getId());
         mapUser.put(user.getId(), user);
     }
 
-    @CacheEvict(value = "user", key = "#id")
+    @CacheEvict(value = "user", key = "#root.args[0]")
     public void deleteUser(String id) {
         log.info("deleteUser({})", id);
         mapUser.remove(id);
