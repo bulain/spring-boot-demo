@@ -2,12 +2,11 @@ package com.bulain.sharding;
 
 import com.google.common.collect.Range;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.shardingsphere.api.sharding.hint.HintShardingAlgorithm;
-import org.apache.shardingsphere.api.sharding.hint.HintShardingValue;
-import org.apache.shardingsphere.api.sharding.standard.PreciseShardingAlgorithm;
-import org.apache.shardingsphere.api.sharding.standard.PreciseShardingValue;
-import org.apache.shardingsphere.api.sharding.standard.RangeShardingAlgorithm;
-import org.apache.shardingsphere.api.sharding.standard.RangeShardingValue;
+import org.apache.shardingsphere.sharding.api.sharding.hint.HintShardingAlgorithm;
+import org.apache.shardingsphere.sharding.api.sharding.hint.HintShardingValue;
+import org.apache.shardingsphere.sharding.api.sharding.standard.PreciseShardingValue;
+import org.apache.shardingsphere.sharding.api.sharding.standard.RangeShardingValue;
+import org.apache.shardingsphere.sharding.api.sharding.standard.StandardShardingAlgorithm;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -16,7 +15,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-public class YearShardingTableAlgorithm implements PreciseShardingAlgorithm<Date>, RangeShardingAlgorithm<Date>, HintShardingAlgorithm<Date> {
+public class YearShardingTableAlgorithm implements StandardShardingAlgorithm<Date>, HintShardingAlgorithm<Date> {
 
     @Override
     public String doSharding(Collection<String> availableTargetNames, PreciseShardingValue<Date> shardingValue) {
@@ -47,16 +46,16 @@ public class YearShardingTableAlgorithm implements PreciseShardingAlgorithm<Date
 
         List<String> list = new ArrayList<>();
         while (lower < upper && lower < curr) {
-            list.add(new StringBuilder(logicTableName).append(lower).toString());
+            list.add(logicTableName + lower);
             lower++;
         }
         if (upper < curr) {
-            list.add(new StringBuilder(logicTableName).append(upper).toString());
+            list.add(logicTableName + upper);
         }
 
         Collection<String> ret = CollectionUtils.intersection(availableTargetNames, list);
         if (upper >= curr) {
-            ret.add(new StringBuilder(logicTableName).toString());
+            ret.add(logicTableName);
         }
 
         return ret;
@@ -74,14 +73,12 @@ public class YearShardingTableAlgorithm implements PreciseShardingAlgorithm<Date
         for (Date dt : values) {
             int year = LocalDateTime.ofInstant(dt.toInstant(), ZoneId.systemDefault()).getYear();
             if (year <= curr) {
-                list.add(new StringBuilder(logicTableName).append(year).toString());
+                list.add(logicTableName + year);
             } else {
-                list.add(new StringBuilder(logicTableName).toString());
+                list.add(logicTableName);
             }
         }
-        Collection<String> ret = CollectionUtils.intersection(availableTargetNames, list);
-
-        return ret;
+        return CollectionUtils.intersection(availableTargetNames, list);
     }
 
 }

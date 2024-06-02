@@ -41,31 +41,9 @@
 
         <!-- shardingsphere -->
        <dependency>
-            <groupId>org.apache.shardingsphere</groupId>
-            <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+           <groupId>org.apache.shardingsphere</groupId>
+           <artifactId>shardingsphere-jdbc</artifactId>
         </dependency>
-        <!-- <dependency>
-            <groupId>org.apache.shardingsphere</groupId>
-            <artifactId>sharding-jdbc-spring-namespace</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.shardingsphere</groupId>
-            <artifactId>sharding-jdbc-core</artifactId>
-        </dependency>
-        -->
-
-        <!-- orchestration -->
-        <!--
-        <dependency>
-            <groupId>org.apache.shardingsphere</groupId>
-            <artifactId>sharding-orchestration-center-nacos</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.shardingsphere</groupId>
-            <artifactId>sharding-orchestration-center-zookeeper-curator</artifactId>
-            <version>4.1.1</version>
-        </dependency>
-        -->
 
         <!-- groovy -->
         <dependency>
@@ -112,23 +90,14 @@
         <dependencies>
             <dependency>
                 <groupId>org.apache.shardingsphere</groupId>
-                <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
-                <version>4.1.1</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.shardingsphere</groupId>
-                <artifactId>sharding-jdbc-spring-namespace</artifactId>
-                <version>4.1.1</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.shardingsphere</groupId>
-                <artifactId>sharding-orchestration-center-nacos</artifactId>
-                <version>4.1.1</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.shardingsphere</groupId>
-                <artifactId>sharding-jdbc-core</artifactId>
-                <version>4.1.1</version>
+                <artifactId>shardingsphere-jdbc</artifactId>
+                <version>5.5.0</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.shardingsphere</groupId>
+                        <artifactId>shardingsphere-test-util</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
         </dependencies>
     </dependencyManagement>

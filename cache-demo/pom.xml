@@ -50,6 +50,10 @@
             <artifactId>caffeine</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-recipes</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.alibaba.boot</groupId>
             <artifactId>nacos-config-spring-boot-starter</artifactId>
         </dependency>
@@ -65,7 +69,7 @@
             <dependency>
                 <groupId>org.redisson</groupId>
                 <artifactId>redisson-spring-boot-starter</artifactId>
-                <version>3.25.2</version>
+                <version>3.31.0</version>
             </dependency>
             <dependency>
                 <groupId>com.github.ben-manes.caffeine</groupId>
@@ -81,6 +85,11 @@
                 <groupId>com.alibaba.nacos</groupId>
                 <artifactId>nacos-spring-context</artifactId>
                 <version>1.1.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-recipes</artifactId>
+                <version>5.6.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
