@@ -92,6 +92,12 @@
                 <groupId>io.dapr</groupId>
                 <artifactId>dapr-sdk</artifactId>
                 <version>1.11.0</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-resources-plugin</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>io.dapr</groupId>
