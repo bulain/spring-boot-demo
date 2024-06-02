@@ -1,0 +1,109 @@
+databaseName: ds_0, ds_1
+
+mode:
+  type: Standalone
+  repository:
+    type: JDBC
+
+dataSources:
+  ds_0:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    jdbcUrl: jdbc:mysql://localhost:3306/db1
+    username: sharding
+    password: dev
+  ds_1:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    jdbcUrl: jdbc:mysql://localhost:3306/db2
+    username: sharding
+    password: dev
+
+rules:
+  - !SHARDING
+    tables:
+      t_order:
+        actualDataNodes: ds_${0..1}.t_order_${0..1}
+        tableStrategy:
+          standard:
+            shardingColumn: order_id
+            shardingAlgorithmName: t_order_inline
+        keyGenerateStrategy:
+          column: order_id
+          keyGeneratorName: snowflake
+        auditStrategy:
+          auditorNames:
+            - sharding_key_required_auditor
+          allowHintDisable: true
+      t_order_item:
+        actualDataNodes: ds_${0..1}.t_order_item_${0..1}
+        tableStrategy:
+          standard:
+            shardingColumn: order_id
+            shardingAlgorithmName: t_order_item_inline
+        keyGenerateStrategy:
+          column: order_item_id
+          keyGeneratorName: snowflake
+      t_dn:
+        actualDataNodes: ds_0.t_dn
+      t_hu:
+        actualDataNodes: ds_0.t_hu,ds_0.t_hu_${2021..2024}
+        tableStrategy:
+          standard:
+            shardingColumn: pgi
+            shardingAlgorithmName: t_hu_sharding
+      t_hint:
+        actualDataNodes: ds_0.t_hint,ds_0.t_hint_${2021..2024}
+        tableStrategy:
+          standard:
+            shardingColumn: pgi
+            shardingAlgorithmName: t_hint_sharding
+
+    defaultShardingColumn: user_id
+    bindingTables:
+      - t_order,t_order_item
+    defaultDatabaseStrategy:
+      standard:
+        shardingColumn: user_id
+        shardingAlgorithmName: database_inline
+    defaultTableStrategy:
+      none:
+
+    shardingAlgorithms:
+      database_inline:
+        type: INLINE
+        props:
+          algorithm-expression: ds_${user_id % 2}
+      t_order_inline:
+        type: INLINE
+        props:
+          algorithm-expression: t_order_${order_id % 2}
+      t_order_item_inline:
+        type: INLINE
+        props:
+          strategy: STANDARD
+          algorithm-expression: t_order_item_${order_id % 2}
+      t_hu_sharding:
+        type: CLASS_BASED
+        props:
+          strategy: STANDARD
+          algorithmClassName: com.bulain.sharding.YearShardingTableAlgorithm
+      t_hint_sharding:
+        type: CLASS_BASED
+        props:
+          strategy: HINT
+          algorithmClassName: com.bulain.sharding.YearShardingTableAlgorithm
+
+    keyGenerators:
+      snowflake:
+        type: SNOWFLAKE
+    auditors:
+      sharding_key_required_auditor:
+        type: DML_SHARDING_CONDITIONS
+
+  - !BROADCAST
+    tables:
+      - t_config
+
+props:
+  sql-show: false

@@ -1,9 +1,7 @@
 package com.bulain.sharding;
 
 import com.zaxxer.hikari.HikariDataSource;
-import org.apache.shardingsphere.shardingjdbc.spring.boot.SpringBootConfiguration;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -21,14 +19,16 @@ import java.util.Map;
 public class DataSourceConfig {
 
     @Bean
-    @ConfigurationProperties(prefix = "spring.shardingsphere.datasource.ds0")
+    @ConfigurationProperties(prefix = "spring.datasource.master")
     public DataSource masterDataSource() {
         return new HikariDataSource();
     }
 
-    @Qualifier("shardingDataSource")
-    @Autowired
-    private DataSource shardingDataSource;
+    @Bean
+    @ConfigurationProperties(prefix = "spring.datasource.sharding")
+    public DataSource shardingDataSource() {
+        return new HikariDataSource();
+    }
 
     @Primary
     @Bean
@@ -36,6 +36,7 @@ public class DataSourceConfig {
 
         //主数据源
         DataSource masterDataSource = masterDataSource();
+        DataSource shardingDataSource = shardingDataSource();
 
         //动态数据源
         DynamicDataSource dynamicDataSource = new DynamicDataSource();
@@ -44,10 +45,11 @@ public class DataSourceConfig {
         dynamicDataSource.setDefaultTargetDataSource(masterDataSource);
 
         // 配置多数据源
-        Map<Object, Object> dsMap = new HashMap();
+        Map<Object, Object> dsMap = new HashMap<>();
         dsMap.put("master", masterDataSource);
         dsMap.put("sharding", shardingDataSource);
         dynamicDataSource.setTargetDataSources(dsMap);
+        dynamicDataSource.setDefaultTargetDataSource(masterDataSource);
 
         return dynamicDataSource;
 

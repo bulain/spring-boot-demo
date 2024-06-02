@@ -1,7 +1,9 @@
 package com.bulain.sharding;
 
+import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shardingsphere.api.hint.HintManager;
+import org.apache.shardingsphere.infra.hint.HintManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,13 +15,14 @@ import java.util.Date;
 
 @Slf4j
 @Service
+@AllArgsConstructor
 public class ShardingService {
 
-    @Autowired
     private DataSource dataSource;
 
+    @SneakyThrows
     @ShardingDs
-    public void sharding() throws SQLException {
+    public void sharding() {
         Connection conn = dataSource.getConnection();
         conn.setAutoCommit(false);
 
@@ -46,8 +49,9 @@ public class ShardingService {
 
     }
 
+    @SneakyThrows
     @ShardingDs
-    public void shardingYear() throws SQLException {
+    public void shardingYear() {
 
         try (Connection conn = dataSource.getConnection()) {
             conn.setAutoCommit(false);
@@ -82,8 +86,9 @@ public class ShardingService {
 
     }
 
+    @SneakyThrows
     @ShardingDs
-    public void shardingSearch() throws SQLException {
+    public void shardingSearch() {
 
         String sql = "SELECT t.hu, n.dn, n.pgi from t_hu t left join t_dn n on n.dn = t.dn WHERE t.dn = ?";
         try (Connection conn = dataSource.getConnection();
@@ -119,8 +124,9 @@ public class ShardingService {
 
     }
 
+    @SneakyThrows
     @ShardingDs
-    public void shardingHint() throws SQLException {
+    public void shardingHint() {
 
         String sql = "SELECT t.hu, n.dn, n.pgi from t_hint t left join t_dn n on n.dn = t.dn WHERE n.pgi > ? and n.pgi < ? ";
         long prev = LocalDateTime.now().minusYears(2).toInstant(ZoneOffset.ofHours(8)).toEpochMilli();
