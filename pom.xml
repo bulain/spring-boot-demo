@@ -217,6 +217,12 @@
                 <artifactId>httpclient</artifactId>
                 <version>4.5.14</version>
             </dependency>
+            <!-- hutool -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-captcha</artifactId>
+                <version>5.8.28</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
