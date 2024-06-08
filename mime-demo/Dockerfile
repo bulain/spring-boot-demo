@@ -1,4 +1,5 @@
-FROM eclipse-temurin:17-jdk-alpine
+FROM amazoncorretto:17-alpine-jdk
+#FROM eclipse-temurin:17-jdk-alpine
 EXPOSE 8109
 ENV PARAMS=""
 ENV JAVA_OPTS=""
