@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
 
@@ -23,13 +24,13 @@ import com.amazonaws.services.s3.model.S3Object;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class AwsS3Demo {
+@Disabled
+class AwsS3Test {
 
     @Test
-    public void testS3() throws Exception {
+    void testS3() throws Exception {
 
-        AWSCredentials credentials = new BasicAWSCredentials("2QXZRL605WFR1RTU9BNE",
-                "2vGGELyPnfyjV+4roYTMlvKMlK+KpaG7VGBku+GR");
+        AWSCredentials credentials = new BasicAWSCredentials("***", "***");
         ClientConfiguration clientConfiguration = new ClientConfiguration();
         clientConfiguration.setSignerOverride("AWSS3V4SignerType");
 
@@ -41,20 +42,20 @@ public class AwsS3Demo {
 
         List<Bucket> listBuckets = s3Client.listBuckets();
         log.debug("{}", listBuckets);
-        
+
         String bucketName = "mime";
         String key = Long.toString(new Date().getTime());
         InputStream input = new ClassPathResource("images/test.jpg").getInputStream();
         ObjectMetadata metadata = new ObjectMetadata();
         PutObjectResult putObject = s3Client.putObject(bucketName, key, input, metadata);
         log.debug("{}", putObject);
-        
+
         ObjectMetadata objectMetadata = s3Client.getObjectMetadata(bucketName, key);
         log.debug("{}", objectMetadata);
-        
+
         S3Object object = s3Client.getObject(bucketName, key);
         log.debug("{}", object);
-        
+
     }
 
 }

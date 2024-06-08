@@ -1,8 +1,8 @@
 package com.bulain.shiro.util;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.util.StringUtils;
 
-import javax.servlet.http.HttpServletRequest;
 
 public class ShiroUtil {
     private ShiroUtil() {
