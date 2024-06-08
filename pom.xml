@@ -112,16 +112,6 @@
                 <artifactId>guava</artifactId>
                 <version>33.2.0-jre</version>
             </dependency>
-            <dependency>
-                <groupId>com.google.protobuf</groupId>
-                <artifactId>protobuf-java</artifactId>
-                <version>3.25.3</version>
-            </dependency>
-            <dependency>
-                <groupId>com.google.protobuf</groupId>
-                <artifactId>protobuf-java-util</artifactId>
-                <version>3.25.3</version>
-            </dependency>
             <!-- groovy -->
             <dependency>
                 <groupId>org.codehaus.groovy</groupId>
@@ -204,6 +194,11 @@
             <dependency>
                 <groupId>com.google.protobuf</groupId>
                 <artifactId>protobuf-java</artifactId>
+                <version>3.25.3</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-java-util</artifactId>
                 <version>3.25.3</version>
             </dependency>
             <dependency>
