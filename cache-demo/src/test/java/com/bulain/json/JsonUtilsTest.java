@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 @Slf4j
 @Disabled
@@ -33,6 +35,14 @@ class JsonUtilsTest {
     @Test
     void toJSON() {
         String json = JsonUtils.toJSON(user);
+        System.out.println(json);
+        Assertions.assertTrue(true);
+    }
+
+    @Test
+    void toJSON4Array() {
+        List<DynUser> users = Arrays.asList(user, user);
+        String json = JsonUtils.toJSON(users);
         System.out.println(json);
         Assertions.assertTrue(true);
     }
@@ -66,8 +76,25 @@ class JsonUtilsTest {
     }
 
     @Test
+    void parseObject4Array() {
+        String texts = "[" + text + "," + text + "]";
+        DynUser[] obj = JsonUtils.parseObject(texts, DynUser[].class);
+        System.out.println(Arrays.asList(obj));
+        Assertions.assertTrue(true);
+    }
+
+    @Test
     void parseObject4Type() {
-        DynUser javaObject = JsonUtils.parseObject(text, new TypeReference<DynUser>() {
+        DynUser javaObject = JsonUtils.parseObject(text, new TypeReference<>() {
+        });
+        System.out.println(javaObject);
+        Assertions.assertTrue(true);
+    }
+
+    @Test
+    void parseObject4List() {
+        String texts = "[" + text + "," + text + "]";
+        List<DynUser> javaObject = JsonUtils.parseObject(texts, new TypeReference<>() {
         });
         System.out.println(javaObject);
         Assertions.assertTrue(true);
