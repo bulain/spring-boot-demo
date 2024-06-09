@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Disabled
@@ -64,6 +65,14 @@ class JsonUtilsTest {
     @Test
     void parseObject() {
         JsonNode obj = JsonUtils.parseObject(text);
+        System.out.println(obj);
+        Assertions.assertTrue(true);
+    }
+
+    @Test
+    void parseObject4Map() {
+        Map<String,?> obj = JsonUtils.parseObject(text, new TypeReference<>() {
+        });
         System.out.println(obj);
         Assertions.assertTrue(true);
     }
