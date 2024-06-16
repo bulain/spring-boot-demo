@@ -218,6 +218,12 @@
                 <artifactId>hutool-captcha</artifactId>
                 <version>5.8.28</version>
             </dependency>
+            <!-- okio -->
+            <dependency>
+                <groupId>com.squareup.okio</groupId>
+                <artifactId>okio-jvm</artifactId>
+                <version>3.6.0</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

@@ -110,6 +110,14 @@ class JsonUtilsTest {
     }
 
     @Test
+    void parseArray() {
+        String texts = "[" + text + "," + text + "]";
+        List<DynUser> javaObject = JsonUtils.parseArray(texts, DynUser.class);
+        System.out.println(javaObject);
+        Assertions.assertTrue(true);
+    }
+
+    @Test
     void toJsonObject() {
         JsonNode obj = JsonUtils.toJsonObject(user);
         System.out.println(obj);

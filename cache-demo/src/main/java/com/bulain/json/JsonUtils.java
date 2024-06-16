@@ -2,10 +2,7 @@ package com.bulain.json;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -20,6 +17,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -144,6 +142,19 @@ public final class JsonUtils {
     @SneakyThrows
     public static <T> T parseObject(String text, TypeReference<T> type) {
         return jsonMapper.readValue(text, type);
+    }
+
+    /**
+     * 将JSON字符串转换为对象
+     *
+     * @param text  JSON字符串
+     * @param clazz 类
+     * @return 对象列表
+     */
+    @SneakyThrows
+    public static <T> List<T> parseArray(String text, Class<T> clazz) {
+        JavaType javaType = jsonMapper.getTypeFactory().constructParametricType(List.class, clazz);
+        return jsonMapper.readValue(text, javaType);
     }
 
     /**
