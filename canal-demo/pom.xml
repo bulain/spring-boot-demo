@@ -55,10 +55,11 @@
             <groupId>io.debezium</groupId>
             <artifactId>debezium-storage-s3</artifactId>
         </dependency>
+        -->
         <dependency>
             <groupId>io.debezium</groupId>
             <artifactId>debezium-storage-jdbc</artifactId>
-        </dependency>-->
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>

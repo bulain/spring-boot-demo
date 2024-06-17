@@ -1,19 +1,26 @@
 package com.bulain.canal;
 
+import io.debezium.connector.mysql.MySqlConnector;
 import io.debezium.embedded.EmbeddedEngine;
 import io.debezium.engine.DebeziumEngine;
-import io.debezium.relational.history.MemorySchemaHistory;
+import io.debezium.storage.file.history.FileSchemaHistory;
+import io.debezium.storage.jdbc.history.JdbcSchemaHistory;
+import io.debezium.storage.jdbc.offset.JdbcOffsetBackingStore;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.connect.data.Schema;
 import org.apache.kafka.connect.data.SchemaBuilder;
 import org.apache.kafka.connect.data.Struct;
 import org.apache.kafka.connect.json.JsonConverter;
 import org.apache.kafka.connect.source.SourceRecord;
+import org.apache.kafka.connect.storage.FileOffsetBackingStore;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.time.Clock;
 import java.time.ZoneId;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
@@ -21,34 +28,54 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-public class ChangeDataSender implements Runnable {
+@Component
+public class ChangeDataSender implements InitializingBean {
     private final JsonConverter valueConverter;
     private final Properties properties;
     private DebeziumEngine<SourceRecord> engine;
 
     public ChangeDataSender() {
+
         properties = new Properties();
-        properties.put("connector.class", "io.debezium.connector.mysql.MySqlConnector");
+        properties.put("connector.class", MySqlConnector.class.getName());
         properties.put("name", "canal");
         properties.put("topic.prefix", "canal");
         properties.put("snapshot.mode", "initial");
+        properties.put("inconsistent.schema.handling.mode", "warn");
         properties.put("database.server.id", "3");
         properties.put("database.hostname", "127.0.0.1");
         properties.put("database.port", "3307");
         properties.put("database.user", "repl");
         properties.put("database.password", "repl");
-        properties.put("database.Database", "lip_dev");
-        properties.put("offset.storage", "org.apache.kafka.connect.storage.MemoryOffsetBackingStore");
-        properties.put("schema.history.internal", MemorySchemaHistory.class.getName());
-        properties.put("inconsistent.schema.handling.mode", "ignore");
-        properties.put("schemas.enable", false);
+        properties.put("database.database", "lip_dev");
+        properties.put("database.connectionTimeZone", "PRC");
+        properties.put("table.exclude.list", Arrays.asList("debezium_database_history,debezium_offset_storage"));
 
+        properties.put("offset.storage", JdbcOffsetBackingStore.class.getName());
+        properties.put("offset.storage.jdbc.url", "jdbc:mysql://127.0.0.1:3307/mybatis_dev?useSSL=false&autoReconnect=true&serverTimezone=PRC&useUnicode=true&characterEncoding=utf-8&nullCatalogMeansCurrent=true&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true");
+        properties.put("offset.storage.jdbc.user", "mybatis");
+        properties.put("offset.storage.jdbc.password", "mybatis");
+        properties.put("offset.storage.jdbc.waitRetryDelay", "60s");
+
+        properties.put("schema.history.internal", JdbcSchemaHistory.class.getName());
+        properties.put("schema.history.internal.jdbc.url", "jdbc:mysql://127.0.0.1:3307/mybatis_dev?useSSL=false&autoReconnect=true&serverTimezone=PRC&useUnicode=true&characterEncoding=utf-8&nullCatalogMeansCurrent=true&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true");
+        properties.put("schema.history.internal.jdbc.user", "mybatis");
+        properties.put("schema.history.internal.jdbc.password", "mybatis");
+        properties.put("schema.history.internal.jdbc.waitRetryDelay", "60s");
+        properties.put("schema.history.internal.jdbc.schema.history.table.ddl", "create table debezium_database_history (id varchar ( 36 ) not null,history_data longtext,history_data_seq integer,record_insert_ts datetime not null,record_insert_seq integer not null,primary key (id))");
+
+        HashMap<String, Object> configs = new HashMap<>();
+        configs.put("schemas.enable", false);
         valueConverter = new JsonConverter();
-        valueConverter.configure(new HashMap<>(), false);
+        valueConverter.configure(configs, false);
 
     }
 
     @Override
+    public void afterPropertiesSet() {
+        this.run();
+    }
+
     public void run() {
 
         DebeziumEngine.Builder<SourceRecord> builder = new EmbeddedEngine.EngineBuilder();
@@ -76,8 +103,6 @@ public class ChangeDataSender implements Runnable {
 
         awaitTermination(executor);
 
-        cleanUp();
-
         log.info("Engine terminated");
     }
 
@@ -91,18 +116,14 @@ public class ChangeDataSender implements Runnable {
         }
     }
 
-    private void cleanUp() {
-
-    }
-
     private void sendRecord(SourceRecord record) {
 
-        log.info("{}", record);
-
-        // We are interested only in data events not schema change events
-        if (record.topic().equals("canal")) {
+        if ("canal".equals(record.topic())) {
+            log.info("Engine initialized");
             return;
         }
+
+        log.info("{}", record);
 
         Schema schema = null;
         if (null == record.keySchema()) {
@@ -110,7 +131,6 @@ public class ChangeDataSender implements Runnable {
             return;
         }
 
-        // For deletes, the value node is null
         if (null != record.valueSchema()) {
             schema = SchemaBuilder.struct()
                     .field("key", record.keySchema())
@@ -127,17 +147,11 @@ public class ChangeDataSender implements Runnable {
         if (null != record.value()) {
             message.put("value", record.value());
         }
-        log.info("{}", message);
-
         String partitionKey = String.valueOf(record.key() != null ? record.key().hashCode() : -1);
         final byte[] payload = valueConverter.fromConnectData("canal", schema, message);
 
         log.info("{}/{}/{}", record.topic(), partitionKey, ByteBuffer.wrap(payload));
 
-    }
-
-    public static void main(String[] args) {
-        new ChangeDataSender().run();
     }
 
 }
