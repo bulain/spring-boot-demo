@@ -3,7 +3,6 @@ package com.bulain.canal;
 import io.debezium.connector.mysql.MySqlConnector;
 import io.debezium.embedded.EmbeddedEngine;
 import io.debezium.engine.DebeziumEngine;
-import io.debezium.storage.file.history.FileSchemaHistory;
 import io.debezium.storage.jdbc.history.JdbcSchemaHistory;
 import io.debezium.storage.jdbc.offset.JdbcOffsetBackingStore;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +11,6 @@ import org.apache.kafka.connect.data.SchemaBuilder;
 import org.apache.kafka.connect.data.Struct;
 import org.apache.kafka.connect.json.JsonConverter;
 import org.apache.kafka.connect.source.SourceRecord;
-import org.apache.kafka.connect.storage.FileOffsetBackingStore;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
@@ -49,7 +47,7 @@ public class ChangeDataSender implements InitializingBean {
         properties.put("database.password", "repl");
         properties.put("database.database", "lip_dev");
         properties.put("database.connectionTimeZone", "PRC");
-        properties.put("table.exclude.list", Arrays.asList("debezium_database_history,debezium_offset_storage"));
+        properties.put("table.exclude.list", "debezium_database_history,debezium_offset_storage");
 
         properties.put("offset.storage", JdbcOffsetBackingStore.class.getName());
         properties.put("offset.storage.jdbc.url", "jdbc:mysql://127.0.0.1:3307/mybatis_dev?useSSL=false&autoReconnect=true&serverTimezone=PRC&useUnicode=true&characterEncoding=utf-8&nullCatalogMeansCurrent=true&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true");
