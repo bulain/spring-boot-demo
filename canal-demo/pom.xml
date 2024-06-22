@@ -30,6 +30,12 @@
         <dependency>
             <groupId>io.debezium</groupId>
             <artifactId>debezium-connector-mysql</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.mariadb.jdbc</groupId>
+                    <artifactId>mariadb-java-client</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>io.debezium</groupId>
@@ -64,6 +70,34 @@
             <artifactId>debezium-storage-jdbc</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-mysql-cdc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-postgres-cdc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-sqlserver-cdc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-oracle-cdc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-streaming-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-clients</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
@@ -78,34 +112,10 @@
         <dependencies>
             <dependency>
                 <groupId>io.debezium</groupId>
-                <artifactId>debezium-connector-mysql</artifactId>
+                <artifactId>debezium-bom</artifactId>
                 <version>2.6.2.Final</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.mariadb.jdbc</groupId>
-                        <artifactId>mariadb-java-client</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>io.debezium</groupId>
-                <artifactId>debezium-connector-postgres</artifactId>
-                <version>2.6.2.Final</version>
-            </dependency>
-            <dependency>
-                <groupId>io.debezium</groupId>
-                <artifactId>debezium-connector-sqlserver</artifactId>
-                <version>2.6.2.Final</version>
-            </dependency>
-            <dependency>
-                <groupId>io.debezium</groupId>
-                <artifactId>debezium-connector-oracle</artifactId>
-                <version>2.6.2.Final</version>
-            </dependency>
-            <dependency>
-                <groupId>io.debezium</groupId>
-                <artifactId>debezium-connector-jdbc</artifactId>
-                <version>2.6.2.Final</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>io.debezium</groupId>
@@ -113,24 +123,39 @@
                 <version>2.6.2.Final</version>
             </dependency>
             <dependency>
-                <groupId>io.debezium</groupId>
-                <artifactId>debezium-storage-redis</artifactId>
-                <version>2.6.2.Final</version>
+                <groupId>org.apache.flink</groupId>
+                <artifactId>flink-connector-mysql-cdc</artifactId>
+                <version>3.1.1</version>
             </dependency>
             <dependency>
-                <groupId>io.debezium</groupId>
-                <artifactId>debezium-storage-s3</artifactId>
-                <version>2.6.2.Final</version>
+                <groupId>org.apache.flink</groupId>
+                <artifactId>flink-connector-postgres-cdc</artifactId>
+                <version>3.1.1</version>
             </dependency>
             <dependency>
-                <groupId>io.debezium</groupId>
-                <artifactId>debezium-storage-jdbc</artifactId>
-                <version>2.6.2.Final</version>
+                <groupId>org.apache.flink</groupId>
+                <artifactId>flink-connector-sqlserver-cdc</artifactId>
+                <version>3.1.1</version>
             </dependency>
             <dependency>
-                <groupId>io.debezium</groupId>
-                <artifactId>debezium-embedded</artifactId>
-                <version>2.6.2.Final</version>
+                <groupId>org.apache.flink</groupId>
+                <artifactId>flink-connector-oracle-cdc</artifactId>
+                <version>3.1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.flink</groupId>
+                <artifactId>flink-java</artifactId>
+                <version>1.19.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.flink</groupId>
+                <artifactId>flink-streaming-java</artifactId>
+                <version>1.19.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.flink</groupId>
+                <artifactId>flink-clients</artifactId>
+                <version>1.19.1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
