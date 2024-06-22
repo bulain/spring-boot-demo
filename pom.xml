@@ -26,6 +26,7 @@
         <module>canal-demo</module>
         <module>cxf-demo</module>
         <module>dapr-demo</module>
+        <module>flink-demo</module>
         <module>flowable-demo</module>
         <module>mime-demo</module>
         <module>mongo-demo</module>

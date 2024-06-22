@@ -45,7 +45,7 @@ public class ChangeDataSender implements InitializingBean {
         properties.put("database.port", "3307");
         properties.put("database.user", "repl");
         properties.put("database.password", "repl");
-        properties.put("database.database", "lip_dev");
+        properties.put("database.database", "dbzm_dev");
         properties.put("database.connectionTimeZone", "PRC");
         properties.put("table.exclude.list", "debezium_database_history,debezium_offset_storage");
 
