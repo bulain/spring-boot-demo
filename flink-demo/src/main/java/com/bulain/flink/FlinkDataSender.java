@@ -3,6 +3,7 @@ package com.bulain.flink;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.cdc.connectors.mysql.source.MySqlSource;
 import org.apache.flink.cdc.debezium.JsonDebeziumDeserializationSchema;
+import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
 public class FlinkDataSender {
@@ -22,8 +23,10 @@ public class FlinkDataSender {
                 .deserializer(new JsonDebeziumDeserializationSchema())
                 .build();
 
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-        env.enableCheckpointing(3000);
+        Configuration config = new Configuration();
+        config.setString("rest.port", "8081");
+        config.setString("execution.checkpointing.interval","3000");
+        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment(config);
         env.fromSource(mySqlSource, WatermarkStrategy.noWatermarks(), "MySQL Source")
                 .setParallelism(2)
                 .print()
