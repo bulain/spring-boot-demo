@@ -25,10 +25,6 @@
         </dependency>
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-connector-base</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.flink</groupId>
             <artifactId>flink-connector-mysql-cdc</artifactId>
         </dependency>
         <dependency>
@@ -45,7 +41,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-java</artifactId>
+            <artifactId>flink-connector-base</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.flink</groupId>
@@ -60,6 +56,10 @@
             <artifactId>flink-clients</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-runtime-web</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
@@ -72,11 +72,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.apache.flink</groupId>
-                <artifactId>flink-connector-base</artifactId>
-                <version>1.19.1</version>
-            </dependency>
             <dependency>
                 <groupId>org.apache.flink</groupId>
                 <artifactId>flink-connector-mysql-cdc</artifactId>
@@ -99,7 +94,7 @@
             </dependency>
             <dependency>
                 <groupId>org.apache.flink</groupId>
-                <artifactId>flink-java</artifactId>
+                <artifactId>flink-connector-base</artifactId>
                 <version>1.19.1</version>
             </dependency>
             <dependency>
@@ -115,6 +110,11 @@
             <dependency>
                 <groupId>org.apache.flink</groupId>
                 <artifactId>flink-clients</artifactId>
+                <version>1.19.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.flink</groupId>
+                <artifactId>flink-runtime-web</artifactId>
                 <version>1.19.1</version>
             </dependency>
         </dependencies>
