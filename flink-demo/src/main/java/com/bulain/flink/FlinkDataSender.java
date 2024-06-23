@@ -26,6 +26,9 @@ public class FlinkDataSender {
         Configuration config = new Configuration();
         config.setString("rest.port", "8081");
         config.setString("execution.checkpointing.interval","3000");
+        config.setString("state.checkpoints.dir","file:/tmp/checkpoints");
+        config.setString("state.backend.type","rocksdb");
+        config.setString("state.savepoints.dir","file:/tmp/savepoints");
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment(config);
         env.fromSource(mySqlSource, WatermarkStrategy.noWatermarks(), "MySQL Source")
                 .setParallelism(2)
