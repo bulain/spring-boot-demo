@@ -29,6 +29,9 @@ public class FlinkDataSender {
         config.setString("state.checkpoints.dir","file:/tmp/checkpoints");
         config.setString("state.backend.type","rocksdb");
         config.setString("state.savepoints.dir","file:/tmp/savepoints");
+        config.setString("restart-strategy.type","fixed-delay");
+        config.setString("restart-strategy.fixed-delay.attempts","10");
+        config.setString("restart-strategy.fixed-delay.delay","1s");
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment(config);
         env.fromSource(mySqlSource, WatermarkStrategy.noWatermarks(), "MySQL Source")
                 .setParallelism(2)
