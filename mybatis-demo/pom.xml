@@ -165,12 +165,16 @@
                         <artifactId>spring-boot-maven-plugin</artifactId>
                         <configuration>
                             <mainClass>com.bulain.mybatis.MybatisPlusApplication</mainClass>
+                            <layout>ZIP</layout>
                         </configuration>
                         <executions>
                             <execution>
                                 <goals>
                                     <goal>repackage</goal>
                                 </goals>
+                                <configuration>
+                                    <attach>false</attach>
+                                </configuration>
                             </execution>
                         </executions>
                         <dependencies>

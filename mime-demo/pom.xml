@@ -105,12 +105,16 @@
                         <artifactId>spring-boot-maven-plugin</artifactId>
                         <configuration>
                             <mainClass>com.bulain.mime.MimeServerApplication</mainClass>
+                            <layout>ZIP</layout>
                         </configuration>
                         <executions>
                             <execution>
                                 <goals>
                                     <goal>repackage</goal>
                                 </goals>
+                                <configuration>
+                                    <attach>false</attach>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
