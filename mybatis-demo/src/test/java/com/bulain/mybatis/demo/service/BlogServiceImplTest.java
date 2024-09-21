@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 @Slf4j
 @ExtendWith(SpringExtension.class)
@@ -84,27 +85,45 @@ class BlogServiceImplTest {
         //初始化环境
         testInsert();
 
-        //准备数据
-        Collection<Blog> list = new ArrayList<>();
-        for (int i = 0; i < 100000; i++) {
-            Blog data = new Blog();
-            data.setTitle("abd-" + i);
-            data.setDescr("descr-" + i);
-            data.setCreatedVia("Thread-" + i);
-            data.setActiveFlag("Y");
-            data.setCreatedAt(LocalDateTime.now());
-            data.setCreatedBy("PT");
-            list.add(data);
+        LocalDateTime now = LocalDateTime.now();
+
+        Random random = new Random();
+        int idx = 0;
+        int size = 100000;
+        for (int i = 0; i < 50; i++) {
+            //准备数据
+            Collection<Blog> list = new ArrayList<>();
+            for (int j = 0; j < size; j++) {
+                idx = i * size + j;
+
+                LocalDateTime createdAt = now.plusSeconds(idx);
+                LocalDateTime updatedAt = createdAt;
+                int rint = random.nextInt() % 1000;
+                boolean b = rint == 5;
+                if (b) {
+                    updatedAt = createdAt.plusMinutes(rint);
+                }
+
+                Blog data = new Blog();
+                data.setTitle("abd-" + idx);
+                data.setDescr("descr-" + idx);
+                data.setCreatedVia("Thread-" + idx);
+                data.setActiveFlag("Y");
+                data.setCreatedAt(createdAt);
+                data.setCreatedBy("PT");
+                data.setUpdatedAt(updatedAt);
+                data.setUpdatedBy("PT");
+                list.add(data);
+            }
+
+            StopWatch stopWatch = StopWatch.createStarted();
+
+            //执行保存
+            blogService.saveBatch(list);
+
+            stopWatch.stop();
+            log.info("execute time: {}ms @{}", stopWatch.getTime(), i);
         }
-
-        StopWatch stopWatch = StopWatch.createStarted();
-
-        //执行保存
-        blogService.saveBatch(list);
-
-        stopWatch.stop();
-        log.info("execute time: {}ms", stopWatch.getTime());
-
     }
 
 }

@@ -35,13 +35,14 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3307/mybatis_dev?useSSL=false&autoReconnect=true&serverTimezone=PRC&useUnicode=true&characterEncoding=utf-8&nullCatalogMeansCurrent=true&rewriteBatchedStatements=true
+    url: jdbc:mysql://localhost:3307/mybatis_dev?useSSL=false&autoReconnect=true&serverTimezone=PRC&useUnicode=true&characterEncoding=utf-8&nullCatalogMeansCurrent=true&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
     username: mybatis
     password: mybatis
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    password: dev
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password: dev
   flyway:
     locations: classpath:/migration/mysql/
     baseline-on-migrate: true
@@ -56,10 +57,11 @@ spring:
     url: jdbc:dm://localhost:5236?comOracle=true
     username: mybatis
     password: mybatis@123
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    password: dev
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password: dev
   flyway:
     locations: classpath:/migration/dm/
     baseline-on-migrate: true

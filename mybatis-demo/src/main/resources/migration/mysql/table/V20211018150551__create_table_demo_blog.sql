@@ -20,3 +20,4 @@ create table demo_blog
 
 create index idx_demo_blog_1 on demo_blog (title);
 create index idx_demo_blog_2 on demo_blog (descr);
+create index idx_demo_blog_3 on demo_blog (created_at);
