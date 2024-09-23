@@ -1,5 +1,6 @@
 package com.bulain.mybatis.demo.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.bulain.mybatis.MybatisPlusApplication;
 import com.bulain.mybatis.core.pojo.Paged;
 import com.bulain.mybatis.demo.entity.Blog;
@@ -62,6 +63,16 @@ class BlogServiceImplTest {
         data.setCreatedAt(LocalDateTime.now());
         data.setCreatedBy("PT");
         blogService.updateById(data);
+    }
+
+    @Test
+    void testQuery() {
+        List<Blog> list = blogService.list(new LambdaQueryWrapper<Blog>()
+                .eq(Blog::getActiveFlag, "1")
+                .apply("title is not null")
+                .apply("(descr != title or created_at < now())")
+        );
+        Assertions.assertNotNull(list);
     }
 
     @Test

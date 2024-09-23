@@ -25,7 +25,7 @@ logging:
   level:
     root: WARN
     org.springframework: INFO
-    com.bulain: INFO
+    com.bulain: DEBUG
 
 ---
 spring:
