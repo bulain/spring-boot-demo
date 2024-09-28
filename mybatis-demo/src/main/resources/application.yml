@@ -2,7 +2,7 @@ server:
   port: 8081
 spring:
   profiles:
-    active: mysql
+    active: oracle
   main:
     banner-mode: off
 
@@ -46,6 +46,30 @@ spring:
   flyway:
     locations: classpath:/migration/mysql/
     baseline-on-migrate: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: oracle
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@127.0.0.1:1521/xepdb1
+    username: mybatis_dev
+    password: mybatis
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password: dev
+  flyway:
+    locations: classpath:/migration/oracle/
+    baseline-on-migrate: true
+mybatis-plus:
+  configuration:
+    variables:
+      dbtype: oracle12c
 ---
 spring:
   config:

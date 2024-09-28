@@ -1,6 +1,7 @@
 package com.bulain.mybatis.demo.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.bulain.mybatis.MybatisPlusApplication;
 import com.bulain.mybatis.core.pojo.Paged;
 import com.bulain.mybatis.demo.entity.Blog;
@@ -67,11 +68,14 @@ class BlogServiceImplTest {
 
     @Test
     void testQuery() {
-        List<Blog> list = blogService.list(new LambdaQueryWrapper<Blog>()
-                .eq(Blog::getActiveFlag, "1")
-                .apply("title is not null")
-                .apply("(descr != title or created_at < now())")
-        );
+        LambdaQueryWrapper<Blog> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.and(qw -> qw.and(ew -> ew.eq(Blog::getActiveFlag, "Y").eq(Blog::getDescr, "descr"))
+                        .or(ew -> ew.eq(Blog::getTitle, "abd").eq(Blog::getDescr, "descr")))
+                .exists("select 1 from demo_order x where x.order_no={0}", new Object[]{"X00001"});
+
+        log.info("{}",queryWrapper.getParamAlias());
+
+        List<Blog> list = blogService.list(queryWrapper);
         Assertions.assertNotNull(list);
     }
 
@@ -84,7 +88,7 @@ class BlogServiceImplTest {
 
     @Test
     void testPage() {
-        search.setPage(3);
+        search.setPage(1);
         search.setPageSize(2);
         search.addOrderBy("id", "asc");
         Paged<Blog> paged = blogService.page(search);

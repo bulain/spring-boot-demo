@@ -1,13 +1,9 @@
 package com.bulain.mybatis.redis;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-
 import org.springframework.data.redis.core.RedisTemplate;
+
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * redis服务的实现类。

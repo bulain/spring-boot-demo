@@ -1,12 +1,11 @@
 package com.bulain.mybatis.core.dao;
 
-import java.util.List;
-
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bulain.mybatis.core.pojo.Search;
 import org.apache.ibatis.annotations.Param;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import java.util.List;
 
 /**
  * 分页DAO，对分页查询提供支持。
