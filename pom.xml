@@ -20,24 +20,24 @@
 
     <modules>
 
-        <module>admin-demo</module>
-        <module>apisix-demo</module>
-        <module>cache-demo</module>
-        <module>canal-demo</module>
-        <module>cxf-demo</module>
-        <module>dapr-demo</module>
-        <module>flink-demo</module>
-        <module>flowable-demo</module>
-        <module>mime-demo</module>
-        <module>mongo-demo</module>
+        <!--<module>admin-demo</module>-->
+        <!--<module>apisix-demo</module>-->
+        <!--<module>cache-demo</module>-->
+        <!--<module>canal-demo</module>-->
+        <!--<module>cxf-demo</module>-->
+        <!--<module>dapr-demo</module>-->
+        <!--<module>flink-demo</module>-->
+        <!--<module>flowable-demo</module>-->
+        <!--<module>mime-demo</module>-->
+        <!--<module>mongo-demo</module>-->
         <module>mybatis-demo</module>
-        <module>native-demo</module>
-        <module>oauth-demo</module>
-        <module>rabbit-demo</module>
-        <module>sharding-demo</module>
-        <module>shiro-demo</module>
-        <module>webflux-demo</module>
-        <module>xxljob-demo</module>
+        <!--<module>native-demo</module>-->
+        <!--<module>oauth-demo</module>-->
+        <!--<module>rabbit-demo</module>-->
+        <!--<module>sharding-demo</module>-->
+        <!--<module>shiro-demo</module>-->
+        <!--<module>webflux-demo</module>-->
+        <!--<module>xxljob-demo</module>-->
 
     </modules>
 
@@ -124,22 +124,22 @@
             <dependency>
                 <groupId>org.bouncycastle</groupId>
                 <artifactId>bcprov-jdk18on</artifactId>
-                <version>1.78</version>
+                <version>1.78.1</version>
             </dependency>
             <dependency>
                 <groupId>org.bouncycastle</groupId>
                 <artifactId>bcpkix-jdk18on</artifactId>
-                <version>1.78</version>
+                <version>1.78.1</version>
             </dependency>
             <dependency>
                 <groupId>org.bouncycastle</groupId>
                 <artifactId>bcmail-jdk18on</artifactId>
-                <version>1.78</version>
+                <version>1.78.1</version>
             </dependency>
             <dependency>
                 <groupId>org.bouncycastle</groupId>
                 <artifactId>bcutil-jdk18on</artifactId>
-                <version>1.78</version>
+                <version>1.78.1</version>
             </dependency>
             <!-- commons -->
             <dependency>
