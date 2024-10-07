@@ -89,6 +89,10 @@
             <artifactId>flyway-database-oracle</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.github.mengweijin</groupId>
+            <artifactId>db-migration-dm</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity-engine-core</artifactId>
         </dependency>
@@ -129,6 +133,11 @@
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-database-oracle</artifactId>
                 <version>9.22.3</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.mengweijin</groupId>
+                <artifactId>db-migration-dm</artifactId>
+                <version>1.1.9</version>
             </dependency>
             <!-- clickhouse -->
             <dependency>
