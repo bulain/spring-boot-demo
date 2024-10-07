@@ -11,9 +11,7 @@ public class DataAuditEvent extends ApplicationEvent {
     public void apply() {
         DataAudit source = (DataAudit) super.getSource();
         if (source != null) {
-            source.audit((obj1, obj2) -> {
-                return DataAuditor.compare(obj1, obj2);
-            });
+            source.audit(DataAuditor::compare);
         }
 
     }

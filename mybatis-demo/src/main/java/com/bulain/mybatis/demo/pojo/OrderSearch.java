@@ -2,7 +2,6 @@ package com.bulain.mybatis.demo.pojo;
 
 import com.bulain.mybatis.core.pojo.Search;
 import com.bulain.mybatis.demo.entity.Order;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

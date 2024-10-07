@@ -1,31 +1,21 @@
 package com.bulain.shiro.conf;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.apache.shiro.authc.AccountException;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.DisabledAccountException;
-import org.apache.shiro.authc.LockedAccountException;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
+import com.bulain.shiro.pojo.User;
+import com.bulain.shiro.service.UserService;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
-import org.apache.shiro.crypto.hash.Sha1Hash;
+import org.apache.shiro.lang.util.ByteSource;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-
-import com.bulain.shiro.pojo.User;
-import com.bulain.shiro.service.UserService;
 import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class ShiroRealm extends AuthorizingRealm {
 
@@ -65,10 +55,8 @@ public class ShiroRealm extends AuthorizingRealm {
 			throw new DisabledAccountException("用户[" + username + "]无密码，不允许登录");
 		}
 
-		AuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(username, passwordHash.toCharArray(),
-				Sha1Hash.Util.bytes(slat), getName());
-
-		return authenticationInfo;
+        return new SimpleAuthenticationInfo(username, passwordHash.toCharArray(),
+				ByteSource.Util.bytes(slat), getName());
 	}
 
 	@Override
