@@ -1,11 +1,9 @@
 package com.bulain.mybatis.mfa;
 
-import lombok.SneakyThrows;
 import org.apache.commons.codec.binary.Base32;
 import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.lang3.math.NumberUtils;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
 import java.security.SecureRandom;
 
 /**
@@ -71,46 +69,22 @@ public class MfaUtils {
     /**
      * 检验验证码是否正确
      */
-    public static boolean checkCode(String secret, long code) {
-        byte[] decodedKey = BASE32.decode(secret);
+    public static boolean checkCode(String secretKey, String code) {
+        long lcode = NumberUtils.toLong(code);
         long time = (System.currentTimeMillis() / 1000L) / 30L;
         long hash;
         for (int i = -WINDOW_SIZE; i <= WINDOW_SIZE; ++i) {
             try {
-                hash = verifyCode(decodedKey, time + i);
+                hash = MfaTotp.verifyTOTP(secretKey, time + i, CRYPTO);
             } catch (Exception e) {
                 return false;
             }
-            if (hash == code) {
+            if (hash == lcode) {
                 return true;
             }
         }
         return false;
     }
 
-    /**
-     * 根据时间偏移量计算
-     */
-    @SneakyThrows
-    private static long verifyCode(byte[] key, long t) {
-        byte[] data = new byte[8];
-        long value = t;
-        for (int i = 8; i-- > 0; value >>>= 8) {
-            data[i] = (byte) value;
-        }
-        SecretKeySpec signKey = new SecretKeySpec(key, CRYPTO);
-        Mac mac = Mac.getInstance(CRYPTO);
-        mac.init(signKey);
-        byte[] hash = mac.doFinal(data);
-        int offset = hash[20 - 1] & 0xF;
-        long truncatedHash = 0;
-        for (int i = 0; i < 4; ++i) {
-            truncatedHash <<= 8;
-            truncatedHash |= (hash[offset + i] & 0xFF);
-        }
-        truncatedHash &= 0x7FFFFFFF;
-        truncatedHash %= 1000000;
-        return truncatedHash;
-    }
 
 }

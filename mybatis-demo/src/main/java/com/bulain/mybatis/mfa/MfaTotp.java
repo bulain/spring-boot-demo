@@ -30,26 +30,16 @@ public class MfaTotp {
     }
 
     /**
-     * This method converts a HEX string to Byte[]
-     *
-     * @param hex : the HEX string
-     * @return a byte array
-     */
-    @SneakyThrows
-    private static byte[] hexStr2Bytes(String hex) {
-        return Hex.decodeHex(hex);
-    }
-
-    /**
      * This method generates a TOTP value for the given set of parameters.
      *
-     * @param key          : the shared secret, HEX encoded
+     * @param hexKey       : the shared secret, HEX encoded
      * @param time         : a value that reflects a time
      * @param returnDigits : number of digits to return
      * @param crypto       : the crypto function to use
      * @return a numeric String in base 10 that includes
      */
-    public static String generateTOTP(String key, String time, int returnDigits, String crypto) {
+    @SneakyThrows
+    public static String generateTOTP(String hexKey, String time, int returnDigits, String crypto) {
         String result = null;
         // Using the counter
         // First 8 bytes are for the movingFactor
@@ -58,8 +48,8 @@ public class MfaTotp {
             time = "0" + time;
         }
         // Get the HEX in a Byte[]
-        byte[] msg = hexStr2Bytes(time);
-        byte[] k = hexStr2Bytes(key);
+        byte[] msg = Hex.decodeHex(time);
+        byte[] k = Hex.decodeHex(hexKey);
         byte[] hash = hmacSha(crypto, k, msg);
         // put selected bytes into result int
         int offset = hash[hash.length - 1] & 0xf;
@@ -72,6 +62,33 @@ public class MfaTotp {
             result = "0" + result;
         }
         return result;
+    }
+
+
+    /**
+     * 根据时间偏移量计算
+     */
+    @SneakyThrows
+    public static long verifyTOTP(String secretKey, long time, String crypto) {
+        byte[] key = Hex.decodeHex(secretKey);
+        byte[] data = new byte[8];
+        long value = time;
+        for (int i = 8; i-- > 0; value >>>= 8) {
+            data[i] = (byte) value;
+        }
+        SecretKeySpec signKey = new SecretKeySpec(key, crypto);
+        Mac mac = Mac.getInstance(crypto);
+        mac.init(signKey);
+        byte[] hash = mac.doFinal(data);
+        int offset = hash[20 - 1] & 0xF;
+        long truncatedHash = 0;
+        for (int i = 0; i < 4; ++i) {
+            truncatedHash <<= 8;
+            truncatedHash |= (hash[offset + i] & 0xFF);
+        }
+        truncatedHash &= 0x7FFFFFFF;
+        truncatedHash %= 1000000;
+        return truncatedHash;
     }
 
 }

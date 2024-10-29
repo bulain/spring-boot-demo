@@ -18,7 +18,7 @@ class MfaUtilsTest {
             String code = MfaUtils.getCode(secretKey);
             log.info("code：{}", code);
 
-            boolean b = MfaUtils.checkCode(secretKey, Long.parseLong(code));
+            boolean b = MfaUtils.checkCode(secretKey, code);
             log.info("isSuccess：{}", b);
         }
     }
