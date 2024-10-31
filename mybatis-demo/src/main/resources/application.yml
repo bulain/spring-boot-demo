@@ -69,7 +69,7 @@ spring:
 mybatis-plus:
   configuration:
     variables:
-      dbtype: oracle12c
+      db-type: oracle12c
 ---
 spring:
   config:
