@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = MybatisPlusApplication.class)
-public class OrderServiceImplDemo {
+class OrderServiceImplTest {
 
 	@Autowired
 	private OrderService orderService;
@@ -28,7 +28,7 @@ public class OrderServiceImplDemo {
 	private String id;
 
 	@BeforeEach
-	public void setup() {
+	void setup() {
         orderService.directRemove(new QueryWrapper<>());
 
 		Order entity = new Order();
@@ -40,7 +40,7 @@ public class OrderServiceImplDemo {
 	}
 
 	@Test
-	public void testSave() {
+	void testSave() {
 		Order entity = new Order();
 		entity.setOrderNo("T00001");
 		entity.setExtnRefNo1("T00001");
@@ -50,7 +50,7 @@ public class OrderServiceImplDemo {
 	}
 
 	@Test
-	public void testSaveAllColumn() {
+	void testSaveAllColumn() {
 		Order entity = new Order();
 		entity.setOrderNo("T00001");
 		entity.setExtnRefNo1("T00001");
@@ -60,7 +60,7 @@ public class OrderServiceImplDemo {
 	}
 
 	@Test
-	public void testSaveBatchListOfT() {
+	void testSaveBatchListOfT() {
 		
 		Order entity1 = new Order();
 		entity1.setOrderNo("T00001");
@@ -77,7 +77,7 @@ public class OrderServiceImplDemo {
 	}
 
 	@Test
-	public void testSaveBatchListOfTInt() {
+	void testSaveBatchListOfTInt() {
 		Order entity1 = new Order();
 		entity1.setOrderNo("T00001");
 		entity1.setExtnRefNo1("T00001");
@@ -93,7 +93,7 @@ public class OrderServiceImplDemo {
 	}
 
 	@Test
-	public void testSaveOrUpdate() {
+	void testSaveOrUpdate() {
 	    orderService.getById(id);
 	    
 		Order entity = new Order();
@@ -107,7 +107,7 @@ public class OrderServiceImplDemo {
 	}
 
 	@Test
-	public void testSaveOrUpdateAllColumn() {
+	void testSaveOrUpdateAllColumn() {
 		Order entity = new Order();
 		entity.setOrderNo("T00001");
 		entity.setExtnRefNo1("T00001");
@@ -117,7 +117,7 @@ public class OrderServiceImplDemo {
 	}
 
 	@Test
-	public void testSaveOrUpdateBatchListOfT() {
+	void testSaveOrUpdateBatchListOfT() {
 	    
 	    orderService.getById(id);
 	    
@@ -139,7 +139,7 @@ public class OrderServiceImplDemo {
 	}
 
 	@Test
-	public void testSaveOrUpdateBatchListOfTInt() {
+	void testSaveOrUpdateBatchListOfTInt() {
 		
 		Order entity1 = new Order();
 		entity1.setOrderNo("T00001");
@@ -157,7 +157,7 @@ public class OrderServiceImplDemo {
 	}
 
 	@Test
-	public void testSaveOrUpdateAllColumnBatchListOfT() {
+	void testSaveOrUpdateAllColumnBatchListOfT() {
 		
 		Order entity1 = new Order();
 		entity1.setOrderNo("T00001");
@@ -175,7 +175,7 @@ public class OrderServiceImplDemo {
 	}
 
 	@Test
-	public void testSaveOrUpdateAllColumnBatchListOfTInt() {
+	void testSaveOrUpdateAllColumnBatchListOfTInt() {
 		
 		Order entity1 = new Order();
 		entity1.setOrderNo("T00001");
@@ -193,13 +193,13 @@ public class OrderServiceImplDemo {
 	}
 
 	@Test
-	public void testRemoveById() {
+	void testRemoveById() {
 		boolean bool = orderService.removeById(id);
 		assertTrue(bool);
 	}
 
 	@Test
-	public void testRemoveByMap() {
+	void testRemoveByMap() {
 		Map<String, Object> columnMap = new HashMap<>();
 		columnMap.put("ORDER_NO", "X00001");
 		boolean bool = orderService.removeByMap(columnMap);
@@ -207,7 +207,7 @@ public class OrderServiceImplDemo {
 	}
 
 	@Test
-	public void testRemove() {
+	void testRemove() {
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
 		boolean bool = orderService.remove(new QueryWrapper<>(wrapper));
@@ -215,14 +215,14 @@ public class OrderServiceImplDemo {
 	}
 
 	@Test
-	public void testRemoveBatchIds() {
+	void testRemoveBatchIds() {
 		Collection<? extends Serializable> idList = Arrays.asList(id, "2", "3");
 		boolean bool = orderService.removeByIds(idList);
 		assertTrue(bool);
 	}
 
 	@Test
-	public void testUpdateById() {
+	void testUpdateById() {
 		Order entity = new Order();
 		entity.setId(id);
 		entity.setOrderNo("X00001");
@@ -234,7 +234,7 @@ public class OrderServiceImplDemo {
 	}
 
 	@Test
-	public void testUpdateAllColumnById() {
+	void testUpdateAllColumnById() {
 		Order entity = new Order();
 		entity.setId(id);
 		entity.setOrderNo("X00001");
@@ -246,7 +246,7 @@ public class OrderServiceImplDemo {
 	}
 
 	@Test
-	public void testUpdate() {
+	void testUpdate() {
 		Order entity = new Order();
 		entity.setExtnRefNo1("E00002");
 
@@ -258,7 +258,7 @@ public class OrderServiceImplDemo {
 	}
 
 	@Test
-	public void testUpdateBatchByIdListOfT() {
+	void testUpdateBatchByIdListOfT() {
 		Order entity1 = new Order();
 		entity1.setOrderNo("T00001");
 		entity1.setExtnRefNo1("T00001");
@@ -275,7 +275,7 @@ public class OrderServiceImplDemo {
 	}
 
 	@Test
-	public void testUpdateBatchByIdListOfTInt() {
+	void testUpdateBatchByIdListOfTInt() {
 		Order entity1 = new Order();
 		entity1.setOrderNo("T00001");
 		entity1.setExtnRefNo1("T00001");
@@ -292,7 +292,7 @@ public class OrderServiceImplDemo {
 	}
 
 	@Test
-	public void testUpdateAllColumnBatchByIdListOfT() {
+	void testUpdateAllColumnBatchByIdListOfT() {
 		Order entity1 = new Order();
 		entity1.setOrderNo("T00001");
 		entity1.setExtnRefNo1("T00001");
@@ -309,7 +309,7 @@ public class OrderServiceImplDemo {
 	}
 
 	@Test
-	public void testUpdateAllColumnBatchByIdListOfTInt() {
+	void testUpdateAllColumnBatchByIdListOfTInt() {
 		Order entity1 = new Order();
 		entity1.setOrderNo("T00001");
 		entity1.setExtnRefNo1("T00001");
@@ -326,20 +326,20 @@ public class OrderServiceImplDemo {
 	}
 
 	@Test
-	public void testSelectById() {
+	void testSelectById() {
 		Order ret = orderService.getById(id);
 		assertNotNull(ret);
 	}
 
 	@Test
-	public void testSelectBatchIds() {
+	void testSelectBatchIds() {
 		Collection<? extends Serializable> idList = Arrays.asList(id, "2", "3");
 		Collection<Order> list = orderService.listByIds(idList);
 		assertEquals(1, list.size());
 	}
 
 	@Test
-	public void testSelectByMap() {
+	void testSelectByMap() {
 		Map<String, Object> columnMap = new HashMap<>();
 		columnMap.put("ORDER_NO", "X00001");
 		Collection<Order> list = orderService.listByMap(columnMap);
@@ -347,7 +347,7 @@ public class OrderServiceImplDemo {
 	}
 
 	@Test
-	public void testSelectOne() {
+	void testSelectOne() {
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
 		Order ret = orderService.getOne(new QueryWrapper<>(wrapper));
@@ -355,7 +355,7 @@ public class OrderServiceImplDemo {
 	}
 
 	@Test
-	public void testSelectMap() {
+	void testSelectMap() {
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
 		Map<String, Object> ret = orderService.getMap(new QueryWrapper<>(wrapper));
@@ -363,7 +363,7 @@ public class OrderServiceImplDemo {
 	}
 
 	@Test
-	public void testSelectCount() {
+	void testSelectCount() {
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
 		long cnt = orderService.count(new QueryWrapper<>(wrapper));
@@ -371,7 +371,7 @@ public class OrderServiceImplDemo {
 	}
 
 	@Test
-	public void testSelectList() {
+	void testSelectList() {
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
 		List<Order> list = orderService.list(new QueryWrapper<>(wrapper));
@@ -379,14 +379,14 @@ public class OrderServiceImplDemo {
 	}
 
 	@Test
-	public void testSelectPagePageOfT() {
+	void testSelectPagePageOfT() {
 		IPage<Order> page = new Page<>(0, 2);
 		IPage<Order> paged = orderService.page(page);
 		assertEquals(1L, paged.getTotal());
 	}
 
 	@Test
-	public void testSelectMaps() {
+	void testSelectMaps() {
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
 		List<Map<String, Object>> list = orderService.listMaps(new QueryWrapper<>(wrapper));
@@ -394,7 +394,7 @@ public class OrderServiceImplDemo {
 	}
 
 	@Test
-	public void testSelectObjs() {
+	void testSelectObjs() {
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
 		List<Object> list = orderService.listObjs(new QueryWrapper<>(wrapper));
@@ -402,7 +402,7 @@ public class OrderServiceImplDemo {
 	}
 
 	@Test
-	public void testSelectMapsPage() {
+	void testSelectMapsPage() {
 		IPage<Map<String, Object>> page = new Page<>(0, 2);
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");
@@ -411,7 +411,7 @@ public class OrderServiceImplDemo {
 	}
 
 	@Test
-	public void testSelectPagePageOfTWrapperOfT() {
+	void testSelectPagePageOfTWrapperOfT() {
 		IPage<Order> page = new Page<>(0, 2);
 		Order wrapper = new Order();
 		wrapper.setOrderNo("X00001");

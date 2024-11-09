@@ -47,10 +47,13 @@ public class MybatisPlusConfig {
         }
 
         // 查询方言
-        String dbType = properties.getConfiguration().getVariables().getProperty("db-type");
         DbType dbTypeDialect = null;
-        if (StringUtils.isNotBlank(dbType)) {
-            dbTypeDialect = DbType.getDbType(dbType);
+        MybatisPlusProperties.CoreConfiguration configuration = properties.getConfiguration();
+        if (configuration != null && configuration.getVariables() != null) {
+            String dbType = configuration.getVariables().getProperty("db-type");
+            if (StringUtils.isNotBlank(dbType)) {
+                dbTypeDialect = DbType.getDbType(dbType);
+            }
         }
 
         return dbTypeDialect;
