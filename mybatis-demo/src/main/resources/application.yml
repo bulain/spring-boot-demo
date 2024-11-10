@@ -23,7 +23,8 @@ mybatis-plus:
 
 seata:
   application-id: mybatis-demo
-  enabled: false
+  tx-service-group: default_tx_group
+  enabled: true
   config:
     type: nacos
     nacos:
@@ -33,6 +34,7 @@ seata:
       username: nacos
       password: nacos
       context-path:
+      data-id: client.properties
   registry:
     type: nacos
     nacos:
@@ -43,10 +45,6 @@ seata:
       username: nacos
       password: nacos
       context-path:
-  tx-service-group: default_tx_group
-  service:
-    vgroup-mapping:
-      default_tx_group: default
 
 logging:
   level:
