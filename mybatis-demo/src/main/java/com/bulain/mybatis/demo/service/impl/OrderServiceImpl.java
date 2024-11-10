@@ -3,8 +3,8 @@ package com.bulain.mybatis.demo.service.impl;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.toolkit.SystemClock;
 import com.baomidou.mybatisplus.extension.conditions.update.UpdateChainWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
+import com.bulain.mybatis.core.service.PagedServiceImpl;
 import com.bulain.mybatis.demo.dao.OrderMapper;
 import com.bulain.mybatis.demo.entity.Order;
 import com.bulain.mybatis.demo.service.OrderService;
@@ -15,7 +15,14 @@ import java.io.Serializable;
 import java.util.Collection;
 
 @Service
-public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements OrderService {
+public class OrderServiceImpl extends PagedServiceImpl<OrderMapper, Order> implements OrderService {
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean save(Order entity) {
+        //throw new RuntimeException("rollback");
+        return super.save(entity);
+    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)

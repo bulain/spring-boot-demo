@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bulain.mybatis.core.dao.PagedMapper;
 import com.bulain.mybatis.core.pojo.Paged;
 import com.bulain.mybatis.core.pojo.Search;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,6 +16,12 @@ import java.util.List;
  * @author Bulain
  */
 public abstract class PagedServiceImpl<M extends PagedMapper<T>, T> extends ServiceImpl<M, T> implements PagedService<T> {
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean save(T entity) {
+        return super.save(entity);
+    }
 
     @Override
     public List<T> find(Search search) {

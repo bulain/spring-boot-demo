@@ -9,11 +9,8 @@ import com.baomidou.mybatisplus.extension.toolkit.JdbcUtils;
 import com.bulain.mybatis.redis.RedisContextHolder;
 import com.bulain.mybatis.redis.RedisService;
 import com.bulain.mybatis.redis.RedisServiceImpl;
-import jakarta.annotation.Resource;
-import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -47,10 +44,13 @@ public class MybatisPlusConfig {
         }
 
         // 查询方言
-        String dbType = properties.getConfiguration().getVariables().getProperty("dbtype");
         DbType dbTypeDialect = null;
-        if (StringUtils.isNotBlank(dbType)) {
-            dbTypeDialect = DbType.getDbType(dbType);
+        MybatisPlusProperties.CoreConfiguration configuration = properties.getConfiguration();
+        if (configuration != null && configuration.getVariables() != null) {
+            String dbType = configuration.getVariables().getProperty("db-type");
+            if (StringUtils.isNotBlank(dbType)) {
+                dbTypeDialect = DbType.getDbType(dbType);
+            }
         }
 
         return dbTypeDialect;

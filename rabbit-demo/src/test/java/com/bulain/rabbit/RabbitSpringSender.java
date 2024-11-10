@@ -2,7 +2,7 @@ package com.bulain.rabbit;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -23,6 +23,12 @@ public class RabbitSpringSender {
 		for (int i = 0; i < 10; i++) {
 			amqpTemplate1.convertAndSend("this is a testing " + i);
 		}
+	}
+
+	@Test
+	public void testSendDelay() {
+		amqpTemplate1.convertAndSend("demo.2", (Object)"this a delay message",
+				message -> MessageBuilder.fromMessage(message).setExpiration(Long.toString(10000L)).build());
 	}
 
 }
