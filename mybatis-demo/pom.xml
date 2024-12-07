@@ -138,6 +138,10 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.microsoft.azure</groupId>
+            <artifactId>msal4j</artifactId>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -147,6 +151,16 @@
                 <groupId>org.apache.seata</groupId>
                 <artifactId>seata-spring-boot-starter</artifactId>
                 <version>2.2.0</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>4.1.115.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-common</artifactId>
+                <version>4.1.115.Final</version>
             </dependency>
             <dependency>
                 <groupId>io.protostuff</groupId>
@@ -224,6 +238,18 @@
                 <groupId>org.ahocorasick</groupId>
                 <artifactId>ahocorasick</artifactId>
                 <version>0.6.3</version>
+            </dependency>
+            <!-- lettuce -->
+            <dependency>
+                <groupId>io.lettuce</groupId>
+                <artifactId>lettuce-core</artifactId>
+                <version>6.5.1.RELEASE</version>
+            </dependency>
+            <!-- msal4j -->
+            <dependency>
+                <groupId>com.microsoft.azure</groupId>
+                <artifactId>msal4j</artifactId>
+                <version>1.17.2</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
