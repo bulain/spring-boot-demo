@@ -23,7 +23,7 @@
 
         <!--<module>admin-demo</module>-->
         <!--<module>apisix-demo</module>-->
-        <!--<module>cache-demo</module>-->
+        <module>cache-demo</module>
         <!--<module>canal-demo</module>-->
         <!--<module>cxf-demo</module>-->
         <!--<module>dapr-demo</module>-->
