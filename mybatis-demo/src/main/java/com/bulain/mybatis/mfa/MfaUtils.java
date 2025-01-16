@@ -70,12 +70,14 @@ public class MfaUtils {
      * 检验验证码是否正确
      */
     public static boolean checkCode(String secretKey, String code) {
+        byte[] bytes = BASE32.decode(secretKey);
+        String hexKey = Hex.encodeHexString(bytes);
         long lcode = NumberUtils.toLong(code);
         long time = (System.currentTimeMillis() / 1000L) / 30L;
         long hash;
         for (int i = -WINDOW_SIZE; i <= WINDOW_SIZE; ++i) {
             try {
-                hash = MfaTotp.verifyTOTP(secretKey, time + i, CRYPTO);
+                hash = MfaTotp.verifyTOTP(hexKey, time + i, CRYPTO);
             } catch (Exception e) {
                 return false;
             }

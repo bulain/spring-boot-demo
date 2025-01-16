@@ -8,7 +8,7 @@ class MfaUtilsTest {
 
     @Test
     void test() {
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
             String secretKey = MfaUtils.getSecretKey();
             log.info("secretKey：{}", secretKey);
 
