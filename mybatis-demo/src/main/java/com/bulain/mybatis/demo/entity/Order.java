@@ -43,19 +43,19 @@ public class Order implements Serializable {
     @TableField("remarks")
     private String remarks;
 
-    @TableField("created_at")
+    @TableField(value = "created_at", fill = FieldFill.INSERT)
     private LocalDateTime createdAt;
 
-    @TableField("created_by")
+    @TableField(value = "created_by", fill = FieldFill.INSERT)
     private String createdBy;
 
-    @TableField("updated_at")
+    @TableField(value = "updated_at")
     private LocalDateTime updatedAt;
 
-    @TableField("updated_by")
+    @TableField(value = "updated_by")
     private String updatedBy;
 
-    @TableField("version")
+    @TableField(value ="version", fill = FieldFill.INSERT_UPDATE)
     @Version
     private Long version;
 
