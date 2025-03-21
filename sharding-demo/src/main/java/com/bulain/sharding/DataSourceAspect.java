@@ -23,10 +23,12 @@ public class DataSourceAspect {
 
     @Around("dataSourceAspect()")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
+        Class<?> aClass = joinPoint.getTarget().getClass();
+        ShardingDs cds = aClass.getAnnotation(ShardingDs.class);
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
-        ShardingDs ds = method.getAnnotation(ShardingDs.class);
-        if (ds != null) {
+        ShardingDs mds = method.getAnnotation(ShardingDs.class);
+        if (mds != null || cds != null) {
             DynamicDataSource.setDataSourceName("sharding");
         }
         try {

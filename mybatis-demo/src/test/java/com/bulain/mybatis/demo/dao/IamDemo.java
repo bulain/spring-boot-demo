@@ -1,6 +1,5 @@
 package com.bulain.mybatis.demo.dao;
 
-import com.alibaba.fastjson.JSON;
 import com.microsoft.aad.msal4j.*;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +33,7 @@ public class IamDemo {
                 .build();
 
         IAuthenticationResult result = cca.acquireToken(acp).get();
-        log.info("{}", JSON.toJSONString(result));
+        log.info("{}", result);
 
         log.info("accessToken: {}", result.accessToken());
         log.info("username: {}", result.account().username());
