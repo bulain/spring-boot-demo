@@ -69,6 +69,11 @@
             <artifactId>clickhouse-jdbc</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.opengauss</groupId>
+            <artifactId>opengauss-jdbc</artifactId>
+            <version>6.0.0-og</version>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
@@ -214,6 +219,11 @@
                 <groupId>cn.com.kingbase</groupId>
                 <artifactId>kingbase8</artifactId>
                 <version>8.6.0</version>
+            </dependency>
+            <!-- opengauss -->
+            <dependency>
+                <groupId>org.opengauss</groupId>
+                <artifactId>opengauss-jdbc</artifactId>
             </dependency>
             <!-- velocity -->
             <dependency>
