@@ -1,24 +1,28 @@
 package com.bulain.sharding;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.infra.hint.HintManager;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.time.Year;
 import java.time.ZoneOffset;
 import java.util.Date;
 
 @Slf4j
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ShardingService {
 
-    private DataSource dataSource;
+    private final DataSource dataSource;
+
+    @Value("${spring.datasource.master.driver-class-name}")
+    private String driverClassName;
 
     @SneakyThrows
     @ShardingDs
@@ -56,31 +60,31 @@ public class ShardingService {
         try (Connection conn = dataSource.getConnection()) {
             conn.setAutoCommit(false);
 
-//            long dt = LocalDateTime.now().minusYears(1).toInstant(ZoneOffset.ofHours(8)).toEpochMilli();
-            long dt = LocalDateTime.now().toInstant(ZoneOffset.ofHours(8)).toEpochMilli();
-            long hu = new Date().getTime() % (365 * 24 * 3600);
-            for (int i = 0; i < 10; i++) {
-                long dn = new Date().getTime() % (365 * 24 * 3600);
-                String dnsql = "insert into t_dn (dn, pgi) values (?, ?)";
-                try (PreparedStatement ps = conn.prepareStatement(dnsql)) {
-                    ps.setString(1, Long.toString(dn));
-                    ps.setTimestamp(2, new Timestamp(dt));
-                    ps.executeUpdate();
-                }
-
-                for (int j = 0; j < 5; j++) {
-                    String husql = "insert into t_hu (hu, dn, pgi) values (?, ?, ?)";
-                    try (PreparedStatement ps = conn.prepareStatement(husql)) {
-                        ps.setString(1, Long.toString(hu));
-                        ps.setString(2, Long.toString(dn));
-                        ps.setTimestamp(3, new Timestamp(dt));
+            for (int year = 2021; year < 2026; year++) {
+                long dt = LocalDateTime.now().with(Year.of(year)).toInstant(ZoneOffset.ofHours(8)).toEpochMilli();
+                long hu = dt / (1000);
+                long dn = dt / (60 * 1000);
+                for (int i = 0; i < 10; i++) {
+                    String dnsql = "insert into t_dn (dn, pgi) values (?, ?)";
+                    try (PreparedStatement ps = conn.prepareStatement(dnsql)) {
+                        ps.setString(1, Long.toString(dn));
+                        ps.setTimestamp(2, new Timestamp(dt));
                         ps.executeUpdate();
                     }
-                    hu++;
+                    for (int j = 0; j < 5; j++) {
+                        String husql = "insert into t_hu (hu, dn, pgi) values (?, ?, ?)";
+                        try (PreparedStatement ps = conn.prepareStatement(husql)) {
+                            ps.setString(1, Long.toString(hu));
+                            ps.setString(2, Long.toString(dn));
+                            ps.setTimestamp(3, new Timestamp(dt));
+                            ps.executeUpdate();
+                        }
+                        hu++;
+                    }
+                    conn.commit();
+                    dn++;
+                    dt = dt + 60 * 1000;
                 }
-                conn.commit();
-                dn++;
-                dt = dt + 60 * 1000;
             }
         }
 
@@ -90,10 +94,10 @@ public class ShardingService {
     @ShardingDs
     public void shardingSearch() {
 
-        String sql = "SELECT t.hu, n.dn, n.pgi from t_hu t left join t_dn n on n.dn = t.dn WHERE t.dn = ?";
+        String sql = "SELECT t.hu, n.dn, n.pgi from t_hu t left join t_dn n on n.dn = t.dn WHERE t.dn = ? order by t.hu";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, "26716058");
+            pstmt.setString(1, "26981776");
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 int count = 0;
@@ -104,9 +108,8 @@ public class ShardingService {
             }
         }
 
-        sql = "SELECT t.hu, n.dn, n.pgi from t_hu t left join t_dn n on n.dn = t.dn WHERE t.pgi > ? and t.pgi < ? ";
-        //sql = "SELECT t.hu, n.dn, n.pgi from t_hu t left join t_dn n on n.dn = t.dn WHERE t.pgi between ? and ?";
-        long prev = LocalDateTime.now().minusMonths(2).toInstant(ZoneOffset.ofHours(8)).toEpochMilli();
+        sql = "SELECT t.hu, n.dn, n.pgi from t_hu t left join t_dn n on n.dn = t.dn WHERE t.pgi > ? and t.pgi < ? order by t.hu";
+        long prev = LocalDateTime.now().minusYears(2).toInstant(ZoneOffset.ofHours(8)).toEpochMilli();
         long curr = LocalDateTime.now().toInstant(ZoneOffset.ofHours(8)).toEpochMilli();
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -124,11 +127,53 @@ public class ShardingService {
 
     }
 
+
+    @SneakyThrows
+    @ShardingDs
+    public void shardingPage() {
+
+        String sql = "SELECT t.hu, n.dn, n.pgi from t_hu t left join t_dn n on n.dn = t.dn WHERE t.pgi between ? and ? order by t.hu ";
+        sql = rowLimit(sql);
+        long prev = LocalDateTime.now().minusYears(2).toInstant(ZoneOffset.ofHours(8)).toEpochMilli();
+        long curr = LocalDateTime.now().toInstant(ZoneOffset.ofHours(8)).toEpochMilli();
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setTimestamp(1, new Timestamp(prev));
+            ps.setTimestamp(2, new Timestamp(curr));
+
+            try (ResultSet rs = ps.executeQuery()) {
+                int count = 0;
+                while (rs.next()) {
+                    count++;
+                }
+                log.info("count: {}", count);
+            }
+        }
+
+    }
+
+    private String rowLimit(String originalSql) {
+        String limitSql;
+        if ("org.postgresql.Driver".equals(driverClassName)
+                || "com.kingbase8.Driver".equals(driverClassName)
+                || "org.opengauss.Driver".equals(driverClassName)) {
+            limitSql = originalSql + " LIMIT 10 OFFSET 10";
+        } else if ("oracle.jdbc.OracleDriver".equals(driverClassName)
+                || "dm.jdbc.driver.DmDriver".equals(driverClassName)) {
+            limitSql = "SELECT * FROM ( SELECT TMP.*, ROWNUM ROW_ID FROM ( " + originalSql + " ) TMP WHERE ROWNUM <= 20) WHERE ROW_ID > 10";
+        } else if ("com.microsoft.sqlserver.jdbc.SQLServerDriver".equals(driverClassName)) {
+            limitSql = originalSql + " OFFSET 10 ROWS FETCH NEXT 10 ROWS ONLY";
+        } else {
+            limitSql = originalSql + " LIMIT 10, 10";
+        }
+        return limitSql;
+    }
+
     @SneakyThrows
     @ShardingDs
     public void shardingHint() {
 
-        String sql = "SELECT t.hu, n.dn, n.pgi from t_hint t left join t_dn n on n.dn = t.dn WHERE n.pgi > ? and n.pgi < ? ";
+        String sql = "SELECT t.hu, n.dn, n.pgi from t_hint t left join t_dn n on n.dn = t.dn WHERE n.pgi > ? and n.pgi < ?  order by t.hu";
         long prev = LocalDateTime.now().minusYears(2).toInstant(ZoneOffset.ofHours(8)).toEpochMilli();
         long curr = LocalDateTime.now().minusYears(1).toInstant(ZoneOffset.ofHours(8)).toEpochMilli();
 
