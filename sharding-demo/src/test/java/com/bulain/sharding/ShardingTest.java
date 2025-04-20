@@ -37,6 +37,12 @@ class ShardingTest {
     }
 
     @Test
+    void testShardingPage() {
+        shardingService.shardingPage();
+        Assertions.assertTrue(true);
+    }
+
+    @Test
     void testShardingHint() {
         shardingService.shardingHint();
         Assertions.assertTrue(true);

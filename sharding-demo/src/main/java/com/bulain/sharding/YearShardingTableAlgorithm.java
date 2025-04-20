@@ -26,7 +26,7 @@ public class YearShardingTableAlgorithm implements StandardShardingAlgorithm<Dat
         if (year >= curr) {
             return sb.toString();
         }
-        return sb.append(year).toString();
+        return sb.append("_").append(year).toString();
     }
 
     @Override
@@ -35,7 +35,7 @@ public class YearShardingTableAlgorithm implements StandardShardingAlgorithm<Dat
         String logicTableName = shardingValue.getLogicTableName();
         Range<Date> valueRange = shardingValue.getValueRange();
         int curr = LocalDateTime.now().getYear();
-        int lower = 2020;
+        int lower = 2021;
         int upper = curr;
         if (valueRange.hasLowerBound()) {
             lower = LocalDateTime.ofInstant(valueRange.lowerEndpoint().toInstant(), ZoneId.systemDefault()).getYear();
@@ -46,11 +46,11 @@ public class YearShardingTableAlgorithm implements StandardShardingAlgorithm<Dat
 
         List<String> list = new ArrayList<>();
         while (lower < upper && lower < curr) {
-            list.add(logicTableName + lower);
+            list.add(logicTableName + "_" + lower);
             lower++;
         }
         if (upper < curr) {
-            list.add(logicTableName + upper);
+            list.add(logicTableName + "_" + upper);
         }
 
         Collection<String> ret = CollectionUtils.intersection(availableTargetNames, list);
@@ -59,7 +59,6 @@ public class YearShardingTableAlgorithm implements StandardShardingAlgorithm<Dat
         }
 
         return ret;
-
     }
 
     @Override
@@ -73,7 +72,7 @@ public class YearShardingTableAlgorithm implements StandardShardingAlgorithm<Dat
         for (Date dt : values) {
             int year = LocalDateTime.ofInstant(dt.toInstant(), ZoneId.systemDefault()).getYear();
             if (year <= curr) {
-                list.add(logicTableName + year);
+                list.add(logicTableName + "_" + year);
             } else {
                 list.add(logicTableName);
             }
