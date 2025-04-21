@@ -9,6 +9,7 @@
     <logger name="org.springframework" level="INFO" />
     <logger name="ShardingSphere-SQL" level="INFO" />
     <logger name="com.bulain" level="DEBUG" />
+    <logger name="com.zaxxer.hikari" level="INFO" />
 
     <root level="WARN">
         <appender-ref ref="console" />

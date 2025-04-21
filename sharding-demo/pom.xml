@@ -89,6 +89,11 @@
         </dependency>
         <!-- dameng -->
         <dependency>
+            <groupId>com.bulain.boot</groupId>
+            <artifactId>sharding-jdbc-ext</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.dameng</groupId>
             <artifactId>DmJdbcDriver8</artifactId>
         </dependency>

@@ -6,18 +6,18 @@ mode:
     type: JDBC
 
 dataSources:
-#  ds_0:
-#    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
-#    driverClassName: com.mysql.cj.jdbc.Driver
-#    jdbcUrl: jdbc:mysql://localhost:3307/db1?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-#    username: db1
-#    password: dev
-#  ds_1:
-#    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
-#    driverClassName: com.mysql.cj.jdbc.Driver
-#    jdbcUrl: jdbc:mysql://localhost:3307/db2?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-#    username: db2
-#    password: dev
+  ds_0:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://localhost:3307/db1?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: db1
+    password: dev
+  ds_1:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://localhost:3307/db2?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: db2
+    password: dev
 #  ds_0:
 #    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
 #    driverClassName: org.postgresql.Driver
@@ -30,18 +30,18 @@ dataSources:
 #    jdbcUrl: jdbc:postgresql://127.0.0.1:5432/db2?tcpKeepAlive=true&reWriteBatchedInserts=true
 #    username: db2
 #    password: dev
-  ds_0:
-    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
-    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    jdbcUrl: jdbc:sqlserver://127.0.0.1:1433;databaseName=db1;selectMethod=cursor;integratedSecurity=false;encrypt=false;trustServerCertificate=true
-    username: db1
-    password: dev
-  ds_1:
-    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
-    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    jdbcUrl: jdbc:sqlserver://127.0.0.1:1433;databaseName=db2;selectMethod=cursor;integratedSecurity=false;encrypt=false;trustServerCertificate=true
-    username: db2
-    password: dev
+#  ds_0:
+#    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+#    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#    jdbcUrl: jdbc:sqlserver://127.0.0.1:1433;databaseName=db1;selectMethod=cursor;integratedSecurity=false;encrypt=false;trustServerCertificate=true
+#    username: db1
+#    password: dev
+#  ds_1:
+#    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+#    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#    jdbcUrl: jdbc:sqlserver://127.0.0.1:1433;databaseName=db2;selectMethod=cursor;integratedSecurity=false;encrypt=false;trustServerCertificate=true
+#    username: db2
+#    password: dev
 #  ds_0:
 #    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
 #    driverClassName: oracle.jdbc.OracleDriver
@@ -57,13 +57,13 @@ dataSources:
 #  ds_0:
 #    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
 #    driverClassName: dm.jdbc.driver.DmDriver
-#    jdbcUrl: jdbc:dm://127.0.0.1:5236/db1
+#    jdbcUrl: jdbc:dm://127.0.0.1:5236?compatibleMode=oracle&characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
 #    username: db1
 #    password: dev
 #  ds_1:
 #    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
 #    driverClassName: dm.jdbc.driver.DmDriver
-#    jdbcUrl: jdbc:dm://127.0.0.1:5236/db2
+#    jdbcUrl: jdbc:dm://127.0.0.1:5236?compatibleMode=oracle&characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
 #    username: db2
 #    password: dev
 #  ds_0:

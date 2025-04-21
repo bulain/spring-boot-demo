@@ -36,6 +36,7 @@
         <!--<module>oauth-demo</module>-->
         <!--<module>rabbit-demo</module>-->
         <module>sharding-demo</module>
+        <module>sharding-jdbc-ext</module>
         <!--<module>shiro-demo</module>-->
         <!--<module>webflux-demo</module>-->
         <module>xxljob-demo</module>
