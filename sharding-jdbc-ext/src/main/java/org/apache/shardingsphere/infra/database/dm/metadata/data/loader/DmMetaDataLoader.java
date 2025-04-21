@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.infra.database.oracle.metadata.data.loader;
+package org.apache.shardingsphere.infra.database.dm.metadata.data.loader;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
@@ -50,7 +50,7 @@ import java.util.stream.Collectors;
 /**
  * Meta data loader for Oracle.
  */
-public final class OracleMetaDataLoader implements DialectMetaDataLoader {
+public final class DmMetaDataLoader implements DialectMetaDataLoader {
 
     private static final String TABLE_META_DATA_SQL_NO_ORDER =
             "SELECT OWNER AS TABLE_SCHEMA, TABLE_NAME, COLUMN_NAME, NULLABLE, DATA_TYPE, COLUMN_ID, HIDDEN_COLUMN %s FROM ALL_TAB_COLS WHERE OWNER = ?";
@@ -247,6 +247,6 @@ public final class OracleMetaDataLoader implements DialectMetaDataLoader {
 
     @Override
     public String getDatabaseType() {
-        return "Oracle";
+        return "DM";
     }
 }
