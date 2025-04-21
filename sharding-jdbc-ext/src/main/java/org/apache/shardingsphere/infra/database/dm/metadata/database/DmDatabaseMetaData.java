@@ -32,7 +32,7 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * Database meta data of Oracle.
+ * Database meta data of Dameng.
  */
 public final class DmDatabaseMetaData implements DialectDatabaseMetaData {
 

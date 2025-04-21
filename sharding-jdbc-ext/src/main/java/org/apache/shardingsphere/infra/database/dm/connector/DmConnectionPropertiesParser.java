@@ -26,7 +26,7 @@ import org.apache.shardingsphere.infra.database.core.connector.url.StandardJdbcU
 import java.util.Properties;
 
 /**
- * Connection properties parser of Oracle.
+ * Connection properties parser of Dameng.
  */
 public final class DmConnectionPropertiesParser implements ConnectionPropertiesParser {
 

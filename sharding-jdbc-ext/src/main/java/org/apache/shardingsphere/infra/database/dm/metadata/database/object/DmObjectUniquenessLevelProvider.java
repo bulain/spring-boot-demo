@@ -20,7 +20,7 @@ package org.apache.shardingsphere.infra.database.dm.metadata.database.object;
 import org.apache.shardingsphere.infra.database.core.metadata.database.object.DialectObjectUniquenessLevelProvider;
 
 /**
- * Oracle object uniqueness level provider.
+ * Dameng object uniqueness level provider.
  */
 public class DmObjectUniquenessLevelProvider implements DialectObjectUniquenessLevelProvider {
 

@@ -26,7 +26,7 @@ import org.apache.shardingsphere.sharding.merge.dql.pagination.builder.Paginatio
 import java.sql.SQLException;
 
 /**
- * Pagination decorator merged result builder for SQLServer.
+ * Pagination decorator merged result builder for Dameng.
  */
 public final class DmPaginationDecoratorMergedResultBuilder implements PaginationDecoratorMergedResultBuilder {
 

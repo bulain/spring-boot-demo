@@ -23,7 +23,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 /**
- * Database type of Oracle.
+ * Database type of Dameng.
  */
 public final class DmDatabaseType implements DatabaseType {
 

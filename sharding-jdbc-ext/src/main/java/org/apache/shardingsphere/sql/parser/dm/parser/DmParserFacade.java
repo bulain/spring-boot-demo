@@ -24,7 +24,7 @@ import org.apache.shardingsphere.sql.parser.oracle.parser.OracleParser;
 import org.apache.shardingsphere.sql.parser.spi.DialectSQLParserFacade;
 
 /**
- * SQL parser facade for Oracle.
+ * SQL parser facade for Dameng.
  */
 public final class DmParserFacade implements DialectSQLParserFacade {
 

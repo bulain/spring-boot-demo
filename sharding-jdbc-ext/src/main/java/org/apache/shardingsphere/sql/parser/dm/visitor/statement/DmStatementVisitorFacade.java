@@ -31,7 +31,7 @@ import org.apache.shardingsphere.sql.parser.oracle.visitor.statement.type.Oracle
 import org.apache.shardingsphere.sql.parser.oracle.visitor.statement.type.OracleDMLStatementVisitor;
 
 /**
- * Statement visitor facade for Oracle.
+ * Statement visitor facade for Dameng.
  */
 public final class DmStatementVisitorFacade implements SQLStatementVisitorFacade {
 

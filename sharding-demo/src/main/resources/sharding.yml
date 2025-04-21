@@ -57,13 +57,13 @@ dataSources:
 #  ds_0:
 #    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
 #    driverClassName: dm.jdbc.driver.DmDriver
-#    jdbcUrl: jdbc:dm://127.0.0.1:5236?compatibleMode=oracle&characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+#    jdbcUrl: jdbc:dm://127.0.0.1:5236/DB1?compatibleMode=oracle&characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
 #    username: db1
 #    password: dev
 #  ds_1:
 #    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
 #    driverClassName: dm.jdbc.driver.DmDriver
-#    jdbcUrl: jdbc:dm://127.0.0.1:5236?compatibleMode=oracle&characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+#    jdbcUrl: jdbc:dm://127.0.0.1:5236/DB2?compatibleMode=oracle&characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
 #    username: db2
 #    password: dev
 #  ds_0:

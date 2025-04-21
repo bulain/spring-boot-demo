@@ -48,7 +48,7 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 /**
- * Meta data loader for Oracle.
+ * Meta data loader for Dameng.
  */
 public final class DmMetaDataLoader implements DialectMetaDataLoader {
 
