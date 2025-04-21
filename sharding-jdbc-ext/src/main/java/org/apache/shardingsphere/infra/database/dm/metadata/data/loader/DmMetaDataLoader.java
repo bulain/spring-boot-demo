@@ -83,7 +83,7 @@ public final class DmMetaDataLoader implements DialectMetaDataLoader {
     @Override
     public Collection<SchemaMetaData> load(final MetaDataLoaderMaterial material) throws SQLException {
         Collection<TableMetaData> tableMetaDataList = new LinkedList<>();
-        try (Connection connection = new MetaDataLoaderConnection(TypedSPILoader.getService(DatabaseType.class, "Oracle"), material.getDataSource().getConnection())) {
+        try (Connection connection = new MetaDataLoaderConnection(TypedSPILoader.getService(DatabaseType.class, "DM"), material.getDataSource().getConnection())) {
             Collection<String> actualTableNames = material.getActualTableNames();
             actualTableNames = actualTableNames.stream().map(StringUtils::upperCase).toList();
             tableMetaDataList.addAll(getTableMetaDataList(connection, connection.getSchema(), actualTableNames));
