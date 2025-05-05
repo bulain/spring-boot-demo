@@ -1,0 +1,27 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: mcp-client
+  main:
+    banner-mode: off
+  ai:
+    openai:
+      base-url: https://api.deepseek.com
+      api-key: sk-******
+      chat:
+        options:
+          model: deepseek-chat
+    mcp:
+      client:
+        enabled: true
+        name: mcp-client
+        version: 1.0.0
+        request-timeout: 120s
+        type: ASYNC
+        sse:
+          connections:
+            server1:
+              url: http://localhost:8081
+        toolcallback:
+          enabled: true
