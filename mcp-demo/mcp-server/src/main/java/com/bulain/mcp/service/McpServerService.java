@@ -19,7 +19,7 @@ public class McpServerService {
 
     @Tool(name = "weather", description = "获取城市天气信息")
     public String weather(@ToolParam(description = "城市") String city) {
-        return String.format("您查询的城市为：%s", code.get(city));
+        return String.format("%s，今日中雨，白天最高气温24℃，夜间最低温度17℃，东南风3级，空气质量优。", city);
     }
 
     @Tool(name = "goodsprice", description = "搜索商品价格")

@@ -6,6 +6,12 @@ spring:
   main:
     banner-mode: off
   ai:
+    openai:
+      base-url: https://api.deepseek.com
+      api-key: sk-sk-******
+      chat:
+        options:
+          model: deepseek-chat
     mcp:
       server:
         name: mcp-server
