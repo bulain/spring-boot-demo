@@ -29,6 +29,7 @@
         <!--<module>dapr-demo</module>-->
         <!--<module>flink-demo</module>-->
         <!--<module>flowable-demo</module>-->
+        <module>mcp-demo</module>
         <!--<module>mime-demo</module>-->
         <!--<module>mongo-demo</module>-->
         <module>mybatis-demo</module>
@@ -39,7 +40,7 @@
         <module>sharding-jdbc-ext</module>
         <!--<module>shiro-demo</module>-->
         <!--<module>webflux-demo</module>-->
-        <module>xxljob-demo</module>
+        <!--<module>xxljob-demo</module>-->
 
     </modules>
 
@@ -49,7 +50,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>3.3.10</version>
+                <version>3.4.5</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -57,7 +58,7 @@
             <dependency>
                 <groupId>io.netty</groupId>
                 <artifactId>netty-bom</artifactId>
-                <version>4.1.119.Final</version>
+                <version>4.2.0.Final</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -74,6 +75,14 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-bom</artifactId>
                 <version>3.5.9</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- hutool -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-bom</artifactId>
+                <version>5.8.37</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -249,7 +258,7 @@
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>3.2.11</version>
+                    <version>3.4.5</version>
                 </plugin>
                 <!-- spring-boot-thin -->
                 <plugin>

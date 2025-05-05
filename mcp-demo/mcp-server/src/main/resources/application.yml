@@ -1,0 +1,12 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: mcp-server
+  main:
+    banner-mode: off
+  ai:
+    mcp:
+      server:
+        name: mcp-server
+        version: 1.0.0
