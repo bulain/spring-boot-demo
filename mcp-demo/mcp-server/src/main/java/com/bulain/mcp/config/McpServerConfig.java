@@ -1,5 +1,6 @@
 package com.bulain.mcp.config;
 
+import com.bulain.mcp.service.McpQueryService;
 import com.bulain.mcp.service.McpServerService;
 import io.modelcontextprotocol.server.McpServerFeatures;
 import io.modelcontextprotocol.spec.McpSchema;
@@ -14,9 +15,9 @@ import java.util.List;
 public class McpServerConfig {
 
     @Bean
-    public ToolCallbackProvider callbackProvider(McpServerService mcpServerService) {
+    public ToolCallbackProvider callbackProvider(McpServerService mcpServerService, McpQueryService mcpQueryService) {
         return MethodToolCallbackProvider.builder()
-                .toolObjects(mcpServerService)
+                .toolObjects(mcpServerService, mcpQueryService)
                 .build();
     }
 

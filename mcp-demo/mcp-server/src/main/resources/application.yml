@@ -5,10 +5,16 @@ spring:
     name: mcp-server
   main:
     banner-mode: off
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/kav_dev?useSSL=false&autoReconnect=true&serverTimezone=PRC&useUnicode=true&characterEncoding=utf-8&nullCatalogMeansCurrent=true&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
+    username: kav
+    password: sk-******
   ai:
     openai:
       base-url: https://api.deepseek.com
-      api-key: sk-sk-******
+      api-key: sk-******
       chat:
         options:
           model: deepseek-chat
