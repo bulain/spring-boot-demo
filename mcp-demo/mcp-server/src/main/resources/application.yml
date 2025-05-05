@@ -7,9 +7,9 @@ spring:
     banner-mode: off
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/kav_dev?useSSL=false&autoReconnect=true&serverTimezone=PRC&useUnicode=true&characterEncoding=utf-8&nullCatalogMeansCurrent=true&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
-    username: kav
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://127.0.0.1:5432/db1?tcpKeepAlive=true&reWriteBatchedInserts=true
+    username: db1
     password: sk-******
   ai:
     openai:

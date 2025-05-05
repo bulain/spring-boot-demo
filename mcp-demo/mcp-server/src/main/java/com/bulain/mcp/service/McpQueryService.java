@@ -17,13 +17,13 @@ public class McpQueryService {
 
     @Tool(description = "查询数据库中所有的表")
     public List<Map<String, Object>> queryAllTables() {
-        String sql = "select table_name, table_comment from information_schema.tables where table_schema = database()";
+        String sql = "select table_name from information_schema.tables where table_type = 'BASE TABLE' and table_schema = 'public'";
         return jdbcTemplate.queryForList(sql);
     }
 
     @Tool(description = "查询数据库中的表的数据")
     public List<Map<String, Object>> queryTable(@ToolParam(description = "表名") String tableName) {
-        String sql = "SELECT * FROM " + tableName;
+        String sql = "select * from " + tableName;
         return jdbcTemplate.queryForList(sql);
     }
 
