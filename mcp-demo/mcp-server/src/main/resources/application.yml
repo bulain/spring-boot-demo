@@ -5,7 +5,19 @@ spring:
     name: mcp-server
   main:
     banner-mode: off
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://127.0.0.1:5432/db1?tcpKeepAlive=true&reWriteBatchedInserts=true
+    username: db1
+    password: sk-******
   ai:
+    openai:
+      base-url: https://api.deepseek.com
+      api-key: sk-******
+      chat:
+        options:
+          model: deepseek-chat
     mcp:
       server:
         name: mcp-server

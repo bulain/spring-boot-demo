@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class McpClientConfig {
 
     @Bean
-    public ChatClient chatClient(ChatClient.Builder builder, ToolCallbackProvider tools){
+    public ChatClient chatClient(ChatClient.Builder builder, ToolCallbackProvider tools) {
         return builder
                 .defaultSystem("""
                 你是一个AI助手，请分析用户的问题，做出不同的处理，你现在拥有以下能力
