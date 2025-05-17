@@ -10,23 +10,28 @@ import org.apache.shardingsphere.sharding.api.sharding.standard.StandardSharding
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class YearShardingTableAlgorithm implements StandardShardingAlgorithm<Date>, HintShardingAlgorithm<Date> {
 
     @Override
     public String doSharding(Collection<String> availableTargetNames, PreciseShardingValue<Date> shardingValue) {
+
         String logicTableName = shardingValue.getLogicTableName();
         int curr = LocalDateTime.now().getYear();
         int year = LocalDateTime.ofInstant(shardingValue.getValue().toInstant(), ZoneId.systemDefault()).getYear();
-        StringBuilder sb = new StringBuilder(logicTableName);
-        if (year >= curr) {
-            return sb.toString();
+        String ret;
+        if (year < curr) {
+            ret = logicTableName + "_" + year;
+        } else {
+            ret = logicTableName;
         }
-        return sb.append("_").append(year).toString();
+
+        if (availableTargetNames.contains(ret)) {
+            return ret;
+        }
+
+        return logicTableName;
     }
 
     @Override
@@ -52,10 +57,13 @@ public class YearShardingTableAlgorithm implements StandardShardingAlgorithm<Dat
         if (upper < curr) {
             list.add(logicTableName + "_" + upper);
         }
+        if (upper >= curr) {
+            list.add(logicTableName);
+        }
 
         Collection<String> ret = CollectionUtils.intersection(availableTargetNames, list);
-        if (upper >= curr) {
-            ret.add(logicTableName);
+        if (CollectionUtils.isEmpty(ret)) {
+            return Collections.singletonList(logicTableName);
         }
 
         return ret;
@@ -71,13 +79,19 @@ public class YearShardingTableAlgorithm implements StandardShardingAlgorithm<Dat
         List<String> list = new ArrayList<>();
         for (Date dt : values) {
             int year = LocalDateTime.ofInstant(dt.toInstant(), ZoneId.systemDefault()).getYear();
-            if (year <= curr) {
+            if (year < curr) {
                 list.add(logicTableName + "_" + year);
             } else {
                 list.add(logicTableName);
             }
         }
-        return CollectionUtils.intersection(availableTargetNames, list);
+
+        Collection<String> ret = CollectionUtils.intersection(availableTargetNames, list);
+        if (CollectionUtils.isEmpty(ret)) {
+            return Collections.singletonList(logicTableName);
+        }
+
+        return ret;
     }
 
 }

@@ -1,4 +1,4 @@
-databaseName: ds_0, ds_1
+databaseName: ds_0
 
 mode:
   type: Standalone
@@ -12,12 +12,12 @@ dataSources:
     jdbcUrl: jdbc:mysql://localhost:3307/db1?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: db1
     password: dev
-  ds_1:
-    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
-    driverClassName: com.mysql.cj.jdbc.Driver
-    jdbcUrl: jdbc:mysql://localhost:3307/db2?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-    username: db2
-    password: dev
+#  ds_1:
+#    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+#    driverClassName: com.mysql.cj.jdbc.Driver
+#    jdbcUrl: jdbc:mysql://localhost:3307/db2?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+#    username: db2
+#    password: dev
 #  ds_0:
 #    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
 #    driverClassName: org.postgresql.Driver
@@ -94,28 +94,28 @@ dataSources:
 rules:
   - !SHARDING
     tables:
+#      t_order:
+#        actualDataNodes: ds_0.t_order,ds_0.t_order_${2023..2024}
+#        tableStrategy:
+#          standard:
+#            shardingColumn: pgi
+#            shardingAlgorithmName: t_table_sharding
+#      t_order_item:
+#        actualDataNodes: ds_0.t_order_item,ds_0.t_order_item_${2023..2024}
+#        tableStrategy:
+#          standard:
+#            shardingColumn: pgi
+#            shardingAlgorithmName: t_table_sharding
       t_order:
-        actualDataNodes: ds_${0..1}.t_order_${0..1}
+        actualDataNodes: ds_0.t_order,ds_0.t_order_${2023..2024}
         tableStrategy:
-          standard:
-            shardingColumn: order_id
-            shardingAlgorithmName: t_order_inline
-        keyGenerateStrategy:
-          column: order_id
-          keyGeneratorName: snowflake
-        auditStrategy:
-          auditorNames:
-            - sharding_key_required_auditor
-          allowHintDisable: true
+          hint:
+            shardingAlgorithmName: t_hint_sharding
       t_order_item:
-        actualDataNodes: ds_${0..1}.t_order_item_${0..1}
+        actualDataNodes: ds_0.t_order_item,ds_0.t_order_item_${2023..2024}
         tableStrategy:
-          standard:
-            shardingColumn: order_id
-            shardingAlgorithmName: t_order_item_inline
-        keyGenerateStrategy:
-          column: order_item_id
-          keyGeneratorName: snowflake
+          hint:
+            shardingAlgorithmName: t_hint_sharding
       t_dn:
         actualDataNodes: ds_0.t_dn
       t_hu:
@@ -123,39 +123,18 @@ rules:
         tableStrategy:
           standard:
             shardingColumn: pgi
-            shardingAlgorithmName: t_hu_sharding
+            shardingAlgorithmName: t_table_sharding
       t_hint:
         actualDataNodes: ds_0.t_hint,ds_0.t_hint_${2021..2024}
         tableStrategy:
-          standard:
-            shardingColumn: pgi
+          hint:
             shardingAlgorithmName: t_hint_sharding
 
-    defaultShardingColumn: user_id
     bindingTables:
       - t_order,t_order_item
-    defaultDatabaseStrategy:
-      standard:
-        shardingColumn: user_id
-        shardingAlgorithmName: database_inline
-    defaultTableStrategy:
-      none:
 
     shardingAlgorithms:
-      database_inline:
-        type: INLINE
-        props:
-          algorithm-expression: ds_${user_id % 2}
-      t_order_inline:
-        type: INLINE
-        props:
-          algorithm-expression: t_order_${order_id % 2}
-      t_order_item_inline:
-        type: INLINE
-        props:
-          strategy: STANDARD
-          algorithm-expression: t_order_item_${order_id % 2}
-      t_hu_sharding:
+      t_table_sharding:
         type: CLASS_BASED
         props:
           strategy: STANDARD
@@ -169,9 +148,6 @@ rules:
     keyGenerators:
       snowflake:
         type: SNOWFLAKE
-    auditors:
-      sharding_key_required_auditor:
-        type: DML_SHARDING_CONDITIONS
 
   - !BROADCAST
     tables:
