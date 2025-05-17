@@ -19,8 +19,14 @@ class ShardingTest {
     private ShardingService shardingService;
 
     @Test
-    void testSharding() {
-        shardingService.sharding();
+    void testShardingInsert() {
+        shardingService.shardingInsert();
+        Assertions.assertTrue(true);
+    }
+
+    @Test
+    void testShardingQuery() {
+        shardingService.shardingQuery();
         Assertions.assertTrue(true);
     }
 
