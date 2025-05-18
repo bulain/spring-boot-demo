@@ -15,9 +15,10 @@ import java.util.List;
 public class McpServerConfig {
 
     @Bean
-    public ToolCallbackProvider callbackProvider(McpServerService mcpServerService, McpQueryService mcpQueryService) {
+    public ToolCallbackProvider callbackProvider(McpServerService mcpServerService,
+                                                 McpQueryService mcpQueryService) {
         return MethodToolCallbackProvider.builder()
-                .toolObjects(mcpServerService, mcpQueryService)
+                .toolObjects(mcpServerService)
                 .build();
     }
 

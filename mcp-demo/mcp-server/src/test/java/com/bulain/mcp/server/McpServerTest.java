@@ -26,7 +26,7 @@ class McpServerTest {
         McpSyncClient mcpSyncClient = McpClient.sync(sseClientTransport).build();
         mcpSyncClient.initialize();
 
-        McpSchema.CallToolResult callToolResult = mcpSyncClient.callTool(new McpSchema.CallToolRequest("queryWeather", Map.of("arg0", "上海")));
+        McpSchema.CallToolResult callToolResult = mcpSyncClient.callTool(new McpSchema.CallToolRequest("query_asn", Map.of("arg0", "AN20250518001")));
         log.info("{}", callToolResult);
 
         try {
@@ -52,7 +52,7 @@ class McpServerTest {
         McpSyncClient mcpSyncClient = McpClient.sync(stdioClientTransport).build();
         mcpSyncClient.initialize();
 
-        McpSchema.CallToolResult callToolResult = mcpSyncClient.callTool(new McpSchema.CallToolRequest("queryWeather", Map.of("arg0", "上海")));
+        McpSchema.CallToolResult callToolResult = mcpSyncClient.callTool(new McpSchema.CallToolRequest("query_asn", Map.of("arg0", "AN20250518001")));
         log.info("{}", callToolResult);
 
         try {
