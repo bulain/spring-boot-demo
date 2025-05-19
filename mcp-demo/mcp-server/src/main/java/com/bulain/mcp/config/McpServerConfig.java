@@ -4,6 +4,7 @@ import com.bulain.mcp.service.McpQueryService;
 import com.bulain.mcp.service.McpServerService;
 import io.modelcontextprotocol.server.McpServerFeatures;
 import io.modelcontextprotocol.spec.McpSchema;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.ai.tool.method.MethodToolCallbackProvider;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
 
+@Slf4j
 @Configuration
 public class McpServerConfig {
 

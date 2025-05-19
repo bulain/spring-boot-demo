@@ -18,8 +18,8 @@ import java.util.List;
 @Service
 public class McpServerService {
 
-    @Tool(name = "query_asn", description = "查询入库单状态")
-    public BillHed queryAsn(@ToolParam(description = "入库单号") String code) {
+    @Tool(name = "query_asn_state", description = "查询入库单状态")
+    public BillHed queryAsnState(@ToolParam(description = "入库单号") String code) {
         List<BillDet> details = new ArrayList<>();
 
         details.add(new BillDet()
@@ -44,8 +44,8 @@ public class McpServerService {
         return hed;
     }
 
-    @Tool(name = "query_so", description = "查询出库单状态")
-    public BillHed querySo(@ToolParam(description = "出库单号") String code) {
+    @Tool(name = "query_so_state", description = "查询出库单状态")
+    public BillHed querySoState(@ToolParam(description = "出库单号") String code) {
         List<BillDet> details = new ArrayList<>();
 
         details.add(new BillDet()
@@ -70,8 +70,8 @@ public class McpServerService {
         return hed;
     }
 
-    @Tool(name = "query_inv", description = "查询库存状态")
-    public List<InvDet> queryInv(@ToolParam(description = "货品编码") String code,
+    @Tool(name = "query_inv_state", description = "查询库存状态")
+    public List<InvDet> queryInvState(@ToolParam(description = "货品编码") String code,
                                  @ToolParam(description = "库位", required = false) String location) {
 
         List<InvDet> details = new ArrayList<>();
