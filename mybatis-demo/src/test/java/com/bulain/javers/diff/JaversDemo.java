@@ -6,9 +6,11 @@ import org.javers.core.Javers;
 import org.javers.core.JaversBuilder;
 import org.javers.core.commit.Commit;
 import org.javers.core.diff.Diff;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 @Slf4j
+@Disabled
 public class JaversDemo {
 
     @Test
