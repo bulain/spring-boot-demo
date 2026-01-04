@@ -6,6 +6,7 @@ import io.modelcontextprotocol.client.McpSyncClient;
 import io.modelcontextprotocol.client.transport.HttpClientSseClientTransport;
 import io.modelcontextprotocol.client.transport.ServerParameters;
 import io.modelcontextprotocol.client.transport.StdioClientTransport;
+import io.modelcontextprotocol.json.McpJsonMapper;
 import io.modelcontextprotocol.spec.McpSchema;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
@@ -47,8 +48,9 @@ class McpServerTest {
                         "-Dlogging.pattern.console=", "-jar",
                         "target/mcp-server-1.0.0-SNAPSHOT.jar")
                 .build();
+        McpJsonMapper jsonMapper = McpJsonMapper.getDefault();
 
-        StdioClientTransport stdioClientTransport = new StdioClientTransport(stdioParams);
+        StdioClientTransport stdioClientTransport = new StdioClientTransport(stdioParams, jsonMapper);
         McpSyncClient mcpSyncClient = McpClient.sync(stdioClientTransport).build();
         mcpSyncClient.initialize();
 

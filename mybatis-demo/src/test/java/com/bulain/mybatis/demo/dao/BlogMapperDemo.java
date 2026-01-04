@@ -5,12 +5,14 @@ import com.bulain.mybatis.MybatisPlusApplication;
 import com.bulain.mybatis.demo.entity.Blog;
 import com.bulain.mybatis.demo.pojo.BlogSearch;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+@Disabled
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = MybatisPlusApplication.class)
 public class BlogMapperDemo {

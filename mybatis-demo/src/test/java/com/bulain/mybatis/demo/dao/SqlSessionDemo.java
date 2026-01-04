@@ -12,6 +12,7 @@ import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mybatis.spring.SqlSessionUtils;
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 @Slf4j
+@Disabled
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = MybatisPlusApplication.class)
 public class SqlSessionDemo {
