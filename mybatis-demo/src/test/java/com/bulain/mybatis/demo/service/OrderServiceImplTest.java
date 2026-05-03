@@ -1,424 +1,156 @@
 package com.bulain.mybatis.demo.service;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.bulain.mybatis.MybatisPlusApplication;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.bulain.mybatis.demo.dao.OrderMapper;
 import com.bulain.mybatis.demo.entity.Order;
+import com.bulain.mybatis.demo.service.impl.OrderServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 
-import java.io.Serializable;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-@Disabled
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = MybatisPlusApplication.class)
+/**
+ * OrderServiceImpl 单元测试
+ * 使用 Mockito 模拟依赖，无需 Spring 上下文和数据库
+ */
+@ExtendWith(MockitoExtension.class)
 class OrderServiceImplTest {
 
-	@Autowired
-	private OrderService orderService;
+    @Mock
+    private OrderMapper orderMapper;
 
-	private final Long version = 0L;
-	private String id;
+    private OrderServiceImpl orderService;
 
-	@BeforeEach
-	void setup() {
-        orderService.directRemove(new QueryWrapper<>());
+    @BeforeEach
+    void setUp() {
+        orderService = new OrderServiceImpl();
+        // 使用反射注入 baseMapper（ServiceImpl 基类中的字段）
+        ReflectionTestUtils.setField(orderService, "baseMapper", orderMapper);
+    }
 
-		Order entity = new Order();
-		entity.setOrderNo("X00001");
-		entity.setExtnRefNo1("E00001");
+    @Test
+    void testSave() {
+        // 准备测试数据
+        Order order = new Order();
+        order.setOrderNo("TEST001");
+        order.setExtnRefNo1("REF001");
 
-		orderService.save(entity);
-		id = entity.getId();
-	}
+        // stub: 当调用 insert 时返回 1（成功插入 1 条记录）
+        when(orderMapper.insert(any(Order.class))).thenReturn(1);
 
-	@Test
-	void testSave() {
-		Order entity = new Order();
-		entity.setOrderNo("T00001");
-		entity.setExtnRefNo1("T00001");
+        // 执行测试
+        boolean result = orderService.save(order);
 
-		boolean bool = orderService.save(entity);
-		assertTrue(bool);
-	}
+        // 验证结果
+        assertTrue(result);
+        // 验证 insert 被调用 1 次
+        verify(orderMapper, times(1)).insert(any(Order.class));
 
-	@Test
-	void testSaveAllColumn() {
-		Order entity = new Order();
-		entity.setOrderNo("T00001");
-		entity.setExtnRefNo1("T00001");
+        // 使用 ArgumentCaptor 捕获实际传入的参数
+        ArgumentCaptor<Order> orderCaptor = ArgumentCaptor.forClass(Order.class);
+        verify(orderMapper).insert(orderCaptor.capture());
+        Order capturedOrder = orderCaptor.getValue();
+        assertEquals("TEST001", capturedOrder.getOrderNo());
+        assertEquals("REF001", capturedOrder.getExtnRefNo1());
+    }
 
-		boolean bool = orderService.save(entity);
-		assertTrue(bool);
-	}
+    @Test
+    void testRemoveById() {
+        // 准备测试数据
+        String orderId = "test-id-001";
 
-	@Test
-	void testSaveBatchListOfT() {
-		
-		Order entity1 = new Order();
-		entity1.setOrderNo("T00001");
-		entity1.setExtnRefNo1("T00001");
-		
-		Order entity2 = new Order();
-		entity2.setOrderNo("T00002");
-		entity2.setExtnRefNo1("T00002");
-		
-		List<Order> entityList = Arrays.asList(entity1, entity2);
-		
-		boolean bool = orderService.saveBatch(entityList);
-		assertTrue(bool);
-	}
+        // stub: 逻辑删除通过 update 实现，返回 1 表示成功
+        // 注意：ServiceImpl.removeById 内部使用的是 UpdateWrapper 而非 LambdaQueryWrapper
+        when(orderMapper.update(any(), any())).thenReturn(1);
 
-	@Test
-	void testSaveBatchListOfTInt() {
-		Order entity1 = new Order();
-		entity1.setOrderNo("T00001");
-		entity1.setExtnRefNo1("T00001");
-		
-		Order entity2 = new Order();
-		entity2.setOrderNo("T00002");
-		entity2.setExtnRefNo1("T00002");
-		
-		List<Order> entityList = Arrays.asList(entity1, entity2);
-		
-		boolean bool = orderService.saveBatch(entityList, 10);
-		assertTrue(bool);
-	}
+        // 执行测试
+        boolean result = orderService.removeById(orderId);
 
-	@Test
-	void testSaveOrUpdate() {
-	    orderService.getById(id);
-	    
-		Order entity = new Order();
-		entity.setOrderNo("T00001");
-		entity.setExtnRefNo1("T00001");
-		
-		boolean bool = orderService.saveOrUpdate(entity);
-		assertTrue(bool);
-		
-		orderService.getById(id);
-	}
+        // 验证结果
+        assertTrue(result);
+        // 验证 update 被调用 1 次
+        verify(orderMapper, times(1)).update(any(), any());
+    }
 
-	@Test
-	void testSaveOrUpdateAllColumn() {
-		Order entity = new Order();
-		entity.setOrderNo("T00001");
-		entity.setExtnRefNo1("T00001");
-		
-		boolean bool = orderService.saveOrUpdate(entity);
-		assertTrue(bool);
-	}
+    @Test
+    void testSelectById() {
+        // 准备测试数据
+        String orderId = "test-id-001";
+        Order expectedOrder = new Order();
+        expectedOrder.setId(orderId);
+        expectedOrder.setOrderNo("TEST001");
+        expectedOrder.setExtnRefNo1("REF001");
 
-	@Test
-	void testSaveOrUpdateBatchListOfT() {
-	    
-	    orderService.getById(id);
-	    
-		Order entity1 = new Order();
-		entity1.setOrderNo("T00001");
-		entity1.setExtnRefNo1("T00001");
-		
-		Order entity2 = new Order();
-		entity2.setOrderNo("T00002");
-		entity2.setExtnRefNo1("T00002");
-		
-		List<Order> entityList = Arrays.asList(entity1, entity2);
-		
-		boolean bool = orderService.saveOrUpdateBatch(entityList);
-		assertTrue(bool);
-	
-		orderService.getById(id);
-		
-	}
+        // stub: 当调用 selectById 时返回预设对象
+        when(orderMapper.selectById(orderId)).thenReturn(expectedOrder);
 
-	@Test
-	void testSaveOrUpdateBatchListOfTInt() {
-		
-		Order entity1 = new Order();
-		entity1.setOrderNo("T00001");
-		entity1.setExtnRefNo1("T00001");
-		
-		Order entity2 = new Order();
-		entity2.setOrderNo("T00002");
-		entity2.setExtnRefNo1("T00002");
-		
-		List<Order> entityList = Arrays.asList(entity1, entity2);
-		
-		boolean bool = orderService.saveOrUpdateBatch(entityList, 10);
-		assertTrue(bool);
-	
-	}
+        // 执行测试
+        Order actualOrder = orderService.getById(orderId);
 
-	@Test
-	void testSaveOrUpdateAllColumnBatchListOfT() {
-		
-		Order entity1 = new Order();
-		entity1.setOrderNo("T00001");
-		entity1.setExtnRefNo1("T00001");
-		
-		Order entity2 = new Order();
-		entity2.setOrderNo("T00002");
-		entity2.setExtnRefNo1("T00002");
-		
-		List<Order> entityList = Arrays.asList(entity1, entity2);
-		
-		boolean bool = orderService.saveOrUpdateBatch(entityList);
-		assertTrue(bool);
-	
-	}
+        // 验证结果
+        assertNotNull(actualOrder);
+        assertEquals(orderId, actualOrder.getId());
+        assertEquals("TEST001", actualOrder.getOrderNo());
+        assertEquals("REF001", actualOrder.getExtnRefNo1());
+        // 验证 selectById 被调用 1 次
+        verify(orderMapper, times(1)).selectById(orderId);
+    }
 
-	@Test
-	void testSaveOrUpdateAllColumnBatchListOfTInt() {
-		
-		Order entity1 = new Order();
-		entity1.setOrderNo("T00001");
-		entity1.setExtnRefNo1("T00001");
-		
-		Order entity2 = new Order();
-		entity2.setOrderNo("T00002");
-		entity2.setExtnRefNo1("T00002");
-		
-		List<Order> entityList = Arrays.asList(entity1, entity2);
-		
-		boolean bool = orderService.saveOrUpdateBatch(entityList, 10);
-		assertTrue(bool);
-	
-	}
+    @Test
+    void testSelectList() {
+        // 准备测试数据
+        Order order1 = new Order();
+        order1.setId("id1");
+        order1.setOrderNo("TEST001");
 
-	@Test
-	void testRemoveById() {
-		boolean bool = orderService.removeById(id);
-		assertTrue(bool);
-	}
+        Order order2 = new Order();
+        order2.setId("id2");
+        order2.setOrderNo("TEST002");
 
-	@Test
-	void testRemoveByMap() {
-		Map<String, Object> columnMap = new HashMap<>();
-		columnMap.put("ORDER_NO", "X00001");
-		boolean bool = orderService.removeByMap(columnMap);
-		assertTrue(bool);
-	}
+        List<Order> expectedList = Arrays.asList(order1, order2);
 
-	@Test
-	void testRemove() {
-		Order wrapper = new Order();
-		wrapper.setOrderNo("X00001");
-		boolean bool = orderService.remove(new QueryWrapper<>(wrapper));
-		assertTrue(bool);
-	}
+        // stub: 当调用 selectList 时返回预设列表
+        when(orderMapper.selectList(any(LambdaQueryWrapper.class))).thenReturn(expectedList);
 
-	@Test
-	void testRemoveBatchIds() {
-		Collection<? extends Serializable> idList = Arrays.asList(id, "2", "3");
-		boolean bool = orderService.removeByIds(idList);
-		assertTrue(bool);
-	}
+        // 执行测试
+        LambdaQueryWrapper<Order> wrapper = Wrappers.lambdaQuery();
+        List<Order> actualList = orderService.list(wrapper);
 
-	@Test
-	void testUpdateById() {
-		Order entity = new Order();
-		entity.setId(id);
-		entity.setOrderNo("X00001");
-		entity.setExtnRefNo1("E00001");
-		entity.setVersion(version);
-		
-		boolean bool = orderService.updateById(entity);
-		assertTrue(bool);
-	}
+        // 验证结果
+        assertNotNull(actualList);
+        assertEquals(2, actualList.size());
+        assertEquals("TEST001", actualList.get(0).getOrderNo());
+        assertEquals("TEST002", actualList.get(1).getOrderNo());
+        // 验证 selectList 被调用 1 次
+        verify(orderMapper, times(1)).selectList(any(LambdaQueryWrapper.class));
+    }
 
-	@Test
-	void testUpdateAllColumnById() {
-		Order entity = new Order();
-		entity.setId(id);
-		entity.setOrderNo("X00001");
-		entity.setExtnRefNo1("E00001");
-		entity.setVersion(version);
-		
-		boolean bool = orderService.updateById(entity);
-		assertTrue(bool);
-	}
+    @Test
+    void testDirectRemove() {
+        // 准备测试数据
+        LambdaQueryWrapper<Order> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(Order::getOrderNo, "TEST001");
 
-	@Test
-	void testUpdate() {
-		Order entity = new Order();
-		entity.setExtnRefNo1("E00002");
+        // stub: 当调用 directDelete 时返回 1（成功删除 1 条记录）
+        when(orderMapper.directDelete(any(LambdaQueryWrapper.class))).thenReturn(1);
 
-		Order wrapper = new Order();
-		wrapper.setOrderNo("X00001");
-		wrapper.setVersion(version);
-		boolean bool = orderService.update(entity, new QueryWrapper<>(wrapper));
-		assertTrue(bool);
-	}
+        // 执行测试
+        boolean result = orderService.directRemove(wrapper);
 
-	@Test
-	void testUpdateBatchByIdListOfT() {
-		Order entity1 = new Order();
-		entity1.setOrderNo("T00001");
-		entity1.setExtnRefNo1("T00001");
-		entity1.setVersion(version);
-		
-		Order entity2 = new Order();
-		entity2.setOrderNo("T00002");
-		entity2.setExtnRefNo1("T00002");
-		entity2.setVersion(version);
-		
-		List<Order> entityList = Arrays.asList(entity1, entity2);
-		boolean bool = orderService.updateBatchById(entityList);
-		assertTrue(bool);
-	}
-
-	@Test
-	void testUpdateBatchByIdListOfTInt() {
-		Order entity1 = new Order();
-		entity1.setOrderNo("T00001");
-		entity1.setExtnRefNo1("T00001");
-		entity1.setVersion(version);
-		
-		Order entity2 = new Order();
-		entity2.setOrderNo("T00002");
-		entity2.setExtnRefNo1("T00002");
-		entity2.setVersion(version);
-		
-		List<Order> entityList = Arrays.asList(entity1, entity2);
-		boolean bool = orderService.updateBatchById(entityList, 10);
-		assertTrue(bool);
-	}
-
-	@Test
-	void testUpdateAllColumnBatchByIdListOfT() {
-		Order entity1 = new Order();
-		entity1.setOrderNo("T00001");
-		entity1.setExtnRefNo1("T00001");
-		entity1.setVersion(version);
-		
-		Order entity2 = new Order();
-		entity2.setOrderNo("T00002");
-		entity2.setExtnRefNo1("T00002");
-		entity2.setVersion(version);
-		
-		List<Order> entityList = Arrays.asList(entity1, entity2);
-		boolean bool = orderService.updateBatchById(entityList);
-		assertTrue(bool);
-	}
-
-	@Test
-	void testUpdateAllColumnBatchByIdListOfTInt() {
-		Order entity1 = new Order();
-		entity1.setOrderNo("T00001");
-		entity1.setExtnRefNo1("T00001");
-		entity1.setVersion(version);
-		
-		Order entity2 = new Order();
-		entity2.setOrderNo("T00002");
-		entity2.setExtnRefNo1("T00002");
-		entity2.setVersion(version);
-		
-		List<Order> entityList = Arrays.asList(entity1, entity2);
-		boolean bool = orderService.updateBatchById(entityList, 10);
-		assertTrue(bool);
-	}
-
-	@Test
-	void testSelectById() {
-		Order ret = orderService.getById(id);
-		assertNotNull(ret);
-	}
-
-	@Test
-	void testSelectBatchIds() {
-		Collection<? extends Serializable> idList = Arrays.asList(id, "2", "3");
-		Collection<Order> list = orderService.listByIds(idList);
-		assertEquals(1, list.size());
-	}
-
-	@Test
-	void testSelectByMap() {
-		Map<String, Object> columnMap = new HashMap<>();
-		columnMap.put("ORDER_NO", "X00001");
-		Collection<Order> list = orderService.listByMap(columnMap);
-		assertEquals(1, list.size());
-	}
-
-	@Test
-	void testSelectOne() {
-		Order wrapper = new Order();
-		wrapper.setOrderNo("X00001");
-		Order ret = orderService.getOne(new QueryWrapper<>(wrapper));
-		assertNotNull(ret);
-	}
-
-	@Test
-	void testSelectMap() {
-		Order wrapper = new Order();
-		wrapper.setOrderNo("X00001");
-		Map<String, Object> ret = orderService.getMap(new QueryWrapper<>(wrapper));
-		assertNotNull(ret);
-	}
-
-	@Test
-	void testSelectCount() {
-		Order wrapper = new Order();
-		wrapper.setOrderNo("X00001");
-		long cnt = orderService.count(new QueryWrapper<>(wrapper));
-		assertEquals(1, cnt);
-	}
-
-	@Test
-	void testSelectList() {
-		Order wrapper = new Order();
-		wrapper.setOrderNo("X00001");
-		List<Order> list = orderService.list(new QueryWrapper<>(wrapper));
-		assertEquals(1, list.size());
-	}
-
-	@Test
-	void testSelectPagePageOfT() {
-		IPage<Order> page = new Page<>(0, 2);
-		IPage<Order> paged = orderService.page(page);
-		assertEquals(1L, paged.getTotal());
-	}
-
-	@Test
-	void testSelectMaps() {
-		Order wrapper = new Order();
-		wrapper.setOrderNo("X00001");
-		List<Map<String, Object>> list = orderService.listMaps(new QueryWrapper<>(wrapper));
-		assertEquals(1, list.size());
-	}
-
-	@Test
-	void testSelectObjs() {
-		Order wrapper = new Order();
-		wrapper.setOrderNo("X00001");
-		List<Object> list = orderService.listObjs(new QueryWrapper<>(wrapper));
-		assertEquals(1, list.size());
-	}
-
-	@Test
-	void testSelectMapsPage() {
-		IPage<Map<String, Object>> page = new Page<>(0, 2);
-		Order wrapper = new Order();
-		wrapper.setOrderNo("X00001");
-		IPage<Map<String, Object>> paged = orderService.pageMaps(page, new QueryWrapper<>(wrapper));
-		assertEquals(1L, paged.getTotal());
-	}
-
-	@Test
-	void testSelectPagePageOfTWrapperOfT() {
-		IPage<Order> page = new Page<>(0, 2);
-		Order wrapper = new Order();
-		wrapper.setOrderNo("X00001");
-		IPage<Order> paged = orderService.page(page, new QueryWrapper<>(wrapper));
-		assertEquals(1L, paged.getTotal());
-	}
+        // 验证结果
+        assertTrue(result);
+        // 验证 directDelete 被调用 1 次
+        verify(orderMapper, times(1)).directDelete(any(LambdaQueryWrapper.class));
+    }
 
 }
