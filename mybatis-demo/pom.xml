@@ -144,10 +144,10 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>com.microsoft.azure</groupId>
             <artifactId>msal4j</artifactId>
-        </dependency>
+        </dependency>-->
     </dependencies>
 
     <dependencyManagement>
@@ -256,11 +256,11 @@
                 <version>6.5.1.RELEASE</version>
             </dependency>
             <!-- msal4j -->
-            <dependency>
+            <!--<dependency>
                 <groupId>com.microsoft.azure</groupId>
                 <artifactId>msal4j</artifactId>
                 <version>1.23.1</version>
-            </dependency>
+            </dependency>-->
         </dependencies>
     </dependencyManagement>
 
@@ -284,26 +284,6 @@
                                 <configuration>
                                     <attach>false</attach>
                                 </configuration>
-                            </execution>
-                        </executions>
-                        <dependencies>
-                            <dependency>
-                                <groupId>org.springframework.boot.experimental</groupId>
-                                <artifactId>spring-boot-thin-layout</artifactId>
-                                <version>${spring-boot-thin.version}</version>
-                            </dependency>
-                        </dependencies>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.springframework.boot.experimental</groupId>
-                        <artifactId>spring-boot-thin-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>resolve</id>
-                                <goals>
-                                    <goal>resolve</goal>
-                                </goals>
-                                <inherited>false</inherited>
                             </execution>
                         </executions>
                     </plugin>
