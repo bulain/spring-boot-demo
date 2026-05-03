@@ -1,10 +1,12 @@
 package com.bulain.mybatis.core.pojo;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.List;
 
-public class Paged<T> implements Serializable {
-    private static final long serialVersionUID = 1L;
+@Data
+public class Paged<T> {
 
     // 分页
     private int pageSize;//每页数量
@@ -14,38 +16,5 @@ public class Paged<T> implements Serializable {
 
     //数据列表
     private List<T> data;
-
-    public void setData(List<T> data) {
-        this.data = data;
-    }
-
-    public List<T> getData() {
-        return (List<T>) data;
-    }
-
-    public int getPage() {
-        return page;
-    }
-    public void setPage(final int page) {
-        this.page = page;
-    }
-    public int getPageSize() {
-        return pageSize;
-    }
-    public void setPageSize(final int pageSize) {
-        this.pageSize = pageSize;
-    }
-    public int getTotalPage() {
-        return totalPage;
-    }
-    public void setTotalPage(final int totalPage) {
-        this.totalPage = totalPage;
-    }
-    public long getTotalCount() {
-        return totalCount;
-    }
-    public void setTotalCount(long totalCount) {
-        this.totalCount = totalCount;
-    }
 
 }

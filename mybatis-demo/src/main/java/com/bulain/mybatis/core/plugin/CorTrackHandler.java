@@ -15,7 +15,7 @@ public class CorTrackHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         LocalDateTime now = LocalDateTime.now();
-        String userId = "1234567890";
+        String userId = "******";
 
         this.setFieldValByName("createdAt", now, metaObject);
         this.setFieldValByName("createdBy", userId, metaObject);
@@ -26,7 +26,7 @@ public class CorTrackHandler implements MetaObjectHandler {
     @Override
     public void updateFill(MetaObject metaObject) {
         LocalDateTime now = LocalDateTime.now();
-        String userId = null;
+        String userId = "******";
 
         this.setFieldValByName("updatedAt", now, metaObject);
         this.setFieldValByName("updatedBy", userId, metaObject);
