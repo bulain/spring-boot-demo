@@ -18,9 +18,7 @@ import java.time.LocalDateTime;
 @Data
 @Accessors(chain = true)
 @TableName("demo_order")
-public class Order implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Order {
 
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
