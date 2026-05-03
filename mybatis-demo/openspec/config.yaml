@@ -15,6 +15,14 @@ conventions:
   commit_style: Conventional Commits
   test_framework: JUnit 5 + Mockito
   db_migration: Flyway VYYYYMMDDHHmmss__description.sql
+  tdd: 测试驱动开发
+  tdd_flow:
+    - 编写失败的测试用例
+    - 编写最小化代码使测试通过
+    - 重构优化代码
+  test_coverage:
+    unit: 80%
+    integration: 60%
 
 # 代码结构
 code_paths:
@@ -48,9 +56,11 @@ artifacts:
     constraints:
       max_hours_per_task: 2
     rules:
-      - 包含单元测试任务
+      - 遵循 TDD 流程：测试任务先于实现任务
+      - 每个功能模块先编写单元测试
       - 包含集成测试任务
       - 包含代码审查任务
+      - 实现任务必须在测试任务之后
 
   design:
     description: 技术方案设计

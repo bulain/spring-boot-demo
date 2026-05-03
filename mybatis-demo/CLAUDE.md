@@ -53,3 +53,9 @@ class OrderServiceImpl extends PagedServiceImpl<Order, OrderSearch>
 - 配置文件: `src/main/resources/application.yml`
 - Mapper 扫描: `com.bulain.mybatis.demo.dao`
 - Flyway 脚本: `src/main/resources/migration/{db-type}/`
+
+## 开发规范
+
+- 所有文档使用中文编写
+- 代码注释统一使用中文
+- 接口、类、方法的说明文档使用中文
