@@ -1,0 +1,63 @@
+# OpenSpec 配置
+version: 1.2.0
+schema: spec-driven
+
+# 项目元数据
+project:
+  type: Java/Spring Boot/Mybatis Plus
+  build: Maven
+  jdk: 17
+  lang: zh
+
+# 约定规范
+conventions:
+  code_style: 阿里巴巴 Java 开发手册
+  commit_style: Conventional Commits
+  test_framework: JUnit 5 + Mockito
+  db_migration: Flyway VYYYYMMDDHHmmss__description.sql
+
+# 代码结构
+code_paths:
+  controller: com.bulain.mybatis.controller
+  service: com.bulain.mybatis.service
+  mapper: com.bulain.mybatis.mapper
+  entity: com.bulain.mybatis.entity
+  config: src/main/resources/application-*.yml
+
+# 工件规则
+artifacts:
+  proposal:
+    description: 变更可行性分析
+    rules:
+      - 包含风险评估
+      - 明确目标、非目标、成功指标
+      - 分析变更影响范围
+      - 评估对现有测试的影响
+
+  specs:
+    description: 需求规格定义
+    rules:
+      - 使用 SHALL/MUST 规范性词汇
+      - 每个需求至少一个测试场景
+      - 场景遵循 WHEN/THEN 格式
+      - 使用中文编写
+    on_change: 列出变更前后对比
+
+  tasks:
+    description: 任务分解
+    constraints:
+      max_hours_per_task: 2
+    rules:
+      - 包含单元测试任务
+      - 包含集成测试任务
+      - 包含代码审查任务
+
+  design:
+    description: 技术方案设计
+    rules:
+      - 使用中文编写
+      - 包含架构图（Mermaid/ASCII）
+      - 定义 REST API 接口
+      - 说明数据流转
+      - 明确异常处理策略
+      - 考虑事务边界
