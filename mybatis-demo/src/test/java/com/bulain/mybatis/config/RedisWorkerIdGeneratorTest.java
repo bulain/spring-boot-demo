@@ -28,9 +28,8 @@ class RedisWorkerIdGeneratorTest {
         when(stringRedisTemplate.opsForValue()).thenReturn(valueOperations);
         when(valueOperations.increment("mybatis:id:worker-id")).thenReturn(5L);
 
-        Long workerId = redisWorkerIdGenerator.getWorkerId();
+        long workerId = redisWorkerIdGenerator.getWorkerId();
 
-        assertNotNull(workerId);
         assertTrue(workerId >= 0 && workerId <= 31);
         assertEquals(5L, workerId);
     }
@@ -40,29 +39,28 @@ class RedisWorkerIdGeneratorTest {
         when(stringRedisTemplate.opsForValue()).thenReturn(valueOperations);
         when(valueOperations.increment("mybatis:id:worker-id")).thenReturn(35L);
 
-        Long workerId = redisWorkerIdGenerator.getWorkerId();
+        long workerId = redisWorkerIdGenerator.getWorkerId();
 
-        assertNotNull(workerId);
         assertEquals(3L, workerId); // 35 % 32 = 3
     }
 
     @Test
-    void getWorkerId_whenRedisException_shouldReturnNull() {
+    void getWorkerId_whenRedisException_shouldReturnRandomId() {
         when(stringRedisTemplate.opsForValue()).thenThrow(new RuntimeException("Redis connection failed"));
 
-        Long workerId = redisWorkerIdGenerator.getWorkerId();
+        long workerId = redisWorkerIdGenerator.getWorkerId();
 
-        assertNull(workerId);
+        assertTrue(workerId >= 0 && workerId <= 31);
     }
 
     @Test
-    void getWorkerId_whenIncrReturnsNull_shouldReturnNull() {
+    void getWorkerId_whenIncrReturnsNull_shouldReturnRandomId() {
         when(stringRedisTemplate.opsForValue()).thenReturn(valueOperations);
         when(valueOperations.increment("mybatis:id:worker-id")).thenReturn(null);
 
-        Long workerId = redisWorkerIdGenerator.getWorkerId();
+        long workerId = redisWorkerIdGenerator.getWorkerId();
 
-        assertNull(workerId);
+        assertTrue(workerId >= 0 && workerId <= 31);
     }
 
 }

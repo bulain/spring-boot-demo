@@ -10,8 +10,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
-import java.net.InetAddress;
-
 /**
  * MyBatis Plus 分布式 ID 生成器配置
  * <p>
@@ -44,19 +42,8 @@ public class MybatisPlusIdConfig {
     @Bean
     public IdentifierGenerator identifierGenerator(RedisWorkerIdGenerator redisWorkerIdGenerator) {
         long validDatacenterId = getValidDatacenterId();
-        Long workerId = redisWorkerIdGenerator.getWorkerId();
-
-        if (workerId != null) {
-            Sequence sequence = new Sequence(workerId, validDatacenterId);
-            return new DefaultIdentifierGenerator(sequence);
-        }
-
-        // Redis 不可用时使用默认机制（基于 MAC 地址）
-        try {
-            return new DefaultIdentifierGenerator(InetAddress.getLocalHost());
-        } catch (Exception e) {
-            log.warn("获取本地主机地址失败，使用默认 ID 生成器: {}", e.getMessage());
-            return new DefaultIdentifierGenerator();
-        }
+        long workerId = redisWorkerIdGenerator.getWorkerId();
+        Sequence sequence = new Sequence(workerId, validDatacenterId);
+        return new DefaultIdentifierGenerator(sequence);
     }
 }

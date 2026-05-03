@@ -14,8 +14,8 @@
 
 #### Scenario: Redis 不可用时降级
 - **WHEN** 应用启动但 Redis 连接不可用
-- **THEN** 系统降级使用 MyBatis Plus 默认的 workerId 生成机制
-- **AND** 记录 WARN 级别日志提示用户
+- **THEN** 系统生成 0-31 范围内的随机 workerId
+- **AND** 记录 WARN 级别日志提示用户降级为随机 workerId
 
 #### Scenario: workerId 取模循环
 - **WHEN** Redis 自增的 workerId 超过 31
