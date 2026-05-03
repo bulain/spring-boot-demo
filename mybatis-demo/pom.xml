@@ -207,6 +207,12 @@
                 <version>0.9.4</version>
             </dependency>
             -->
+            <!-- postgresql -->
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>42.7.11</version>
+            </dependency>
             <!-- dameng -->
             <dependency>
                 <groupId>com.dameng</groupId>
