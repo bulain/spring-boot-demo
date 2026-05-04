@@ -26,10 +26,10 @@ conventions:
 
 # 代码结构
 code_paths:
-  controller: com.bulain.mybatis.controller
-  service: com.bulain.mybatis.service
-  mapper: com.bulain.mybatis.mapper
-  entity: com.bulain.mybatis.entity
+  controller: com.bulain.mybatis.demo.ctrl
+  service: com.bulain.mybatis.demo.service
+  mapper: com.bulain.mybatis.demo.mapper
+  entity: com.bulain.mybatis.demo.entity
   config: src/main/resources/application-*.yml
 
 # 工件规则
