@@ -1,7 +1,7 @@
 package com.bulain.mybatis.sys.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.bulain.mybatis.core.pojo.Paged;
-import com.bulain.mybatis.core.service.PagedService;
 import com.bulain.mybatis.sys.dto.CreateRoleDTO;
 import com.bulain.mybatis.sys.dto.RoleQueryDTO;
 import com.bulain.mybatis.sys.dto.UpdateRoleDTO;
@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * 角色服务接口
  */
-public interface SysRoleService extends PagedService<SysRole> {
+public interface SysRoleService extends IService<SysRole> {
 
     /**
      * 创建角色

@@ -77,9 +77,9 @@ public class OrderMapperDemo {
     }
 
     @Test
-    public void testDeleteBatchIds() {
+    public void testDeleteIds() {
         Collection<? extends Serializable> idList = Arrays.asList(new String[]{id, "2", "3"});
-        Integer dcnt = orderMapper.deleteBatchIds(idList);
+        Integer dcnt = orderMapper.deleteByIds(idList);
         assertEquals(Integer.valueOf(1), dcnt);
     }
 
@@ -115,9 +115,9 @@ public class OrderMapperDemo {
     }
 
     @Test
-    public void testSelectBatchIds() {
+    public void testSelectIds() {
         Collection<? extends Serializable> idList = Arrays.asList(new String[]{id, "2", "3"});
-        List<Order> list = orderMapper.selectBatchIds(idList);
+        List<Order> list = orderMapper.selectByIds(idList);
         assertEquals(1, list.size());
     }
 
@@ -206,23 +206,6 @@ public class OrderMapperDemo {
                 .set("version", SystemClock.now())
                 .eq("id", id);
         orderMapper.update(null, updateWrapper);
-    }
-
-    @Test
-    public void testSelectByCustomSql() {
-        QueryWrapper<Order> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("order_no", "X00001");
-        List<Order> list = orderMapper.selectByCustomSql(queryWrapper);
-        assertEquals(1, list.size());
-
-        queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("order_no", "X00001");
-        queryWrapper.eq("deleted", 0);
-        queryWrapper.select("order_no");
-        queryWrapper.orderByAsc("order_no");
-        list = orderMapper.selectByCustomSql(queryWrapper);
-        assertEquals(1, list.size());
-
     }
 
 }

@@ -2,8 +2,8 @@ package com.bulain.mybatis.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bulain.mybatis.core.pojo.Paged;
-import com.bulain.mybatis.core.service.PagedServiceImpl;
 import com.bulain.mybatis.sys.dao.SysPermissionMapper;
 import com.bulain.mybatis.sys.dao.SysRoleMapper;
 import com.bulain.mybatis.sys.dao.SysUserMapper;
@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
  * 用户服务实现类
  */
 @Service
-public class SysUserServiceImpl extends PagedServiceImpl<SysUserMapper, SysUser> implements SysUserService {
+public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 
     @Autowired
     private SysUserRoleService sysUserRoleService;

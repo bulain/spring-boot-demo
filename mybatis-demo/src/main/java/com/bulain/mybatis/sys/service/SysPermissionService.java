@@ -1,7 +1,7 @@
 package com.bulain.mybatis.sys.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.bulain.mybatis.core.pojo.Paged;
-import com.bulain.mybatis.core.service.PagedService;
 import com.bulain.mybatis.sys.dto.CreatePermissionDTO;
 import com.bulain.mybatis.sys.dto.PermissionQueryDTO;
 import com.bulain.mybatis.sys.dto.UpdatePermissionDTO;
@@ -10,7 +10,7 @@ import com.bulain.mybatis.sys.entity.SysPermission;
 /**
  * 权限服务接口
  */
-public interface SysPermissionService extends PagedService<SysPermission> {
+public interface SysPermissionService extends IService<SysPermission> {
 
     /**
      * 创建权限

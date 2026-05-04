@@ -2,8 +2,8 @@ package com.bulain.mybatis.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bulain.mybatis.core.pojo.Paged;
-import com.bulain.mybatis.core.service.PagedServiceImpl;
 import com.bulain.mybatis.sys.dao.SysPermissionMapper;
 import com.bulain.mybatis.sys.dto.CreatePermissionDTO;
 import com.bulain.mybatis.sys.dto.PermissionQueryDTO;
@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
  * 权限服务实现类
  */
 @Service
-public class SysPermissionServiceImpl extends PagedServiceImpl<SysPermissionMapper, SysPermission> implements SysPermissionService {
+public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, SysPermission> implements SysPermissionService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)

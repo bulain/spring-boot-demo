@@ -1,7 +1,7 @@
 package com.bulain.mybatis.sys.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.bulain.mybatis.core.pojo.Paged;
-import com.bulain.mybatis.core.service.PagedService;
 import com.bulain.mybatis.sys.dto.CreateUserDTO;
 import com.bulain.mybatis.sys.dto.UpdateUserDTO;
 import com.bulain.mybatis.sys.dto.UserQueryDTO;
@@ -14,7 +14,7 @@ import java.util.Set;
 /**
  * 用户服务接口
  */
-public interface SysUserService extends PagedService<SysUser> {
+public interface SysUserService extends IService<SysUser> {
 
     /**
      * 创建用户
