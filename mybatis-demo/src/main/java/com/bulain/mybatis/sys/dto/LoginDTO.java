@@ -16,4 +16,14 @@ public class LoginDTO {
     @NotBlank(message = "密码不能为空")
     private String password;
 
+    /**
+     * 验证码ID（登录失败达到阈值后需要）
+     */
+    private String captchaId;
+
+    /**
+     * 图片验证码（登录失败达到阈值后需要）
+     */
+    private String captchaCode;
+
 }

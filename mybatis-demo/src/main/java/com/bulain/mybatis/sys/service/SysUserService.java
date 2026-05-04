@@ -76,4 +76,14 @@ public interface SysUserService extends IService<SysUser> {
      */
     Paged<SysUser> pageUsers(UserQueryDTO query);
 
+    /**
+     * 解锁账户（清除登录失败计数和锁定状态）
+     */
+    void unlockUser(String userId);
+
+    /**
+     * 修改密码
+     */
+    void changePassword(String userId, String oldPassword, String newPassword);
+
 }

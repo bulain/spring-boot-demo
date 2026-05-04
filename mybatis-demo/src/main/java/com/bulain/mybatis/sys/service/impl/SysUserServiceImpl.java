@@ -15,6 +15,8 @@ import com.bulain.mybatis.sys.entity.SysPermission;
 import com.bulain.mybatis.sys.entity.SysRole;
 import com.bulain.mybatis.sys.entity.SysUser;
 import com.bulain.mybatis.sys.entity.SysUserRole;
+import com.bulain.mybatis.sys.service.LoginSecurityService;
+import com.bulain.mybatis.sys.service.PasswordPolicyService;
 import com.bulain.mybatis.sys.service.SysRoleService;
 import com.bulain.mybatis.sys.service.SysUserRoleService;
 import com.bulain.mybatis.sys.service.SysUserService;
@@ -48,11 +50,23 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Autowired
     private SysPermissionMapper sysPermissionMapper;
 
+    @Autowired
+    private PasswordPolicyService passwordPolicyService;
+
+    @Autowired
+    private LoginSecurityService loginSecurityService;
+
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public SysUser createUser(CreateUserDTO dto) {
+        // 验证密码策略
+        String passwordError = passwordPolicyService.validatePassword(dto.getPassword(), dto.getUsername());
+        if (passwordError != null) {
+            throw new RuntimeException(passwordError);
+        }
+
         SysUser user = new SysUser();
         user.setUsername(dto.getUsername());
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
@@ -102,8 +116,43 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         if (user == null) {
             throw new RuntimeException("用户不存在");
         }
+
+        // 验证密码策略
+        String passwordError = passwordPolicyService.validatePassword(newPassword, user.getUsername());
+        if (passwordError != null) {
+            throw new RuntimeException(passwordError);
+        }
+
         user.setPassword(passwordEncoder.encode(newPassword));
         baseMapper.updateById(user);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void changePassword(String userId, String oldPassword, String newPassword) {
+        SysUser user = baseMapper.selectById(userId);
+        if (user == null) {
+            throw new RuntimeException("用户不存在");
+        }
+
+        // 验证旧密码
+        if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+            throw new RuntimeException("旧密码不正确");
+        }
+
+        // 验证新密码策略
+        String passwordError = passwordPolicyService.validatePassword(newPassword, user.getUsername());
+        if (passwordError != null) {
+            throw new RuntimeException(passwordError);
+        }
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        baseMapper.updateById(user);
+    }
+
+    @Override
+    public void unlockUser(String userId) {
+        loginSecurityService.unlockUser(userId);
     }
 
     @Override

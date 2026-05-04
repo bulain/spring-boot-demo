@@ -9,21 +9,24 @@ import com.bulain.mybatis.sys.dto.CreateUserDTO;
 import com.bulain.mybatis.sys.dto.LoginDTO;
 import com.bulain.mybatis.sys.dto.PhoneLoginDTO;
 import com.bulain.mybatis.sys.dto.SendCodeRequest;
+import com.bulain.mybatis.sys.service.LoginSecurityService;
 import com.bulain.mybatis.sys.service.SysUserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import tools.jackson.databind.ObjectMapper;
 
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -49,25 +52,40 @@ class SysAuthControllerTest {
     @Autowired
     private RedissonClient redissonClient;
 
+    @Autowired
+    private LoginSecurityService loginSecurityService;
+
     @BeforeEach
     void setUp() {
         // 清理测试数据
         sysUserMapper.directDelete(new LambdaQueryWrapper<>());
 
-        // 创建测试用户
+        // 清理Redis中的安全计数
+        loginSecurityService.recordLoginSuccess("test-user", "127.0.0.1");
+
+        // 创建测试用户 - 使用符合密码策略的密码
         CreateUserDTO dto = new CreateUserDTO();
         dto.setUsername("loginuser");
         dto.setName("Login User");
-        dto.setPassword("password123");
+        dto.setPassword("Test@1234");
         dto.setPhone("13800138000");
         sysUserService.createUser(dto);
     }
 
     @Test
-    void testLogin() throws Exception {
+    void testGetImageCaptcha() throws Exception {
+        mockMvc.perform(get("/api/sys/auth/image-captcha"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(200))
+                .andExpect(jsonPath("$.data.captchaId").exists())
+                .andExpect(jsonPath("$.data.imageBase64").exists());
+    }
+
+    @Test
+    void testLogin_Success() throws Exception {
         LoginDTO dto = new LoginDTO();
         dto.setUsername("loginuser");
-        dto.setPassword("password123");
+        dto.setPassword("Test@1234");
 
         mockMvc.perform(post("/api/sys/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -78,12 +96,49 @@ class SysAuthControllerTest {
     }
 
     @Test
-    void testGetImageCaptcha() throws Exception {
-        mockMvc.perform(get("/api/sys/auth/image-captcha"))
+    void testLogin_WrongPassword() throws Exception {
+        LoginDTO dto = new LoginDTO();
+        dto.setUsername("loginuser");
+        dto.setPassword("wrongpassword");
+
+        mockMvc.perform(post("/api/sys/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.code").value(200))
+                .andExpect(jsonPath("$.code").value(500))
+                .andExpect(jsonPath("$.message").value("用户名或密码错误"));
+    }
+
+    @Test
+    void testLogin_CaptchaTriggerAfterFailures() throws Exception {
+        LoginDTO dto = new LoginDTO();
+        dto.setUsername("loginuser");
+        dto.setPassword("wrongpassword");
+
+        // 先进行4次错误登录，不触发验证码
+        for (int i = 0; i < 4; i++) {
+            mockMvc.perform(post("/api/sys/auth/login")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(dto)))
+                    .andExpect(jsonPath("$.code").value(500));
+        }
+
+        // 第5次应该触发验证码要求 (428)
+        String response = mockMvc.perform(post("/api/sys/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(428))
+                .andExpect(jsonPath("$.message").value("密码错误次数过多，请输入验证码"))
                 .andExpect(jsonPath("$.data.captchaId").exists())
-                .andExpect(jsonPath("$.data.imageBase64").exists());
+                .andExpect(jsonPath("$.data.captchaImage").exists())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        Map<String, Object> data = (Map<String, Object>) objectMapper.readValue(response, Map.class).get("data");
+        assertNotNull(data.get("captchaId"));
+        assertNotNull(data.get("captchaImage"));
     }
 
     @Test
@@ -184,4 +239,5 @@ class SysAuthControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(500));
     }
+
 }

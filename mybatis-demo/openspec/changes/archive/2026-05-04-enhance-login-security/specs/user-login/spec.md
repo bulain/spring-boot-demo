@@ -1,10 +1,4 @@
-# user-login Specification
-
-## Purpose
-
-用户登录能力 - 支持用户名密码登录，包含密码验证、安全策略、账户锁定等功能。
-
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: Password Verification
 
@@ -40,4 +34,3 @@
 - **WHEN** 提供的验证码不正确或已过期
 - **THEN** 返回错误提示："验证码错误或已过期"
 - **AND** 返回新的 captchaId
-
