@@ -1,5 +1,6 @@
 package com.bulain.mybatis.sys.service;
 
+import com.alibaba.excel.EasyExcel;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.bulain.mybatis.config.Profiles;
 import com.bulain.mybatis.core.pojo.Paged;
@@ -8,12 +9,17 @@ import com.bulain.mybatis.sys.dto.CreateUserDTO;
 import com.bulain.mybatis.sys.dto.UpdateUserDTO;
 import com.bulain.mybatis.sys.dto.UserQueryDTO;
 import com.bulain.mybatis.sys.entity.SysUser;
+import com.bulain.mybatis.sys.excel.ImportResultVO;
+import com.bulain.mybatis.sys.excel.SysUserExcel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -144,5 +150,167 @@ class SysUserServiceTest {
         assertNotNull(permissions);
         // User without roles should have empty permissions
         assertTrue(permissions.isEmpty());
+    }
+
+    @Test
+    void testImportUsers() throws Exception {
+        // 准备测试数据
+        List<SysUserExcel> dataList = List.of(
+            createUserExcel("importuser001", "Import User 001", "import001@example.com", "13900139001"),
+            createUserExcel("importuser002", "Import User 002", "import002@example.com", "13900139002")
+        );
+
+        // 写入Excel
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        EasyExcel.write(out, SysUserExcel.class).sheet().doWrite(dataList);
+
+        // 执行流式导入
+        ImportResultVO result = sysUserService.importExcel(new ByteArrayInputStream(out.toByteArray()));
+
+        // 验证结果
+        assertNotNull(result);
+        assertEquals(2, result.getSuccessCount());
+        assertEquals(0, result.getUpdateCount());
+        assertEquals(0, result.getFailCount());
+
+        // 验证数据已创建
+        SysUser user1 = sysUserService.getByUsername("importuser001");
+        SysUser user2 = sysUserService.getByUsername("importuser002");
+        assertNotNull(user1);
+        assertNotNull(user2);
+    }
+
+    @Test
+    void testImportUsersWithUpdate() throws Exception {
+        // 先创建一个已存在的用户
+        CreateUserDTO dto = new CreateUserDTO();
+        dto.setUsername("updateimport");
+        dto.setName("Original Name");
+        dto.setPassword("password123!");
+        sysUserService.createUser(dto);
+
+        // 准备导入数据（包含已存在的，会更新）
+        List<SysUserExcel> dataList = List.of(
+            createUserExcel("updateimport", "Updated Name", "updated@example.com", "13800138000"),
+            createUserExcel("newimport", "New User", "new@example.com", "13800138001")
+        );
+
+        // 写入Excel
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        EasyExcel.write(out, SysUserExcel.class).sheet().doWrite(dataList);
+
+        // 执行流式导入
+        ImportResultVO result = sysUserService.importExcel(new ByteArrayInputStream(out.toByteArray()));
+
+        // 验证结果
+        assertNotNull(result);
+        assertEquals(1, result.getSuccessCount());
+        assertEquals(1, result.getUpdateCount());
+        assertEquals(0, result.getFailCount());
+
+        // 验证更新
+        SysUser updated = sysUserService.getByUsername("updateimport");
+        assertEquals("Updated Name", updated.getName());
+        assertEquals("updated@example.com", updated.getEmail());
+    }
+
+    @Test
+    void testUserImportListenerValidation() throws Exception {
+        // 准备测试数据（包含空值和格式错误）
+        List<SysUserExcel> dataList = List.of(
+            createUserExcel(null, "Valid Name", "email@example.com", "13900139000"), // 用户名为空
+            createUserExcel("VALID_USER", null, "email@example.com", "13900139001"), // 姓名为空
+            createUserExcel("VALID_USER2", "Valid Name 2", "invalid-email", "13900139002"), // 邮箱格式错误
+            createUserExcel("VALID_USER3", "Valid Name 3", "valid@example.com", "123"), // 手机号格式错误
+            createUserExcel("VALID_USER4", "Valid Name 4", "valid2@example.com", "13900139004") // 有效数据
+        );
+
+        // 写入Excel
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        EasyExcel.write(out, SysUserExcel.class).sheet().doWrite(dataList);
+
+        // 流式导入（包含校验）
+        ImportResultVO result = sysUserService.importExcel(new ByteArrayInputStream(out.toByteArray()));
+
+        // 第1、2、3、4行应该校验失败
+        assertEquals(4, result.getFailCount());
+        // 第5行成功
+        assertEquals(1, result.getSuccessCount());
+    }
+
+    @Test
+    void testStreamingBatchProcessing() throws Exception {
+        // 创建 101 行数据（超过一批，验证分批处理）
+        List<SysUserExcel> dataList = new ArrayList<>();
+        for (int i = 1; i <= 101; i++) {
+            SysUserExcel excel = new SysUserExcel();
+            excel.setUsername("BATCH_USER_" + i);
+            excel.setName("Batch User " + i);
+            excel.setEmail("batch" + i + "@example.com");
+            excel.setPhone("139" + String.format("%08d", i));
+            excel.setStatus("启用");
+            dataList.add(excel);
+        }
+
+        // 写入Excel
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        EasyExcel.write(out, SysUserExcel.class).sheet().doWrite(dataList);
+
+        // 执行流式导入
+        ImportResultVO result = sysUserService.importExcel(new ByteArrayInputStream(out.toByteArray()));
+
+        // 验证101行全部成功导入
+        assertEquals(101, result.getSuccessCount());
+        assertEquals(0, result.getUpdateCount());
+        assertEquals(0, result.getFailCount());
+    }
+
+    @Test
+    void testEmptyFileImport() throws Exception {
+        // 空数据（只有表头，无数据行）
+        List<SysUserExcel> dataList = List.of();
+
+        // 写入Excel
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        EasyExcel.write(out, SysUserExcel.class).sheet().doWrite(dataList);
+
+        // 流式导入
+        ImportResultVO result = sysUserService.importExcel(new ByteArrayInputStream(out.toByteArray()));
+
+        // 验证空文件不报错
+        assertNotNull(result);
+        assertEquals(0, result.getSuccessCount());
+        assertEquals(0, result.getUpdateCount());
+        assertEquals(0, result.getFailCount());
+    }
+
+    @Test
+    void testDuplicateUsernameInFile() throws Exception {
+        // 准备测试数据（包含重复用户名）
+        List<SysUserExcel> dataList = List.of(
+            createUserExcel("dupuser", "First User", "first@example.com", "13900139000"),
+            createUserExcel("dupuser", "Duplicate User", "dup@example.com", "13900139001") // 重复
+        );
+
+        // 写入Excel
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        EasyExcel.write(out, SysUserExcel.class).sheet().doWrite(dataList);
+
+        // 流式导入
+        ImportResultVO result = sysUserService.importExcel(new ByteArrayInputStream(out.toByteArray()));
+
+        // 第1行成功，第2行应该校验失败（重复）
+        assertEquals(1, result.getSuccessCount());
+        assertEquals(1, result.getFailCount());
+    }
+
+    private SysUserExcel createUserExcel(String username, String name, String email, String phone) {
+        SysUserExcel excel = new SysUserExcel();
+        excel.setUsername(username);
+        excel.setName(name);
+        excel.setEmail(email);
+        excel.setPhone(phone);
+        excel.setStatus("启用");
+        return excel;
     }
 }

@@ -1,5 +1,6 @@
 package com.bulain.mybatis.sys.service.impl;
 
+import com.alibaba.excel.EasyExcel;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -15,13 +16,19 @@ import com.bulain.mybatis.sys.entity.SysPermission;
 import com.bulain.mybatis.sys.entity.SysRole;
 import com.bulain.mybatis.sys.entity.SysUser;
 import com.bulain.mybatis.sys.entity.SysUserRole;
+import com.bulain.mybatis.sys.excel.ImportResultVO;
+import com.bulain.mybatis.sys.excel.SysUserExcel;
+import com.bulain.mybatis.sys.excel.UserImportListener;
 import com.bulain.mybatis.sys.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -272,6 +279,59 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         return baseMapper.selectOne(
             new LambdaQueryWrapper<SysUser>().eq(SysUser::getDingtalkUserid, userid)
         );
+    }
+
+    @Override
+    public ImportResultVO importExcel(InputStream inputStream) {
+        UserImportListener listener = new UserImportListener(this::processImportBatch);
+        EasyExcel.read(inputStream, SysUserExcel.class, listener).sheet().doRead();
+        return listener.getResult();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
+    public ImportResultVO processImportBatch(List<SysUserExcel> batch) {
+        ImportResultVO batchResult = new ImportResultVO();
+
+        List<SysUser> insertList = new ArrayList<>();
+        List<SysUser> updateList = new ArrayList<>();
+
+        for (SysUserExcel excel : batch) {
+            SysUser existing = getByUsername(excel.getUsername());
+            if (existing != null) {
+                // 更新
+                existing.setName(excel.getName());
+                existing.setEmail(excel.getEmail());
+                existing.setPhone(excel.getPhone());
+                existing.setStatus("启用".equals(excel.getStatus()) ? 1 : 0);
+                updateList.add(existing);
+            } else {
+                // 新增
+                SysUser user = new SysUser();
+                user.setUsername(excel.getUsername());
+                user.setName(excel.getName());
+                user.setEmail(excel.getEmail());
+                user.setPhone(excel.getPhone());
+                user.setStatus("启用".equals(excel.getStatus()) ? 1 : 0);
+                // 默认密码：手机号后6位，无手机号则为 "123456"
+                String defaultPassword = (excel.getPhone() != null && excel.getPhone().length() >= 6)
+                        ? excel.getPhone().substring(excel.getPhone().length() - 6)
+                        : "123456";
+                user.setPassword(passwordEncoder.encode(defaultPassword));
+                insertList.add(user);
+            }
+        }
+
+        if (!insertList.isEmpty()) {
+            saveBatch(insertList);
+            batchResult.setSuccessCount(insertList.size());
+        }
+        if (!updateList.isEmpty()) {
+            updateBatchById(updateList);
+            batchResult.setUpdateCount(updateList.size());
+        }
+
+        return batchResult;
     }
 
 }

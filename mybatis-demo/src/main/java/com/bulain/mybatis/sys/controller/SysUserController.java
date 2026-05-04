@@ -8,6 +8,7 @@ import com.bulain.mybatis.sys.dto.UserQueryDTO;
 import com.bulain.mybatis.sys.dto.UserRoleAssignDTO;
 import com.bulain.mybatis.sys.entity.SysRole;
 import com.bulain.mybatis.sys.entity.SysUser;
+import com.bulain.mybatis.sys.excel.ImportResultVO;
 import com.bulain.mybatis.sys.excel.SysUserExcel;
 import com.bulain.mybatis.sys.service.SysExcelService;
 import com.bulain.mybatis.sys.service.SysUserService;
@@ -112,10 +113,9 @@ public class SysUserController {
     }
 
     @PostMapping("/import")
-    public Result<Integer> importUsers(@RequestParam("file") MultipartFile file) throws IOException {
-        List<SysUser> users = sysExcelService.importUsers(file.getInputStream());
-        sysUserService.saveBatch(users);
-        return Result.success(users.size());
+    public Result<ImportResultVO> importUsers(@RequestParam("file") MultipartFile file) throws IOException {
+        ImportResultVO result = sysUserService.importExcel(file.getInputStream());
+        return Result.success(result);
     }
 
     @GetMapping("/template")

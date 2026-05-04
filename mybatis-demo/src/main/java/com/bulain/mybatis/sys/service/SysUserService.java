@@ -7,7 +7,10 @@ import com.bulain.mybatis.sys.dto.UpdateUserDTO;
 import com.bulain.mybatis.sys.dto.UserQueryDTO;
 import com.bulain.mybatis.sys.entity.SysRole;
 import com.bulain.mybatis.sys.entity.SysUser;
+import com.bulain.mybatis.sys.excel.ImportResultVO;
+import com.bulain.mybatis.sys.excel.SysUserExcel;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Set;
 
@@ -85,5 +88,15 @@ public interface SysUserService extends IService<SysUser> {
      * 修改密码
      */
     void changePassword(String userId, String oldPassword, String newPassword);
+
+    /**
+     * 流式导入用户Excel
+     */
+    ImportResultVO importExcel(InputStream inputStream);
+
+    /**
+     * 处理单个导入批次（独立事务）
+     */
+    ImportResultVO processImportBatch(List<SysUserExcel> batch);
 
 }
