@@ -41,7 +41,7 @@ class SysUserServiceTest {
         dto.setName("Service User");
         dto.setEmail("service@example.com");
         dto.setPhone("13900139000");
-        dto.setPassword("password123");
+        dto.setPassword("password123!");
 
         SysUser user = sysUserService.createUser(dto);
 
@@ -55,7 +55,7 @@ class SysUserServiceTest {
         CreateUserDTO createDTO = new CreateUserDTO();
         createDTO.setUsername("updateuser");
         createDTO.setName("Update User");
-        createDTO.setPassword("password123");
+        createDTO.setPassword("password123!");
         SysUser user = sysUserService.createUser(createDTO);
 
         UpdateUserDTO updateDTO = new UpdateUserDTO();
@@ -73,7 +73,7 @@ class SysUserServiceTest {
         CreateUserDTO createDTO = new CreateUserDTO();
         createDTO.setUsername("statususer");
         createDTO.setName("Status User");
-        createDTO.setPassword("password123");
+        createDTO.setPassword("password123!");
         SysUser user = sysUserService.createUser(createDTO);
 
         sysUserService.toggleStatus(user.getId(), 0);
@@ -87,7 +87,7 @@ class SysUserServiceTest {
         CreateUserDTO createDTO = new CreateUserDTO();
         createDTO.setUsername("pageuser");
         createDTO.setName("Page User");
-        createDTO.setPassword("password123");
+        createDTO.setPassword("password123!");
         sysUserService.createUser(createDTO);
 
         UserQueryDTO query = new UserQueryDTO();
@@ -106,7 +106,7 @@ class SysUserServiceTest {
         CreateUserDTO createDTO = new CreateUserDTO();
         createDTO.setUsername("getbyusername");
         createDTO.setName("Get By Username");
-        createDTO.setPassword("password123");
+        createDTO.setPassword("password123!");
         sysUserService.createUser(createDTO);
 
         SysUser found = sysUserService.getByUsername("getbyusername");
@@ -120,7 +120,7 @@ class SysUserServiceTest {
         CreateUserDTO createDTO = new CreateUserDTO();
         createDTO.setUsername("assignroleuser");
         createDTO.setName("Assign Role User");
-        createDTO.setPassword("password123");
+        createDTO.setPassword("password123!");
         SysUser user = sysUserService.createUser(createDTO);
 
         // Note: In a real test, we'd create roles first then assign them
@@ -136,7 +136,7 @@ class SysUserServiceTest {
         CreateUserDTO createDTO = new CreateUserDTO();
         createDTO.setUsername("permuser");
         createDTO.setName("Permission User");
-        createDTO.setPassword("password123");
+        createDTO.setPassword("password123!");
         SysUser user = sysUserService.createUser(createDTO);
 
         Set<String> permissions = sysUserService.getUserPermissionCodes(user.getId());

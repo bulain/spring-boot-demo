@@ -50,7 +50,7 @@ class SysUserControllerTest {
         dto.setUsername("controlleruser");
         dto.setName("Controller User");
         dto.setEmail("controller@example.com");
-        dto.setPassword("password123");
+        dto.setPassword("password123!");
         SysUser user = sysUserService.createUser(dto);
         testUserId = user.getId();
     }
@@ -61,7 +61,7 @@ class SysUserControllerTest {
         dto.setUsername("newuser");
         dto.setName("New User");
         dto.setEmail("new@example.com");
-        dto.setPassword("password123");
+        dto.setPassword("password123!");
 
         mockMvc.perform(post("/api/sys/users")
                         .contentType(MediaType.APPLICATION_JSON)

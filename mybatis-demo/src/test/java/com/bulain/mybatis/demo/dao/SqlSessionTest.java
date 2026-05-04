@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 
 @Slf4j
-@Disabled
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = MybatisPlusApplication.class)
 public class SqlSessionTest {

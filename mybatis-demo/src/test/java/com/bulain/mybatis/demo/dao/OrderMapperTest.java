@@ -21,7 +21,6 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@Disabled
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = MybatisPlusApplication.class)
 public class OrderMapperTest {

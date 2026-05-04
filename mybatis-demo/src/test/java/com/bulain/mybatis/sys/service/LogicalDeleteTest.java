@@ -36,7 +36,7 @@ class LogicalDeleteTest {
         CreateUserDTO dto = new CreateUserDTO();
         dto.setUsername("drtestuser");
         dto.setName("DR Test User");
-        dto.setPassword("password123");
+        dto.setPassword("password123!");
 
         SysUser user = sysUserService.createUser(dto);
 
@@ -50,7 +50,7 @@ class LogicalDeleteTest {
         CreateUserDTO dto = new CreateUserDTO();
         dto.setUsername("deleteuser");
         dto.setName("Delete User");
-        dto.setPassword("password123");
+        dto.setPassword("password123!");
         SysUser user = sysUserService.createUser(dto);
 
         // Delete via service
@@ -67,7 +67,7 @@ class LogicalDeleteTest {
         CreateUserDTO dto = new CreateUserDTO();
         dto.setUsername("drsetuser");
         dto.setName("DR Set User");
-        dto.setPassword("password123");
+        dto.setPassword("password123!");
         SysUser user = sysUserService.createUser(dto);
 
         // Delete
@@ -90,7 +90,7 @@ class LogicalDeleteTest {
         CreateUserDTO dto = new CreateUserDTO();
         dto.setUsername("deleteduser");
         dto.setName("Deleted User");
-        dto.setPassword("password123");
+        dto.setPassword("password123!");
         SysUser user = sysUserService.createUser(dto);
         sysUserService.removeById(user.getId());
 
@@ -109,13 +109,13 @@ class LogicalDeleteTest {
         CreateUserDTO dto1 = new CreateUserDTO();
         dto1.setUsername("batchuser1");
         dto1.setName("Batch User 1");
-        dto1.setPassword("password123");
+        dto1.setPassword("password123!");
         SysUser user1 = sysUserService.createUser(dto1);
 
         CreateUserDTO dto2 = new CreateUserDTO();
         dto2.setUsername("batchuser2");
         dto2.setName("Batch User 2");
-        dto2.setPassword("password123");
+        dto2.setPassword("password123!");
         SysUser user2 = sysUserService.createUser(dto2);
 
         // Both should exist
@@ -136,7 +136,7 @@ class LogicalDeleteTest {
         CreateUserDTO dto = new CreateUserDTO();
         dto.setUsername("preserveuser");
         dto.setName("Preserve User");
-        dto.setPassword("password123");
+        dto.setPassword("password123!");
         SysUser user = sysUserService.createUser(dto);
 
         assertNotNull(user.getCreatedAt());

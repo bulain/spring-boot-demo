@@ -39,7 +39,7 @@ class OptimisticLockTest {
         CreateUserDTO dto = new CreateUserDTO();
         dto.setUsername("lockuser");
         dto.setName("Lock User");
-        dto.setPassword("password123");
+        dto.setPassword("password123!");
 
         SysUser user = sysUserService.createUser(dto);
 
@@ -51,7 +51,7 @@ class OptimisticLockTest {
         CreateUserDTO dto = new CreateUserDTO();
         dto.setUsername("updatepubts");
         dto.setName("Update Pubts User");
-        dto.setPassword("password123");
+        dto.setPassword("password123!");
         SysUser user = sysUserService.createUser(dto);
 
         Long initialPubts = user.getPubts();
@@ -71,7 +71,7 @@ class OptimisticLockTest {
         CreateUserDTO dto = new CreateUserDTO();
         dto.setUsername("concurrentuser");
         dto.setName("Concurrent User");
-        dto.setPassword("password123");
+        dto.setPassword("password123!");
         SysUser user = sysUserService.createUser(dto);
 
         int threadCount = 5;
@@ -118,7 +118,7 @@ class OptimisticLockTest {
         CreateUserDTO dto = new CreateUserDTO();
         dto.setUsername("stalelockuser");
         dto.setName("Stale Lock User");
-        dto.setPassword("password123");
+        dto.setPassword("password123!");
         SysUser user = sysUserService.createUser(dto);
 
         // Keep reference to original user

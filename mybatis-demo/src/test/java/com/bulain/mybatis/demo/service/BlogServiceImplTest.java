@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Random;
 
 @Slf4j
-@Disabled
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = MybatisPlusApplication.class)
 class BlogServiceImplTest {

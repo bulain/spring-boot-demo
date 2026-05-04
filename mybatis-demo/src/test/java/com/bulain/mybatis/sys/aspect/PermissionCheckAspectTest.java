@@ -57,7 +57,7 @@ class PermissionCheckAspectTest {
         CreateUserDTO dto = new CreateUserDTO();
         dto.setUsername("aspectuser");
         dto.setName("Aspect User");
-        dto.setPassword("password123");
+        dto.setPassword("password123!");
         SysUser user = sysUserService.createUser(dto);
         testUserId = user.getId();
         validToken = sysJwtService.generateToken(testUserId, "aspectuser");
