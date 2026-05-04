@@ -1,6 +1,8 @@
 package com.bulain.mybatis.sys.service.impl;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.write.metadata.WriteSheet;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -19,6 +21,8 @@ import com.bulain.mybatis.sys.service.SysPermissionService;
 import com.bulain.mybatis.sys.service.SysRolePermissionService;
 import com.bulain.mybatis.sys.service.SysRoleService;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.ibatis.session.ResultContext;
+import org.apache.ibatis.session.ResultHandler;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -138,14 +142,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         }
         wrapper.orderByDesc(SysRole::getCreatedAt);
 
-        List<SysRole> list = baseMapper.selectList(wrapper);
-        List<SysRoleExcel> excelList = list.stream().map(role -> {
-            SysRoleExcel excel = new SysRoleExcel();
-            BeanUtils.copyProperties(role, excel);
-            return excel;
-        }).collect(Collectors.toList());
-
-        writeExcel(response, excelList);
+        exportStreaming(wrapper, response);
     }
 
     @Override
@@ -153,14 +150,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         if (ids == null || ids.isEmpty()) {
             throw new RuntimeException("请选择要导出的角色");
         }
-        List<SysRole> list = baseMapper.selectBatchIds(ids);
-        List<SysRoleExcel> excelList = list.stream().map(role -> {
-            SysRoleExcel excel = new SysRoleExcel();
-            BeanUtils.copyProperties(role, excel);
-            return excel;
-        }).collect(Collectors.toList());
-
-        writeExcel(response, excelList);
+        LambdaQueryWrapper<SysRole> wrapper = new LambdaQueryWrapper<>();
+        wrapper.in(SysRole::getId, ids);
+        exportStreaming(wrapper, response);
     }
 
     @Override
@@ -206,19 +198,41 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         return batchResult;
     }
 
-    private void writeExcel(HttpServletResponse response, List<SysRoleExcel> data) {
+    /**
+     * 流式导出角色数据（OOM安全）
+     */
+    private void exportStreaming(LambdaQueryWrapper<SysRole> wrapper, HttpServletResponse response) {
         try {
             response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
             response.setCharacterEncoding("utf-8");
             String fileName = URLEncoder.encode("角色数据", StandardCharsets.UTF_8).replaceAll("\\+", "%20");
             response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
 
-            EasyExcel.write(response.getOutputStream(), SysRoleExcel.class)
-                    .sheet("角色")
-                    .doWrite(data);
+            try (ExcelWriter excelWriter = EasyExcel.write(response.getOutputStream(), SysRoleExcel.class).build()) {
+                WriteSheet sheet = EasyExcel.writerSheet("角色").build();
+                List<SysRoleExcel> batch = new ArrayList<>(100);
+
+                baseMapper.selectList(wrapper, (ResultHandler<SysRole>) resultContext -> {
+                    SysRole role = resultContext.getResultObject();
+                    SysRoleExcel excel = new SysRoleExcel();
+                    BeanUtils.copyProperties(role, excel);
+                    batch.add(excel);
+
+                    if (batch.size() >= 100) {
+                        excelWriter.write(batch, sheet);
+                        batch.clear();
+                    }
+                });
+
+                // 处理剩余数据
+                if (!batch.isEmpty()) {
+                    excelWriter.write(batch, sheet);
+                }
+            }
         } catch (IOException e) {
             throw new RuntimeException("导出Excel失败", e);
         }
     }
+
 
 }

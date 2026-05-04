@@ -281,6 +281,133 @@ class SysRoleServiceTest {
         assertEquals(0, result.getFailCount());
     }
 
+    @Test
+    void testStreamingExportEmptyData() throws Exception {
+        // 测试空数据导出（0行）
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        RoleQueryDTO query = new RoleQueryDTO();
+        sysRoleService.export(query, response);
+
+        // 验证生成了Excel文件（至少有表头）
+        assertNotNull(response.getContentAsByteArray());
+        assertTrue(response.getContentAsByteArray().length > 0);
+    }
+
+    @Test
+    void testStreamingExportSmallBatch() throws Exception {
+        // 创建 99 行数据（不满一批）
+        for (int i = 1; i <= 99; i++) {
+            CreateRoleDTO dto = new CreateRoleDTO();
+            dto.setCode("SMALL_ROLE_" + i);
+            dto.setName("Small Role " + i);
+            sysRoleService.createRole(dto);
+        }
+
+        // 测试导出
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        RoleQueryDTO query = new RoleQueryDTO();
+        sysRoleService.export(query, response);
+
+        // 验证导出成功
+        assertNotNull(response.getContentAsByteArray());
+        assertTrue(response.getContentAsByteArray().length > 0);
+    }
+
+    @Test
+    void testStreamingExportExactBatch() throws Exception {
+        // 创建 100 行数据（刚好一批）
+        for (int i = 1; i <= 100; i++) {
+            CreateRoleDTO dto = new CreateRoleDTO();
+            dto.setCode("EXACT_ROLE_" + i);
+            dto.setName("Exact Role " + i);
+            sysRoleService.createRole(dto);
+        }
+
+        // 测试导出
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        RoleQueryDTO query = new RoleQueryDTO();
+        sysRoleService.export(query, response);
+
+        // 验证导出成功
+        assertNotNull(response.getContentAsByteArray());
+        assertTrue(response.getContentAsByteArray().length > 0);
+    }
+
+    @Test
+    void testStreamingExportMultiBatch() throws Exception {
+        // 创建 101 行数据（两批次）
+        for (int i = 1; i <= 101; i++) {
+            CreateRoleDTO dto = new CreateRoleDTO();
+            dto.setCode("MULTI_ROLE_" + i);
+            dto.setName("Multi Role " + i);
+            sysRoleService.createRole(dto);
+        }
+
+        // 测试导出
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        RoleQueryDTO query = new RoleQueryDTO();
+        sysRoleService.export(query, response);
+
+        // 验证导出成功
+        assertNotNull(response.getContentAsByteArray());
+        assertTrue(response.getContentAsByteArray().length > 0);
+    }
+
+    @Test
+    void testStreamingExportWithFilter() throws Exception {
+        // 创建测试数据
+        CreateRoleDTO dto1 = new CreateRoleDTO();
+        dto1.setCode("FILTER_ROLE_001");
+        dto1.setName("Filter Test Role 001");
+        sysRoleService.createRole(dto1);
+
+        CreateRoleDTO dto2 = new CreateRoleDTO();
+        dto2.setCode("FILTER_ROLE_002");
+        dto2.setName("Filter Test Role 002");
+        sysRoleService.createRole(dto2);
+
+        // 按名称筛选导出
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        RoleQueryDTO query = new RoleQueryDTO();
+        query.setName("001");
+        sysRoleService.export(query, response);
+
+        // 验证导出成功
+        assertNotNull(response.getContentAsByteArray());
+        assertTrue(response.getContentAsByteArray().length > 0);
+    }
+
+    @Test
+    void testStreamingExportByIds() throws Exception {
+        // 创建测试数据
+        CreateRoleDTO dto1 = new CreateRoleDTO();
+        dto1.setCode("ID_ROLE_001");
+        dto1.setName("ID Test Role 001");
+        SysRole role1 = sysRoleService.createRole(dto1);
+
+        CreateRoleDTO dto2 = new CreateRoleDTO();
+        dto2.setCode("ID_ROLE_002");
+        dto2.setName("ID Test Role 002");
+        sysRoleService.createRole(dto2);
+
+        // 测试按ID导出
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        sysRoleService.exportByIds(List.of(role1.getId()), response);
+
+        // 验证导出成功
+        assertNotNull(response.getContentAsByteArray());
+        assertTrue(response.getContentAsByteArray().length > 0);
+    }
+
+    @Test
+    void testStreamingExportByIdsEmptyList() {
+        // 测试空ID列表导出（应抛出异常）
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        assertThrows(RuntimeException.class, () -> {
+            sysRoleService.exportByIds(List.of(), response);
+        });
+    }
+
     private SysRoleExcel createRoleExcel(String code, String name) {
         SysRoleExcel excel = new SysRoleExcel();
         excel.setCode(code);
