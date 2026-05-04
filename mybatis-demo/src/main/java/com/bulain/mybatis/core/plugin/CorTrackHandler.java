@@ -21,6 +21,10 @@ public class CorTrackHandler implements MetaObjectHandler {
         this.setFieldValByName("createdBy", userId, metaObject);
         this.setFieldValByName("updatedAt", now, metaObject);
         this.setFieldValByName("updatedBy", userId, metaObject);
+        // 乐观锁初始值为当前时间戳
+        strictInsertFill(metaObject, "pubts", System::currentTimeMillis, Long.class);
+        // 逻辑删除初始值为0
+        strictInsertFill(metaObject, "dr", () -> 0L, Long.class);
     }
 
     @Override
@@ -30,6 +34,8 @@ public class CorTrackHandler implements MetaObjectHandler {
 
         this.setFieldValByName("updatedAt", now, metaObject);
         this.setFieldValByName("updatedBy", userId, metaObject);
+        // 更新时自动更新乐观锁为当前时间戳
+        strictUpdateFill(metaObject, "pubts", System::currentTimeMillis, Long.class);
     }
 
 }
