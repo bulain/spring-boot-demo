@@ -10,6 +10,7 @@ import com.bulain.mybatis.sys.entity.SysUser;
 import com.bulain.mybatis.sys.excel.ImportResultVO;
 import com.bulain.mybatis.sys.excel.SysUserExcel;
 
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Set;
@@ -98,5 +99,15 @@ public interface SysUserService extends IService<SysUser> {
      * 处理单个导入批次（独立事务）
      */
     ImportResultVO processImportBatch(List<SysUserExcel> batch);
+
+    /**
+     * 流式导出用户数据（按查询条件）
+     */
+    void export(UserQueryDTO query, HttpServletResponse response);
+
+    /**
+     * 流式导出选中用户（按ID列表）
+     */
+    void exportByIds(List<String> ids, HttpServletResponse response);
 
 }

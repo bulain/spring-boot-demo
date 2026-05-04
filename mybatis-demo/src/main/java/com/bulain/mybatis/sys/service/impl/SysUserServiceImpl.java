@@ -1,6 +1,8 @@
 package com.bulain.mybatis.sys.service.impl;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.write.metadata.WriteSheet;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -20,6 +22,9 @@ import com.bulain.mybatis.sys.excel.ImportResultVO;
 import com.bulain.mybatis.sys.excel.SysUserExcel;
 import com.bulain.mybatis.sys.excel.UserImportListener;
 import com.bulain.mybatis.sys.service.*;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.ibatis.session.ResultContext;
+import org.apache.ibatis.session.ResultHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,7 +32,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -332,6 +340,76 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         }
 
         return batchResult;
+    }
+
+    @Override
+    public void export(UserQueryDTO query, HttpServletResponse response) {
+        LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
+        if (StringUtils.hasText(query.getUsername())) {
+            wrapper.like(SysUser::getUsername, query.getUsername());
+        }
+        if (StringUtils.hasText(query.getName())) {
+            wrapper.like(SysUser::getName, query.getName());
+        }
+        if (StringUtils.hasText(query.getPhone())) {
+            wrapper.like(SysUser::getPhone, query.getPhone());
+        }
+        if (query.getStatus() != null) {
+            wrapper.eq(SysUser::getStatus, query.getStatus());
+        }
+        wrapper.orderByDesc(SysUser::getCreatedAt);
+
+        exportStreaming(wrapper, response);
+    }
+
+    @Override
+    public void exportByIds(List<String> ids, HttpServletResponse response) {
+        if (ids == null || ids.isEmpty()) {
+            throw new RuntimeException("请选择要导出的用户");
+        }
+        LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
+        wrapper.in(SysUser::getId, ids);
+        exportStreaming(wrapper, response);
+    }
+
+    /**
+     * 流式导出用户数据（OOM安全）
+     */
+    private void exportStreaming(LambdaQueryWrapper<SysUser> wrapper, HttpServletResponse response) {
+        try {
+            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            response.setCharacterEncoding("utf-8");
+            String fileName = URLEncoder.encode("用户数据", StandardCharsets.UTF_8).replaceAll("\\+", "%20");
+            response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
+
+            try (ExcelWriter excelWriter = EasyExcel.write(response.getOutputStream(), SysUserExcel.class).build()) {
+                WriteSheet sheet = EasyExcel.writerSheet("用户").build();
+                List<SysUserExcel> batch = new ArrayList<>(100);
+
+                baseMapper.selectList(wrapper, (ResultHandler<SysUser>) resultContext -> {
+                    SysUser user = resultContext.getResultObject();
+                    SysUserExcel excel = new SysUserExcel();
+                    excel.setUsername(user.getUsername());
+                    excel.setName(user.getName());
+                    excel.setEmail(user.getEmail());
+                    excel.setPhone(user.getPhone());
+                    excel.setStatus(user.getStatus() == 1 ? "启用" : "禁用");
+                    batch.add(excel);
+
+                    if (batch.size() >= 100) {
+                        excelWriter.write(batch, sheet);
+                        batch.clear();
+                    }
+                });
+
+                // 处理剩余数据
+                if (!batch.isEmpty()) {
+                    excelWriter.write(batch, sheet);
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("导出Excel失败", e);
+        }
     }
 
 }

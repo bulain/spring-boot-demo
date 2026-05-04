@@ -9,7 +9,6 @@ import com.bulain.mybatis.sys.dto.UserRoleAssignDTO;
 import com.bulain.mybatis.sys.entity.SysRole;
 import com.bulain.mybatis.sys.entity.SysUser;
 import com.bulain.mybatis.sys.excel.ImportResultVO;
-import com.bulain.mybatis.sys.excel.SysUserExcel;
 import com.bulain.mybatis.sys.service.SysExcelService;
 import com.bulain.mybatis.sys.service.SysUserService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,7 +21,6 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * 用户控制器
@@ -98,18 +96,13 @@ public class SysUserController {
     }
 
     @PostMapping("/export")
-    public void exportUsers(HttpServletResponse response, UserQueryDTO query) throws IOException {
-        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        response.setCharacterEncoding("utf-8");
-        String fileName = URLEncoder.encode("用户列表", StandardCharsets.UTF_8).replaceAll("\\+", "%20");
-        response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
+    public void exportUsers(HttpServletResponse response, UserQueryDTO query) {
+        sysUserService.export(query, response);
+    }
 
-        Paged<SysUser> page = sysUserService.pageUsers(query);
-        List<SysUserExcel> excelList = page.getData().stream()
-                .map(this::convertToExcel)
-                .collect(Collectors.toList());
-
-        sysExcelService.exportUsers(response.getOutputStream(), excelList);
+    @PostMapping("/export/selected")
+    public void exportUsersByIds(@RequestBody List<String> ids, HttpServletResponse response) {
+        sysUserService.exportByIds(ids, response);
     }
 
     @PostMapping("/import")
@@ -126,16 +119,6 @@ public class SysUserController {
         response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
 
         sysExcelService.downloadUserTemplate(response.getOutputStream());
-    }
-
-    private SysUserExcel convertToExcel(SysUser user) {
-        SysUserExcel excel = new SysUserExcel();
-        excel.setUsername(user.getUsername());
-        excel.setName(user.getName());
-        excel.setEmail(user.getEmail());
-        excel.setPhone(user.getPhone());
-        excel.setStatus(user.getStatus() == 1 ? "启用" : "禁用");
-        return excel;
     }
 
 }

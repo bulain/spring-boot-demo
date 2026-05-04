@@ -15,6 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.io.ByteArrayInputStream;
@@ -302,6 +303,160 @@ class SysUserServiceTest {
         // 第1行成功，第2行应该校验失败（重复）
         assertEquals(1, result.getSuccessCount());
         assertEquals(1, result.getFailCount());
+    }
+
+    @Test
+    void testExportUsers() throws Exception {
+        // 创建测试数据
+        CreateUserDTO dto = new CreateUserDTO();
+        dto.setUsername("exportuser001");
+        dto.setName("Export Test User 001");
+        dto.setEmail("export001@example.com");
+        dto.setPhone("13900139001");
+        dto.setPassword("password123!");
+        sysUserService.createUser(dto);
+
+        CreateUserDTO dto2 = new CreateUserDTO();
+        dto2.setUsername("exportuser002");
+        dto2.setName("Export Test User 002");
+        dto2.setEmail("export002@example.com");
+        dto2.setPhone("13900139002");
+        dto2.setPassword("password123!");
+        sysUserService.createUser(dto2);
+
+        // 测试导出
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        UserQueryDTO query = new UserQueryDTO();
+        sysUserService.export(query, response);
+
+        assertNotNull(response.getContentAsByteArray());
+        assertTrue(response.getContentAsByteArray().length > 0);
+        assertNotNull(response.getContentType());
+        assertTrue(response.getContentType().startsWith("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"));
+    }
+
+    @Test
+    void testExportUsersByIds() throws Exception {
+        // 创建测试数据
+        CreateUserDTO dto = new CreateUserDTO();
+        dto.setUsername("exportid001");
+        dto.setName("Export ID Test User 001");
+        dto.setEmail("eid001@example.com");
+        dto.setPhone("13900139101");
+        dto.setPassword("password123!");
+        SysUser user1 = sysUserService.createUser(dto);
+
+        CreateUserDTO dto2 = new CreateUserDTO();
+        dto2.setUsername("exportid002");
+        dto2.setName("Export ID Test User 002");
+        dto2.setEmail("eid002@example.com");
+        dto2.setPhone("13900139102");
+        dto2.setPassword("password123!");
+        sysUserService.createUser(dto2);
+
+        // 测试按ID导出
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        sysUserService.exportByIds(List.of(user1.getId()), response);
+
+        assertNotNull(response.getContentAsByteArray());
+        assertTrue(response.getContentAsByteArray().length > 0);
+    }
+
+    @Test
+    void testExportUsersByIdsEmptyList() {
+        // 测试空ID列表导出（应抛出异常）
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        assertThrows(RuntimeException.class, () -> {
+            sysUserService.exportByIds(List.of(), response);
+        });
+    }
+
+    @Test
+    void testStreamingExportEmptyData() throws Exception {
+        // 测试空数据导出（0行）
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        UserQueryDTO query = new UserQueryDTO();
+        sysUserService.export(query, response);
+
+        // 验证生成了Excel文件（至少有表头）
+        assertNotNull(response.getContentAsByteArray());
+        assertTrue(response.getContentAsByteArray().length > 0);
+    }
+
+    @Test
+    void testStreamingExportSmallBatch() throws Exception {
+        // 创建 99 行数据（不满一批）
+        for (int i = 1; i <= 99; i++) {
+            CreateUserDTO dto = new CreateUserDTO();
+            dto.setUsername("smalluser" + i);
+            dto.setName("Small User " + i);
+            dto.setEmail("small" + i + "@example.com");
+            dto.setPhone("139" + String.format("%08d", i));
+            dto.setPassword("password123!");
+            sysUserService.createUser(dto);
+        }
+
+        // 测试导出
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        UserQueryDTO query = new UserQueryDTO();
+        sysUserService.export(query, response);
+
+        // 验证导出成功
+        assertNotNull(response.getContentAsByteArray());
+        assertTrue(response.getContentAsByteArray().length > 0);
+    }
+
+    @Test
+    void testStreamingExportMultiBatch() throws Exception {
+        // 创建 101 行数据（两批次）
+        for (int i = 1; i <= 101; i++) {
+            CreateUserDTO dto = new CreateUserDTO();
+            dto.setUsername("multiuser" + i);
+            dto.setName("Multi User " + i);
+            dto.setEmail("multi" + i + "@example.com");
+            dto.setPhone("138" + String.format("%08d", i));
+            dto.setPassword("password123!");
+            sysUserService.createUser(dto);
+        }
+
+        // 测试导出
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        UserQueryDTO query = new UserQueryDTO();
+        sysUserService.export(query, response);
+
+        // 验证导出成功
+        assertNotNull(response.getContentAsByteArray());
+        assertTrue(response.getContentAsByteArray().length > 0);
+    }
+
+    @Test
+    void testStreamingExportWithFilter() throws Exception {
+        // 创建测试数据
+        CreateUserDTO dto1 = new CreateUserDTO();
+        dto1.setUsername("filteruser001");
+        dto1.setName("Filter Test User 001");
+        dto1.setEmail("filter001@example.com");
+        dto1.setPhone("13900139201");
+        dto1.setPassword("password123!");
+        sysUserService.createUser(dto1);
+
+        CreateUserDTO dto2 = new CreateUserDTO();
+        dto2.setUsername("filteruser002");
+        dto2.setName("Filter Test User 002");
+        dto2.setEmail("filter002@example.com");
+        dto2.setPhone("13900139202");
+        dto2.setPassword("password123!");
+        sysUserService.createUser(dto2);
+
+        // 按名称筛选导出
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        UserQueryDTO query = new UserQueryDTO();
+        query.setName("001");
+        sysUserService.export(query, response);
+
+        // 验证导出成功
+        assertNotNull(response.getContentAsByteArray());
+        assertTrue(response.getContentAsByteArray().length > 0);
     }
 
     private SysUserExcel createUserExcel(String username, String name, String email, String phone) {
