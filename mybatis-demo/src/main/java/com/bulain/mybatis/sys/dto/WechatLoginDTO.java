@@ -1,8 +1,7 @@
 package com.bulain.mybatis.sys.dto;
 
-import lombok.Data;
-
 import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 
 /**
  * 微信登录DTO

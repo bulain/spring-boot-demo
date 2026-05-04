@@ -8,16 +8,16 @@ import com.bulain.mybatis.sys.dao.SysRoleMapper;
 import com.bulain.mybatis.sys.dto.CreateRoleDTO;
 import com.bulain.mybatis.sys.dto.RoleQueryDTO;
 import com.bulain.mybatis.sys.dto.UpdateRoleDTO;
-import org.springframework.util.StringUtils;
+import com.bulain.mybatis.sys.entity.SysPermission;
 import com.bulain.mybatis.sys.entity.SysRole;
 import com.bulain.mybatis.sys.entity.SysRolePermission;
 import com.bulain.mybatis.sys.service.SysPermissionService;
 import com.bulain.mybatis.sys.service.SysRolePermissionService;
 import com.bulain.mybatis.sys.service.SysRoleService;
-import com.bulain.mybatis.sys.entity.SysPermission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;

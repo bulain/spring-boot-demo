@@ -2,7 +2,9 @@ package com.bulain.mybatis.sys.controller;
 
 import com.bulain.mybatis.core.pojo.Paged;
 import com.bulain.mybatis.sys.common.Result;
-import com.bulain.mybatis.sys.dto.*;
+import com.bulain.mybatis.sys.dto.CreatePermissionDTO;
+import com.bulain.mybatis.sys.dto.PermissionQueryDTO;
+import com.bulain.mybatis.sys.dto.UpdatePermissionDTO;
 import com.bulain.mybatis.sys.entity.SysPermission;
 import com.bulain.mybatis.sys.service.SysPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;

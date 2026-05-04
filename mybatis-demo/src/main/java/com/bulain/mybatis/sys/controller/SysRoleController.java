@@ -2,7 +2,10 @@ package com.bulain.mybatis.sys.controller;
 
 import com.bulain.mybatis.core.pojo.Paged;
 import com.bulain.mybatis.sys.common.Result;
-import com.bulain.mybatis.sys.dto.*;
+import com.bulain.mybatis.sys.dto.CreateRoleDTO;
+import com.bulain.mybatis.sys.dto.RolePermissionAssignDTO;
+import com.bulain.mybatis.sys.dto.RoleQueryDTO;
+import com.bulain.mybatis.sys.dto.UpdateRoleDTO;
 import com.bulain.mybatis.sys.entity.SysPermission;
 import com.bulain.mybatis.sys.entity.SysRole;
 import com.bulain.mybatis.sys.service.SysRoleService;

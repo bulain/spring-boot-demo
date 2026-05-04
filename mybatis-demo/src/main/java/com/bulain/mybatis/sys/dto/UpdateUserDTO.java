@@ -1,8 +1,7 @@
 package com.bulain.mybatis.sys.dto;
 
-import lombok.Data;
-
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 
 /**
  * 更新用户DTO

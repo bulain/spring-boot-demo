@@ -1,7 +1,7 @@
 package com.bulain.mybatis.core.config;
 
-import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
 import com.baomidou.mybatisplus.core.incrementer.DefaultIdentifierGenerator;
+import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
 import com.baomidou.mybatisplus.core.toolkit.Sequence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

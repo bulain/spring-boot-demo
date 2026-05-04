@@ -1,9 +1,8 @@
 package com.bulain.mybatis.sys.dto;
 
-import lombok.Data;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 
 /**
  * 创建角色DTO
