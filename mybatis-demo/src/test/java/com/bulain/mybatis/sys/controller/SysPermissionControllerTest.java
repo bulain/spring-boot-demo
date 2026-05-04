@@ -1,5 +1,8 @@
 package com.bulain.mybatis.sys.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.bulain.mybatis.config.Profiles;
+import com.bulain.mybatis.sys.dao.SysPermissionMapper;
 import com.bulain.mybatis.sys.dto.CreatePermissionDTO;
 import com.bulain.mybatis.sys.entity.SysPermission;
 import com.bulain.mybatis.sys.service.SysPermissionService;
@@ -10,11 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@ActiveProfiles(Profiles.TEST)
 @SpringBootTest
 @AutoConfigureMockMvc
 class SysPermissionControllerTest {
@@ -28,10 +35,15 @@ class SysPermissionControllerTest {
     @Autowired
     private SysPermissionService sysPermissionService;
 
-    private Long testPermissionId;
+    @Autowired
+    private SysPermissionMapper sysPermissionMapper;
+
+    private String testPermissionId;
 
     @BeforeEach
     void setUp() {
+        sysPermissionMapper.directDelete(new LambdaQueryWrapper<>());
+
         CreatePermissionDTO dto = new CreatePermissionDTO();
         dto.setCode("controller:test");
         dto.setName("Controller Test Permission");

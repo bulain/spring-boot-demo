@@ -1,23 +1,38 @@
 package com.bulain.mybatis.sys.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.bulain.mybatis.config.Profiles;
+import com.bulain.mybatis.sys.dao.SysUserMapper;
 import com.bulain.mybatis.sys.entity.SysUser;
 import com.bulain.mybatis.sys.excel.SysUserExcel;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@ActiveProfiles(Profiles.TEST)
 @SpringBootTest
 class SysExcelServiceTest {
 
     @Autowired
     private SysExcelService sysExcelService;
+
+    @Autowired
+    private SysUserMapper sysUserMapper;
+
+    @BeforeEach
+    void setUp() {
+        sysUserMapper.directDelete(new LambdaQueryWrapper<>());
+    }
 
     @Test
     void testExportUsers() throws IOException {

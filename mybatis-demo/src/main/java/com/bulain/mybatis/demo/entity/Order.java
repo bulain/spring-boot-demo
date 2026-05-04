@@ -53,13 +53,13 @@ public class Order {
     @TableField(value = "updated_by")
     private String updatedBy;
 
-    @TableField(value ="version", fill = FieldFill.INSERT_UPDATE)
+    @TableField(value = "pubts", fill = FieldFill.INSERT_UPDATE)
     @Version
-    private Long version;
+    private Long pubts;
 
-    @TableField("deleted")
+    @TableField("dr")
     @TableLogic
-    private Integer deleted;
+    private Long dr;
 
     @TableField("archived")
     private String archived;

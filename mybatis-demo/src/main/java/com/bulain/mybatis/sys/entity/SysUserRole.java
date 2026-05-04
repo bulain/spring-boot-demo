@@ -19,23 +19,23 @@ import java.time.LocalDateTime;
 @TableName("sys_user_roles")
 public class SysUserRole {
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private String id;
 
     @TableField("user_id")
-    private Long userId;
+    private String userId;
 
     @TableField("role_id")
-    private Long roleId;
+    private String roleId;
 
     @TableField(value = "created_by", fill = FieldFill.INSERT)
-    private Long createdBy;
+    private String createdBy;
 
     @TableField(value = "created_at", fill = FieldFill.INSERT)
     private LocalDateTime createdAt;
 
     @TableField(value = "updated_by", fill = FieldFill.INSERT_UPDATE)
-    private Long updatedBy;
+    private String updatedBy;
 
     @TableField(value = "updated_at", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedAt;

@@ -20,7 +20,7 @@ public interface SysPermissionService extends IService<SysPermission> {
     /**
      * 更新权限
      */
-    SysPermission updatePermission(Long id, UpdatePermissionDTO dto);
+    SysPermission updatePermission(String id, UpdatePermissionDTO dto);
 
     /**
      * 根据编码查询权限

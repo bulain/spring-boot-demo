@@ -23,17 +23,17 @@ public interface SysRoleService extends IService<SysRole> {
     /**
      * 更新角色
      */
-    SysRole updateRole(Long id, UpdateRoleDTO dto);
+    SysRole updateRole(String id, UpdateRoleDTO dto);
 
     /**
      * 查询角色权限列表
      */
-    List<SysPermission> getRolePermissions(Long roleId);
+    List<SysPermission> getRolePermissions(String roleId);
 
     /**
      * 分配角色权限
      */
-    void assignPermissions(Long roleId, List<Long> permissionIds);
+    void assignPermissions(String roleId, List<String> permissionIds);
 
     /**
      * 根据编码查询角色

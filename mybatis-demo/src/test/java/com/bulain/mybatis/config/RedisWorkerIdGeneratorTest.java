@@ -1,5 +1,6 @@
 package com.bulain.mybatis.config;
 
+import com.bulain.mybatis.core.config.RedisWorkerIdGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

@@ -1,11 +1,14 @@
 package com.bulain.mybatis.sys.service;
 
+import com.bulain.mybatis.config.Profiles;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ActiveProfiles(Profiles.TEST)
 @SpringBootTest
 class SysJwtServiceTest {
 
@@ -14,7 +17,7 @@ class SysJwtServiceTest {
 
     @Test
     void testGenerateToken() {
-        String token = sysJwtService.generateToken(1L, "testuser");
+        String token = sysJwtService.generateToken("1", "testuser");
 
         assertNotNull(token);
         assertFalse(token.isEmpty());
@@ -24,16 +27,16 @@ class SysJwtServiceTest {
 
     @Test
     void testGetUserIdFromToken() {
-        String token = sysJwtService.generateToken(123L, "testuser");
+        String token = sysJwtService.generateToken("123", "testuser");
 
-        Long userId = sysJwtService.getUserIdFromToken(token);
+        String userId = sysJwtService.getUserIdFromToken(token);
 
-        assertEquals(123L, userId);
+        assertEquals("123", userId);
     }
 
     @Test
     void testGetUsernameFromToken() {
-        String token = sysJwtService.generateToken(1L, "jwtuser");
+        String token = sysJwtService.generateToken("1", "jwtuser");
 
         String username = sysJwtService.getUsernameFromToken(token);
 
@@ -42,7 +45,7 @@ class SysJwtServiceTest {
 
     @Test
     void testValidateToken_ValidToken() {
-        String token = sysJwtService.generateToken(1L, "validuser");
+        String token = sysJwtService.generateToken("1", "validuser");
 
         boolean isValid = sysJwtService.validateToken(token);
 
@@ -58,7 +61,7 @@ class SysJwtServiceTest {
 
     @Test
     void testIsTokenExpired_NotExpired() {
-        String token = sysJwtService.generateToken(1L, "notexpired");
+        String token = sysJwtService.generateToken("1", "notexpired");
 
         boolean isExpired = sysJwtService.isTokenExpired(token);
 

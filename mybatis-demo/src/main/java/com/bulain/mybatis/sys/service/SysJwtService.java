@@ -8,12 +8,12 @@ public interface SysJwtService {
     /**
      * 生成Token
      */
-    String generateToken(Long userId, String username);
+    String generateToken(String userId, String username);
 
     /**
      * 从Token中获取用户ID
      */
-    Long getUserIdFromToken(String token);
+    String getUserIdFromToken(String token);
 
     /**
      * 从Token中获取用户名

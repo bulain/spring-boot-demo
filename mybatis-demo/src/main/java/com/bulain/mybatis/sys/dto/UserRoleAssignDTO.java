@@ -10,6 +10,6 @@ import java.util.List;
 @Data
 public class UserRoleAssignDTO {
 
-    private List<Long> roleIds;
+    private List<String> roleIds;
 
 }

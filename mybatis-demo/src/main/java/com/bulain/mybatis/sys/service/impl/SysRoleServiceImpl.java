@@ -47,7 +47,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public SysRole updateRole(Long id, UpdateRoleDTO dto) {
+    public SysRole updateRole(String id, UpdateRoleDTO dto) {
         SysRole role = baseMapper.selectById(id);
         if (role == null) {
             throw new RuntimeException("角色不存在");
@@ -63,11 +63,11 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     }
 
     @Override
-    public List<SysPermission> getRolePermissions(Long roleId) {
+    public List<SysPermission> getRolePermissions(String roleId) {
         List<SysRolePermission> rolePermissions = sysRolePermissionService.list(
             new LambdaQueryWrapper<SysRolePermission>().eq(SysRolePermission::getRoleId, roleId)
         );
-        List<Long> permissionIds = rolePermissions.stream().map(SysRolePermission::getPermissionId).collect(Collectors.toList());
+        List<String> permissionIds = rolePermissions.stream().map(SysRolePermission::getPermissionId).collect(Collectors.toList());
         if (permissionIds.isEmpty()) {
             return List.of();
         }
@@ -76,7 +76,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void assignPermissions(Long roleId, List<Long> permissionIds) {
+    public void assignPermissions(String roleId, List<String> permissionIds) {
         // 删除现有权限关联
         sysRolePermissionService.remove(
             new LambdaQueryWrapper<SysRolePermission>().eq(SysRolePermission::getRoleId, roleId)
@@ -109,7 +109,6 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         if (StringUtils.hasText(query.getName())) {
             wrapper.like(SysRole::getName, query.getName());
         }
-        wrapper.eq(SysRole::getDr, 0);
         wrapper.orderByDesc(SysRole::getCreatedAt);
 
         Page<SysRole> page = new Page<>(query.getCurrent() != null ? query.getCurrent() : 1,

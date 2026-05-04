@@ -3,6 +3,7 @@ package com.bulain.mybatis.demo.service;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.bulain.mybatis.MybatisPlusApplication;
+import com.bulain.mybatis.demo.dao.BlogMapper;
 import com.bulain.mybatis.demo.entity.Blog;
 import com.bulain.mybatis.demo.pojo.BlogSearch;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +24,6 @@ import java.util.List;
 import java.util.Random;
 
 @Slf4j
-@Disabled
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = MybatisPlusApplication.class)
 class BlogServiceImplTest {
@@ -31,10 +31,15 @@ class BlogServiceImplTest {
     @Autowired
     private BlogService blogService;
 
+    @Autowired
+    private BlogMapper blogMapper;
+
     private BlogSearch search;
 
     @BeforeEach
     void setUp() {
+        blogMapper.directDelete(new LambdaQueryWrapper<>());
+
         search = new BlogSearch();
         search.setTitle("abd");
         search.setDescr("descr");
@@ -89,8 +94,8 @@ class BlogServiceImplTest {
 
         Random random = new Random();
         int idx = 0;
-        int size = 100000;
-        for (int i = 0; i < 50; i++) {
+        int size = 1;
+        for (int i = 0; i < 5; i++) {
             //准备数据
             Collection<Blog> list = new ArrayList<>();
             for (int j = 0; j < size; j++) {

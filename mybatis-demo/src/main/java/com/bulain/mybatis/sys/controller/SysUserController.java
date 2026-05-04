@@ -40,19 +40,19 @@ public class SysUserController {
     }
 
     @GetMapping("/{id}")
-    public Result<SysUser> getUserById(@PathVariable Long id) {
+    public Result<SysUser> getUserById(@PathVariable("id") String id) {
         SysUser user = sysUserService.getById(id);
         return Result.success(user);
     }
 
     @PutMapping("/{id}")
-    public Result<SysUser> updateUser(@PathVariable Long id, @RequestBody UpdateUserDTO dto) {
+    public Result<SysUser> updateUser(@PathVariable("id") String id, @RequestBody UpdateUserDTO dto) {
         SysUser user = sysUserService.updateUser(id, dto);
         return Result.success(user);
     }
 
     @DeleteMapping("/{id}")
-    public Result<Void> deleteUser(@PathVariable Long id) {
+    public Result<Void> deleteUser(@PathVariable("id") String id) {
         sysUserService.removeById(id);
         return Result.success();
     }
@@ -64,31 +64,31 @@ public class SysUserController {
     }
 
     @PutMapping("/{id}/status")
-    public Result<Void> toggleStatus(@PathVariable Long id, @RequestBody Integer status) {
+    public Result<Void> toggleStatus(@PathVariable("id") String id, @RequestBody Integer status) {
         sysUserService.toggleStatus(id, status);
         return Result.success();
     }
 
     @PutMapping("/{id}/password")
-    public Result<Void> resetPassword(@PathVariable Long id, @RequestBody String newPassword) {
+    public Result<Void> resetPassword(@PathVariable("id") String id, @RequestBody String newPassword) {
         sysUserService.resetPassword(id, newPassword);
         return Result.success();
     }
 
     @GetMapping("/{id}/roles")
-    public Result<List<SysRole>> getUserRoles(@PathVariable Long id) {
+    public Result<List<SysRole>> getUserRoles(@PathVariable("id") String id) {
         List<SysRole> roles = sysUserService.getUserRoles(id);
         return Result.success(roles);
     }
 
     @PutMapping("/{id}/roles")
-    public Result<Void> assignRoles(@PathVariable Long id, @RequestBody UserRoleAssignDTO dto) {
+    public Result<Void> assignRoles(@PathVariable("id") String id, @RequestBody UserRoleAssignDTO dto) {
         sysUserService.assignRoles(id, dto.getRoleIds());
         return Result.success();
     }
 
     @GetMapping("/{id}/permissions")
-    public Result<Set<String>> getUserPermissions(@PathVariable Long id) {
+    public Result<Set<String>> getUserPermissions(@PathVariable("id") String id) {
         Set<String> permissionCodes = sysUserService.getUserPermissionCodes(id);
         return Result.success(permissionCodes);
     }

@@ -8,7 +8,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bulain.mybatis.MybatisPlusApplication;
 import com.bulain.mybatis.demo.entity.Order;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +20,15 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@Disabled
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = MybatisPlusApplication.class)
-public class OrderMapperDemo {
+public class OrderMapperTest {
 
     @Autowired
     private OrderMapper orderMapper;
 
     private String id;
+    private Order dbEntity;
 
     @BeforeEach
     public void setup() {
@@ -41,6 +40,7 @@ public class OrderMapperDemo {
 
         orderMapper.insert(entity);
         id = entity.getId();
+        dbEntity = entity;
     }
 
     @Test
@@ -89,7 +89,7 @@ public class OrderMapperDemo {
         entity.setId(id);
         entity.setOrderNo("X00001");
         entity.setExtnRefNo1("E00001");
-        entity.setVersion(0L);
+        entity.setPubts(dbEntity.getPubts());
 
         Integer ucnt = orderMapper.updateById(entity);
         assertEquals(Integer.valueOf(1), ucnt);
@@ -202,8 +202,8 @@ public class OrderMapperDemo {
     @Test
     public void testUpdateToLogic() {
         UpdateWrapper<Order> updateWrapper = new UpdateWrapper<Order>()
-                .set("deleted", "1")
-                .set("version", SystemClock.now())
+                .set("dr", "1")
+                .set("pubts", SystemClock.now())
                 .eq("id", id);
         orderMapper.update(null, updateWrapper);
     }

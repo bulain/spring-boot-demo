@@ -1,5 +1,9 @@
 package com.bulain.mybatis.sys.aspect;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.bulain.mybatis.config.Profiles;
+import com.bulain.mybatis.sys.dao.SysRoleMapper;
+import com.bulain.mybatis.sys.dao.SysUserMapper;
 import com.bulain.mybatis.sys.dto.CreateRoleDTO;
 import com.bulain.mybatis.sys.dto.CreateUserDTO;
 import com.bulain.mybatis.sys.entity.SysRole;
@@ -7,18 +11,19 @@ import com.bulain.mybatis.sys.entity.SysUser;
 import com.bulain.mybatis.sys.service.SysJwtService;
 import com.bulain.mybatis.sys.service.SysRoleService;
 import com.bulain.mybatis.sys.service.SysUserService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@ActiveProfiles(Profiles.TEST)
 @SpringBootTest
 @AutoConfigureMockMvc
 class PermissionCheckAspectTest {
@@ -33,13 +38,22 @@ class PermissionCheckAspectTest {
     private SysUserService sysUserService;
 
     @Autowired
+    private SysUserMapper sysUserMapper;
+
+    @Autowired
     private SysRoleService sysRoleService;
 
+    @Autowired
+    private SysRoleMapper sysRoleMapper;
+
     private String validToken;
-    private Long testUserId;
+    private String testUserId;
 
     @BeforeEach
     void setUp() {
+        sysUserMapper.directDelete(new LambdaQueryWrapper<>());
+        sysRoleMapper.directDelete(new LambdaQueryWrapper<>());
+
         CreateUserDTO dto = new CreateUserDTO();
         dto.setUsername("aspectuser");
         dto.setName("Aspect User");
@@ -51,9 +65,9 @@ class PermissionCheckAspectTest {
 
     @Test
     void testJwtTokenValidation() {
-        String token = sysJwtService.generateToken(100L, "testuser");
+        String token = sysJwtService.generateToken("100", "testuser");
         assertTrue(sysJwtService.validateToken(token));
-        assertEquals(100L, sysJwtService.getUserIdFromToken(token));
+        assertEquals("100", sysJwtService.getUserIdFromToken(token));
         assertEquals("testuser", sysJwtService.getUsernameFromToken(token));
     }
 

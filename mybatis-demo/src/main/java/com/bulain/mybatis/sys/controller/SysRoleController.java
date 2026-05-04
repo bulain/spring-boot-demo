@@ -28,19 +28,19 @@ public class SysRoleController {
     }
 
     @GetMapping("/{id}")
-    public Result<SysRole> getRoleById(@PathVariable Long id) {
+    public Result<SysRole> getRoleById(@PathVariable("id") String id) {
         SysRole role = sysRoleService.getById(id);
         return Result.success(role);
     }
 
     @PutMapping("/{id}")
-    public Result<SysRole> updateRole(@PathVariable Long id, @RequestBody UpdateRoleDTO dto) {
+    public Result<SysRole> updateRole(@PathVariable("id") String id, @RequestBody UpdateRoleDTO dto) {
         SysRole role = sysRoleService.updateRole(id, dto);
         return Result.success(role);
     }
 
     @DeleteMapping("/{id}")
-    public Result<Void> deleteRole(@PathVariable Long id) {
+    public Result<Void> deleteRole(@PathVariable("id") String id) {
         sysRoleService.removeById(id);
         return Result.success();
     }
@@ -52,13 +52,13 @@ public class SysRoleController {
     }
 
     @GetMapping("/{id}/permissions")
-    public Result<List<SysPermission>> getRolePermissions(@PathVariable Long id) {
+    public Result<List<SysPermission>> getRolePermissions(@PathVariable("id") String id) {
         List<SysPermission> permissions = sysRoleService.getRolePermissions(id);
         return Result.success(permissions);
     }
 
     @PutMapping("/{id}/permissions")
-    public Result<Void> assignPermissions(@PathVariable Long id, @RequestBody RolePermissionAssignDTO dto) {
+    public Result<Void> assignPermissions(@PathVariable("id") String id, @RequestBody RolePermissionAssignDTO dto) {
         sysRoleService.assignPermissions(id, dto.getPermissionIds());
         return Result.success();
     }

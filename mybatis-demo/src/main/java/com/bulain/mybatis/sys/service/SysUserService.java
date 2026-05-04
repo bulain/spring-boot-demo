@@ -24,32 +24,32 @@ public interface SysUserService extends IService<SysUser> {
     /**
      * 更新用户
      */
-    SysUser updateUser(Long id, UpdateUserDTO dto);
+    SysUser updateUser(String id, UpdateUserDTO dto);
 
     /**
      * 启用/禁用用户
      */
-    void toggleStatus(Long id, Integer status);
+    void toggleStatus(String id, Integer status);
 
     /**
      * 重置密码
      */
-    void resetPassword(Long id, String newPassword);
+    void resetPassword(String id, String newPassword);
 
     /**
      * 查询用户角色列表
      */
-    List<SysRole> getUserRoles(Long userId);
+    List<SysRole> getUserRoles(String userId);
 
     /**
      * 分配用户角色
      */
-    void assignRoles(Long userId, List<Long> roleIds);
+    void assignRoles(String userId, List<String> roleIds);
 
     /**
      * 获取用户权限编码列表
      */
-    Set<String> getUserPermissionCodes(Long userId);
+    Set<String> getUserPermissionCodes(String userId);
 
     /**
      * 根据用户名查询用户

@@ -31,7 +31,7 @@ public class OrderController {
      * @return 订单详情
      */
     @GetMapping("/{id}")
-    public Order getById(@PathVariable String id) {
+    public Order getById(@PathVariable("id") String id) {
         return orderService.getById(id);
     }
 
@@ -113,7 +113,7 @@ public class OrderController {
      * @return 是否成功
      */
     @DeleteMapping("/{id}")
-    public boolean delete(@PathVariable String id) {
+    public boolean delete(@PathVariable("id") String id) {
         return orderService.removeById(id);
     }
 }

@@ -1,20 +1,25 @@
 package com.bulain.mybatis.sys.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.bulain.mybatis.config.Profiles;
 import com.bulain.mybatis.sys.dao.SysRoleMapper;
 import com.bulain.mybatis.sys.dao.SysUserMapper;
 import com.bulain.mybatis.sys.dao.SysUserRoleMapper;
 import com.bulain.mybatis.sys.entity.SysRole;
 import com.bulain.mybatis.sys.entity.SysUser;
 import com.bulain.mybatis.sys.entity.SysUserRole;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
+@ActiveProfiles(Profiles.TEST)
 @SpringBootTest
 class SysUserRoleMapperTest {
 
@@ -26,6 +31,14 @@ class SysUserRoleMapperTest {
 
     @Autowired
     private SysRoleMapper sysRoleMapper;
+
+    @BeforeEach
+    void setUp() {
+        sysUserRoleMapper.directDelete(new LambdaQueryWrapper<>());
+        sysUserMapper.directDelete(new LambdaQueryWrapper<>());
+        sysRoleMapper.directDelete(new LambdaQueryWrapper<>());
+    }
+
 
     @Test
     void testInsertAndSelectByUserId() {

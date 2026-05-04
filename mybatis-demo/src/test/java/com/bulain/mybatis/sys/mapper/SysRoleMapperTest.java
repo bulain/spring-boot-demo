@@ -1,19 +1,28 @@
 package com.bulain.mybatis.sys.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.bulain.mybatis.config.Profiles;
 import com.bulain.mybatis.sys.dao.SysRoleMapper;
 import com.bulain.mybatis.sys.entity.SysRole;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ActiveProfiles(Profiles.TEST)
 @SpringBootTest
 class SysRoleMapperTest {
 
     @Autowired
     private SysRoleMapper sysRoleMapper;
+
+    @BeforeEach
+    void setUp() {
+        sysRoleMapper.directDelete(new LambdaQueryWrapper<>());
+    }
 
     @Test
     void testInsertAndSelectById() {

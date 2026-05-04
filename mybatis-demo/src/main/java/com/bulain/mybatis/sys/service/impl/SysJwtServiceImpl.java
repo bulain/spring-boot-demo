@@ -32,7 +32,7 @@ public class SysJwtServiceImpl implements SysJwtService {
     }
 
     @Override
-    public String generateToken(Long userId, String username) {
+    public String generateToken(String userId, String username) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", userId);
         claims.put("username", username);
@@ -53,9 +53,9 @@ public class SysJwtServiceImpl implements SysJwtService {
     }
 
     @Override
-    public Long getUserIdFromToken(String token) {
+    public String getUserIdFromToken(String token) {
         Claims claims = getClaimsFromToken(token);
-        return claims.get("userId", Long.class);
+        return claims.get("userId", String.class);
     }
 
     @Override

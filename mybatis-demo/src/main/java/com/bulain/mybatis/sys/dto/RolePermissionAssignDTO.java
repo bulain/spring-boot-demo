@@ -10,6 +10,6 @@ import java.util.List;
 @Data
 public class RolePermissionAssignDTO {
 
-    private List<Long> permissionIds;
+    private List<String> permissionIds;
 
 }

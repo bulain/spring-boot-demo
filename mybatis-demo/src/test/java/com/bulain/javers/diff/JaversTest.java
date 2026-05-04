@@ -9,7 +9,7 @@ import org.javers.core.diff.Diff;
 import org.junit.jupiter.api.Test;
 
 @Slf4j
-public class JaversDemo {
+public class JaversTest {
 
     @Test
     void testCompare() {

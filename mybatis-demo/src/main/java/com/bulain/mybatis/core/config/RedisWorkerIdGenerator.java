@@ -1,4 +1,4 @@
-package com.bulain.mybatis.config;
+package com.bulain.mybatis.core.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

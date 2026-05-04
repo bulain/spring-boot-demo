@@ -15,8 +15,8 @@ create table demo_order
     created_by   varchar(50),
     updated_at   datetime,
     updated_by   varchar(50),
-    version      bigint       default 0,
-    deleted      int          default 0,
+    pubts        bigint       default 0,
+    dr           bigint       default 0,
     archived     char(1),
 
     primary key (id)

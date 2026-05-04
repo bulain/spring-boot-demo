@@ -66,7 +66,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public SysUser updateUser(Long id, UpdateUserDTO dto) {
+    public SysUser updateUser(String id, UpdateUserDTO dto) {
         SysUser user = baseMapper.selectById(id);
         if (user == null) {
             throw new RuntimeException("用户不存在");
@@ -86,7 +86,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void toggleStatus(Long id, Integer status) {
+    public void toggleStatus(String id, Integer status) {
         SysUser user = baseMapper.selectById(id);
         if (user == null) {
             throw new RuntimeException("用户不存在");
@@ -97,7 +97,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void resetPassword(Long id, String newPassword) {
+    public void resetPassword(String id, String newPassword) {
         SysUser user = baseMapper.selectById(id);
         if (user == null) {
             throw new RuntimeException("用户不存在");
@@ -107,11 +107,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public List<SysRole> getUserRoles(Long userId) {
+    public List<SysRole> getUserRoles(String userId) {
         List<SysUserRole> userRoles = sysUserRoleService.list(
             new LambdaQueryWrapper<SysUserRole>().eq(SysUserRole::getUserId, userId)
         );
-        List<Long> roleIds = userRoles.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
+        List<String> roleIds = userRoles.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
         if (roleIds.isEmpty()) {
             return List.of();
         }
@@ -120,7 +120,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void assignRoles(Long userId, List<Long> roleIds) {
+    public void assignRoles(String userId, List<String> roleIds) {
         // 删除现有角色关联
         sysUserRoleService.remove(
             new LambdaQueryWrapper<SysUserRole>().eq(SysUserRole::getUserId, userId)
@@ -152,7 +152,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         if (query.getStatus() != null) {
             wrapper.eq(SysUser::getStatus, query.getStatus());
         }
-        wrapper.eq(SysUser::getDr, 0); // 只查询未删除的用户
         wrapper.orderByDesc(SysUser::getCreatedAt);
 
         Page<SysUser> page = new Page<>(query.getCurrent() != null ? query.getCurrent() : 1,
@@ -162,7 +161,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public Set<String> getUserPermissionCodes(Long userId) {
+    public Set<String> getUserPermissionCodes(String userId) {
         // 查询用户的角色
         List<SysUserRole> userRoles = sysUserRoleMapper.selectList(
             new LambdaQueryWrapper<SysUserRole>().eq(SysUserRole::getUserId, userId)
@@ -171,13 +170,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             return Collections.emptySet();
         }
 
-        List<Long> roleIds = userRoles.stream()
+        List<String> roleIds = userRoles.stream()
                 .map(SysUserRole::getRoleId)
                 .collect(Collectors.toList());
 
         // 查询角色对应的权限
         List<SysRole> roles = sysRoleMapper.selectBatchIds(roleIds);
-        List<Long> enabledRoleIds = roles.stream()
+        List<String> enabledRoleIds = roles.stream()
                 .filter(r -> r.getDr() == 0) // 只考虑未删除的角色
                 .map(SysRole::getId)
                 .collect(Collectors.toList());
@@ -188,10 +187,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         // 查询所有权限
         Set<String> permissionCodes = new HashSet<>();
-        for (Long roleId : enabledRoleIds) {
+        for (String roleId : enabledRoleIds) {
             List<SysPermission> permissions = sysPermissionMapper.selectList(
                 new LambdaQueryWrapper<SysPermission>().inSql(SysPermission::getId,
-                        "SELECT permission_id FROM sys_role_permissions WHERE role_id = " + roleId)
+                        "SELECT permission_id FROM sys_role_permissions WHERE role_id = '" + roleId + "'")
             );
             permissions.stream()
                     .map(SysPermission::getCode)

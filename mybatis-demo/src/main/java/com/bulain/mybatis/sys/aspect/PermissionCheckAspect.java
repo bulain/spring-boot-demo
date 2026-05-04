@@ -43,7 +43,7 @@ public class
         }
 
         // TODO: 从当前登录用户获取用户ID
-        Long currentUserId = getCurrentUserId();
+        String currentUserId = getCurrentUserId();
         if (currentUserId == null) {
             throw new RuntimeException("用户未登录");
         }
@@ -67,7 +67,7 @@ public class
         }
 
         // TODO: 从当前登录用户获取用户ID
-        Long currentUserId = getCurrentUserId();
+        String currentUserId = getCurrentUserId();
         if (currentUserId == null) {
             throw new RuntimeException("用户未登录");
         }
@@ -82,7 +82,7 @@ public class
         return joinPoint.proceed();
     }
 
-    private Long getCurrentUserId() {
+    private String getCurrentUserId() {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (attributes != null) {
             HttpServletRequest request = attributes.getRequest();

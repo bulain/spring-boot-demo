@@ -1,4 +1,4 @@
-package com.bulain.mybatis.config;
+package com.bulain.mybatis.core.config;
 
 import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
 import com.baomidou.mybatisplus.core.incrementer.DefaultIdentifierGenerator;

@@ -25,19 +25,19 @@ public class SysPermissionController {
     }
 
     @GetMapping("/{id}")
-    public Result<SysPermission> getPermissionById(@PathVariable Long id) {
+    public Result<SysPermission> getPermissionById(@PathVariable("id") String id) {
         SysPermission permission = sysPermissionService.getById(id);
         return Result.success(permission);
     }
 
     @PutMapping("/{id}")
-    public Result<SysPermission> updatePermission(@PathVariable Long id, @RequestBody UpdatePermissionDTO dto) {
+    public Result<SysPermission> updatePermission(@PathVariable("id") String id, @RequestBody UpdatePermissionDTO dto) {
         SysPermission permission = sysPermissionService.updatePermission(id, dto);
         return Result.success(permission);
     }
 
     @DeleteMapping("/{id}")
-    public Result<Void> deletePermission(@PathVariable Long id) {
+    public Result<Void> deletePermission(@PathVariable("id") String id) {
         sysPermissionService.removeById(id);
         return Result.success();
     }

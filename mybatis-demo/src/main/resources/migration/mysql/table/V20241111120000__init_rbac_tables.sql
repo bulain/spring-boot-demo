@@ -4,9 +4,9 @@
 -- Users table
 create table sys_users
 (
-    id                bigint      not null auto_increment,
+    id                varchar(20) not null,
     username          varchar(50) not null comment '用户名',
-    password          varchar(255) not null comment '密码（BCrypt加密）',
+    password          varchar(255) comment '密码（BCrypt加密）',
     name              varchar(50) comment '姓名',
     email             varchar(100) comment '邮箱',
     phone             varchar(20) comment '手机号',
@@ -14,9 +14,9 @@ create table sys_users
     dingtalk_userid   varchar(100) comment '钉钉UserID',
     status            tinyint     default 1 comment '状态：1-启用，0-禁用',
 
-    created_by        bigint comment '创建人ID',
+    created_by        varchar(50) comment '创建人ID',
     created_at        datetime    default current_timestamp comment '创建时间',
-    updated_by        bigint comment '修改人ID',
+    updated_by        varchar(50) comment '修改人ID',
     updated_at        datetime    default current_timestamp on update current_timestamp comment '更新时间',
     pubts             bigint      default 0 comment '乐观锁版本号，更新时赋值当前毫秒时间戳',
     dr                bigint      default 0 comment '逻辑删除时间戳，0表示未删除',
@@ -38,14 +38,14 @@ create index idx_sys_users_dr on sys_users (dr);
 -- Roles table
 create table sys_roles
 (
-    id                bigint      not null auto_increment,
+    id                varchar(20) not null,
     name              varchar(50) not null comment '角色名称',
     code              varchar(50) not null comment '角色编码',
     description       varchar(255) comment '角色描述',
 
-    created_by        bigint comment '创建人ID',
+    created_by        varchar(50) comment '创建人ID',
     created_at        datetime    default current_timestamp comment '创建时间',
-    updated_by        bigint comment '修改人ID',
+    updated_by        varchar(50) comment '修改人ID',
     updated_at        datetime    default current_timestamp on update current_timestamp comment '更新时间',
     pubts             bigint      default 0 comment '乐观锁版本号，更新时赋值当前毫秒时间戳',
     dr                bigint      default 0 comment '逻辑删除时间戳，0表示未删除',
@@ -62,15 +62,15 @@ create index idx_sys_roles_dr on sys_roles (dr);
 -- Permissions table
 create table sys_permissions
 (
-    id                bigint      not null auto_increment,
+    id                varchar(20) not null,
     name              varchar(50) not null comment '权限名称',
     code              varchar(100) not null comment '权限编码',
     resource_type     varchar(50) comment '资源类型：menu, button, api',
     description       varchar(255) comment '权限描述',
 
-    created_by        bigint comment '创建人ID',
+    created_by        varchar(50) comment '创建人ID',
     created_at        datetime    default current_timestamp comment '创建时间',
-    updated_by        bigint comment '修改人ID',
+    updated_by        varchar(50) comment '修改人ID',
     updated_at        datetime    default current_timestamp on update current_timestamp comment '更新时间',
     pubts             bigint      default 0 comment '乐观锁版本号，更新时赋值当前毫秒时间戳',
 
@@ -86,13 +86,13 @@ create index idx_sys_permissions_updated_by on sys_permissions (updated_by);
 -- User-Role association table
 create table sys_user_roles
 (
-    id                bigint      not null auto_increment,
-    user_id           bigint      not null comment '用户ID',
-    role_id           bigint      not null comment '角色ID',
+    id                varchar(20) not null,
+    user_id           varchar(20) not null comment '用户ID',
+    role_id           varchar(20) not null comment '角色ID',
 
-    created_by        bigint comment '创建人ID',
+    created_by        varchar(50) comment '创建人ID',
     created_at        datetime    default current_timestamp comment '创建时间',
-    updated_by        bigint comment '修改人ID',
+    updated_by        varchar(50) comment '修改人ID',
     updated_at        datetime    default current_timestamp on update current_timestamp comment '更新时间',
     pubts             bigint      default 0 comment '乐观锁版本号，更新时赋值当前毫秒时间戳',
 
@@ -108,13 +108,13 @@ create index idx_sys_user_roles_updated_by on sys_user_roles (updated_by);
 -- Role-Permission association table
 create table sys_role_permissions
 (
-    id                bigint      not null auto_increment,
-    role_id           bigint      not null comment '角色ID',
-    permission_id     bigint      not null comment '权限ID',
+    id                varchar(20) not null,
+    role_id           varchar(20) not null comment '角色ID',
+    permission_id     varchar(20) not null comment '权限ID',
 
-    created_by        bigint comment '创建人ID',
+    created_by        varchar(50) comment '创建人ID',
     created_at        datetime    default current_timestamp comment '创建时间',
-    updated_by        bigint comment '修改人ID',
+    updated_by        varchar(50) comment '修改人ID',
     updated_at        datetime    default current_timestamp on update current_timestamp comment '更新时间',
     pubts             bigint      default 0 comment '乐观锁版本号，更新时赋值当前毫秒时间戳',
 

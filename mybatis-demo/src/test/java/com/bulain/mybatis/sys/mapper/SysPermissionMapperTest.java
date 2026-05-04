@@ -1,19 +1,28 @@
 package com.bulain.mybatis.sys.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.bulain.mybatis.config.Profiles;
 import com.bulain.mybatis.sys.dao.SysPermissionMapper;
 import com.bulain.mybatis.sys.entity.SysPermission;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ActiveProfiles(Profiles.TEST)
 @SpringBootTest
 class SysPermissionMapperTest {
 
     @Autowired
     private SysPermissionMapper sysPermissionMapper;
+
+    @BeforeEach
+    void setUp() {
+        sysPermissionMapper.directDelete(new LambdaQueryWrapper<>());
+    }
 
     @Test
     void testInsertAndSelectById() {

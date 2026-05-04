@@ -34,7 +34,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public SysPermission updatePermission(Long id, UpdatePermissionDTO dto) {
+    public SysPermission updatePermission(String id, UpdatePermissionDTO dto) {
         SysPermission permission = baseMapper.selectById(id);
         if (permission == null) {
             throw new RuntimeException("权限不存在");
