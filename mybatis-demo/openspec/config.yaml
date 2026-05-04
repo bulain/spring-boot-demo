@@ -1,0 +1,78 @@
+# OpenSpec 配置
+version: 1.2.0
+schema: spec-driven
+
+# 项目元数据
+project:
+  type: Java/Spring Boot/Mybatis Plus
+  build: Maven
+  jdk: 17
+  lang: zh
+
+# 约定规范
+conventions:
+  code_style: 阿里巴巴 Java 开发手册
+  commit_style: Conventional Commits
+  test_framework: JUnit 5 + Mockito
+  db_migration: Flyway VYYYYMMDDHHmmss__description.sql
+  tdd: 测试驱动开发
+  tdd_flow:
+    - 编写失败的测试用例
+    - 编写最小化代码使测试通过
+    - 重构优化代码
+  test_coverage:
+    unit: 80%
+    integration: 60%
+
+# 代码结构
+code_paths:
+  controller: com.bulain.mybatis.demo.ctrl
+  service: com.bulain.mybatis.demo.service
+  mapper: com.bulain.mybatis.demo.mapper
+  entity: com.bulain.mybatis.demo.entity
+  config: src/main/resources/application-*.yml
+
+# 工件规则
+artifacts:
+  proposal:
+    description: 变更可行性分析
+    rules:
+      - 包含风险评估
+      - 明确目标、非目标、成功指标
+      - 分析变更影响范围
+      - 评估对现有测试的影响
+
+  specs:
+    description: 需求规格定义
+    rules:
+      - 使用 SHALL/MUST 规范性词汇
+      - 每个需求至少一个测试场景
+      - 场景遵循 WHEN/THEN 格式
+      - 使用中文编写
+      - 数据库表结构 SHALL 明确列出所有字段名、类型、长度、默认值、非空约束、索引
+      - REST API 接口 SHALL 明确请求方法、路径、请求体字段（类型、必填性）、响应体字段（类型）
+      - 接口错误响应 SHALL 明确错误码和错误信息格式
+    on_change: 列出变更前后对比
+
+  tasks:
+    description: 任务分解
+    constraints:
+      max_hours_per_task: 2
+    rules:
+      - 遵循 TDD 流程：测试任务先于实现任务
+      - 每个功能模块先编写单元测试
+      - 包含集成测试任务
+      - 包含代码审查任务
+      - 实现任务必须在测试任务之后
+
+  design:
+    description: 技术方案设计
+    rules:
+      - 使用中文编写
+      - 包含架构图（Mermaid/ASCII）
+      - 定义 REST API 接口，包含请求/响应字段详情
+      - 说明数据流转
+      - 明确异常处理策略
+      - 考虑事务边界
+      - 数据库表设计 SHALL 包含完整字段定义（字段名、类型、长度、约束、索引）
+      - API 设计 SHALL 包含完整的请求参数和响应结构定义

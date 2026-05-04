@@ -21,7 +21,10 @@ import java.sql.Connection;
 
 @Configuration
 @EnableTransactionManagement
-@MapperScan(basePackages = "com.bulain.mybatis.demo.dao")
+@MapperScan(basePackages = {
+        "com.bulain.mybatis.demo.dao",
+        "com.bulain.mybatis.sys.dao"
+})
 public class MybatisPlusConfig {
 
 

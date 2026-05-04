@@ -7,7 +7,6 @@ spring:
     banner-mode: off
 
 mybatis-plus:
-  mapper-locations: classpath:mybatis/xml/Common.xml,classpath:mybatis/custom/**/*.xml
   typeAliasesPackage: com.bulain.mybatis.*.model
   global-config:
     banner: false
@@ -16,6 +15,9 @@ mybatis-plus:
       capital-mode: false
       table-underline: true
       update-strategy: not_null
+      logic-delete-field: dr
+      logic-delete-value: UNIX_TIMESTAMP(NOW())*1000
+      logic-not-delete-value: 0
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false

@@ -1,51 +1,55 @@
 package com.bulain.mybatis.core.pojo;
 
-import java.io.Serializable;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import lombok.Data;
+
 import java.util.List;
 
-public class Paged<T> implements Serializable {
-    private static final long serialVersionUID = 1L;
+/**
+ * 分页响应对象
+ */
+@Data
+public class Paged<T> {
 
-    // 分页
-    private int pageSize;//每页数量
-    private int page;//页号，从1开始
-    private int totalPage;//总页数
-    private long totalCount;//总个数
+    /**
+     * 每页数量
+     */
+    private int pageSize;
 
-    //数据列表
+    /**
+     * 页号，从1开始
+     */
+    private int page;
+
+    /**
+     * 总页数
+     */
+    private int totalPage;
+
+    /**
+     * 总记录数
+     */
+    private long totalCount;
+
+    /**
+     * 数据列表
+     */
     private List<T> data;
 
-    public void setData(List<T> data) {
-        this.data = data;
-    }
-
-    public List<T> getData() {
-        return (List<T>) data;
-    }
-
-    public int getPage() {
-        return page;
-    }
-    public void setPage(final int page) {
-        this.page = page;
-    }
-    public int getPageSize() {
-        return pageSize;
-    }
-    public void setPageSize(final int pageSize) {
-        this.pageSize = pageSize;
-    }
-    public int getTotalPage() {
-        return totalPage;
-    }
-    public void setTotalPage(final int totalPage) {
-        this.totalPage = totalPage;
-    }
-    public long getTotalCount() {
-        return totalCount;
-    }
-    public void setTotalCount(long totalCount) {
-        this.totalCount = totalCount;
+    /**
+     * 从 IPage 转换为 Paged
+     * @param pageResult MyBatis Plus 分页结果
+     * @param <T> 数据类型
+     * @return Paged 分页对象
+     */
+    public static <T> Paged<T> from(IPage<T> pageResult) {
+        Paged<T> paged = new Paged<>();
+        paged.setPageSize((int) pageResult.getSize());
+        paged.setTotalPage((int) pageResult.getPages());
+        paged.setTotalCount(pageResult.getTotal());
+        paged.setPage((int) pageResult.getCurrent());
+        paged.setData(pageResult.getRecords());
+        return paged;
     }
 
 }

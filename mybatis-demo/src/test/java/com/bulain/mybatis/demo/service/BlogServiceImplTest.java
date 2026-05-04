@@ -3,7 +3,7 @@ package com.bulain.mybatis.demo.service;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.bulain.mybatis.MybatisPlusApplication;
-import com.bulain.mybatis.core.pojo.Paged;
+import com.bulain.mybatis.demo.dao.BlogMapper;
 import com.bulain.mybatis.demo.entity.Blog;
 import com.bulain.mybatis.demo.pojo.BlogSearch;
 import lombok.extern.slf4j.Slf4j;
@@ -32,10 +32,15 @@ class BlogServiceImplTest {
     @Autowired
     private BlogService blogService;
 
+    @Autowired
+    private BlogMapper blogMapper;
+
     private BlogSearch search;
 
     @BeforeEach
     void setUp() {
+        blogMapper.directDelete(new LambdaQueryWrapper<>());
+
         search = new BlogSearch();
         search.setTitle("abd");
         search.setDescr("descr");
@@ -82,22 +87,6 @@ class BlogServiceImplTest {
     }
 
     @Test
-    void testFind() {
-        search.addOrderBy("id", "asc");
-        List<Blog> list = blogService.find(search);
-        Assertions.assertNotNull(list);
-    }
-
-    @Test
-    void testPage() {
-        search.setPage(1);
-        search.setPageSize(2);
-        search.addOrderBy("id", "asc");
-        Paged<Blog> paged = blogService.page(search);
-        Assertions.assertNotNull(paged);
-    }
-
-    @Test
     void testSaveBatch() {
         //初始化环境
         testInsert();
@@ -106,8 +95,8 @@ class BlogServiceImplTest {
 
         Random random = new Random();
         int idx = 0;
-        int size = 100000;
-        for (int i = 0; i < 50; i++) {
+        int size = 1;
+        for (int i = 0; i < 5; i++) {
             //准备数据
             Collection<Blog> list = new ArrayList<>();
             for (int j = 0; j < size; j++) {

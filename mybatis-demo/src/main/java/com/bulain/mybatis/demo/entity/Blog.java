@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -23,9 +22,7 @@ import java.time.LocalDateTime;
 @Setter
 @Accessors(chain = true)
 @TableName("demo_blog")
-public class Blog implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Blog {
 
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;

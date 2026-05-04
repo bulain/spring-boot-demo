@@ -1,18 +1,19 @@
 package com.bulain.mybatis.core.pojo;
 
-import java.io.Serializable;
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 查询基础类 
  */
-public class Search<T> implements Serializable {
-    private static final long serialVersionUID = 1L;
+@Data
+public class Search {
     private static final int PAGE_SIZE = 20;
 
     // 排序
-    private List<OrderBy> orderBys = new ArrayList<OrderBy>();
+    private List<OrderBy> orderBys = new ArrayList<>();
 
     // 分页
     private int pageSize = PAGE_SIZE;
@@ -44,54 +45,5 @@ public class Search<T> implements Serializable {
     public void clearOrderBy() {
         this.orderBys.clear();
     }
-
-    /**
-     * 返回页数，从1开始
-     * 
-     * @return 页数
-     */
-    public int getPage() {
-        return page;
-    }
-    /**
-     * 设置页数，从1开始
-     * 
-     * @param page 页数
-     */
-    public void setPage(final int page) {
-        this.page = page;
-    }
-    /**
-     * 返回每页数量
-     * 
-     * @return 每页数量
-     */
-    public int getPageSize() {
-        return pageSize;
-    }
-    /**
-     * 设置每页数量
-     * 
-     * @param pageSize 每页数量
-     */
-    public void setPageSize(final int pageSize) {
-        this.pageSize = pageSize;
-    }
-    /**
-     * 返回排序字段列表
-     * @return 排序字段列表
-     */
-    public List<OrderBy> getOrderBys() {
-        return orderBys;
-    }
-
-    /**
-     * 设置排序字段列表
-     * @param orderBy 排序字段列表
-     */
-    public void setOrderBys(List<OrderBy> orderBys) {
-        this.orderBys = orderBys;
-    }
-    
 
 }

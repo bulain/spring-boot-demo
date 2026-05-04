@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 
+ * 订单
  * </p>
  *
  * @author Bulain
@@ -18,9 +18,7 @@ import java.time.LocalDateTime;
 @Data
 @Accessors(chain = true)
 @TableName("demo_order")
-public class Order implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Order {
 
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
@@ -55,13 +53,13 @@ public class Order implements Serializable {
     @TableField(value = "updated_by")
     private String updatedBy;
 
-    @TableField(value ="version", fill = FieldFill.INSERT_UPDATE)
+    @TableField(value = "pubts", fill = FieldFill.INSERT_UPDATE)
     @Version
-    private Long version;
+    private Long pubts;
 
-    @TableField("deleted")
+    @TableField("dr")
     @TableLogic
-    private Integer deleted;
+    private Long dr;
 
     @TableField("archived")
     private String archived;

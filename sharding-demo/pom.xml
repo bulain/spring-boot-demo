@@ -135,6 +135,11 @@
                 </exclusions>
             </dependency>
             <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>42.7.11</version>
+            </dependency>
+            <dependency>
                 <groupId>com.dameng</groupId>
                 <artifactId>DmJdbcDriver8</artifactId>
                 <version>8.1.4.93</version>

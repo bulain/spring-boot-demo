@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 @SuppressWarnings("unchecked")
 public class RedisServiceImpl implements RedisService {
 
-    private RedisTemplate<Object, Object> redisTemplate;
+    private final RedisTemplate<Object, Object> redisTemplate;
 
     public RedisServiceImpl(RedisTemplate<Object, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
@@ -39,16 +39,13 @@ public class RedisServiceImpl implements RedisService {
 
     @Override
     public <T> List<T> mget(Collection<String> keys) {
-        Collection<Object> objs = new LinkedList<Object>(keys);
+        Collection<Object> objs = new LinkedList<>(keys);
         return (List<T>) redisTemplate.opsForValue().multiGet(objs);
     }
 
     @Override
     public void del(String... key) {
-        List<Object> objs = new LinkedList<Object>();
-        for (String k : key) {
-            objs.add(k);
-        }
+        List<Object> objs = new LinkedList<>(Arrays.asList(key));
         redisTemplate.delete(objs);
     }
 
@@ -74,10 +71,9 @@ public class RedisServiceImpl implements RedisService {
         Object[] objs = null;
         if (fields != null) {
             objs = new Object[fields.length];
-            for (int i = 0; i < fields.length; i++) {
-                objs[i] = fields[i];
-            }
+            System.arraycopy(fields, 0, objs, 0, fields.length);
         }
+        assert objs != null;
         redisTemplate.opsForHash().delete(key, objs);
     }
 
