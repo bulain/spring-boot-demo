@@ -59,8 +59,13 @@ public interface SysRoleService extends IService<SysRole> {
     void exportByIds(List<String> ids, HttpServletResponse response);
 
     /**
-     * 导入角色
+     * 导入角色（流式分批处理）
      */
-    ImportResultVO importExcel(List<SysRoleExcel> dataList);
+    ImportResultVO importExcel(java.io.InputStream inputStream);
+
+    /**
+     * 处理单个导入批次（独立事务）
+     */
+    ImportResultVO processImportBatch(List<SysRoleExcel> batch);
 
 }

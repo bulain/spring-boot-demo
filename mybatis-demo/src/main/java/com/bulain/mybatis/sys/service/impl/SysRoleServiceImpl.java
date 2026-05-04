@@ -13,6 +13,7 @@ import com.bulain.mybatis.sys.entity.SysPermission;
 import com.bulain.mybatis.sys.entity.SysRole;
 import com.bulain.mybatis.sys.entity.SysRolePermission;
 import com.bulain.mybatis.sys.excel.ImportResultVO;
+import com.bulain.mybatis.sys.excel.RoleImportListener;
 import com.bulain.mybatis.sys.excel.SysRoleExcel;
 import com.bulain.mybatis.sys.service.SysPermissionService;
 import com.bulain.mybatis.sys.service.SysRolePermissionService;
@@ -163,42 +164,46 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public ImportResultVO importExcel(List<SysRoleExcel> dataList) {
-        ImportResultVO result = new ImportResultVO();
-        if (dataList == null || dataList.isEmpty()) {
-            return result;
-        }
+    public ImportResultVO importExcel(java.io.InputStream inputStream) {
+        RoleImportListener listener = new RoleImportListener(this::processImportBatch);
+        EasyExcel.read(inputStream, SysRoleExcel.class, listener).sheet().doRead();
+        return listener.getResult();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class, propagation = org.springframework.transaction.annotation.Propagation.REQUIRES_NEW)
+    public ImportResultVO processImportBatch(List<SysRoleExcel> batch) {
+        ImportResultVO batchResult = new ImportResultVO();
 
         List<SysRole> insertList = new ArrayList<>();
         List<SysRole> updateList = new ArrayList<>();
 
-        for (int i = 0; i < dataList.size(); i++) {
-            SysRoleExcel excel = dataList.get(i);
+        for (SysRoleExcel excel : batch) {
             SysRole existing = getByCode(excel.getCode());
             if (existing != null) {
                 // 更新
                 existing.setName(excel.getName());
                 existing.setDescription(excel.getDescription());
                 updateList.add(existing);
-                result.incrementUpdate();
             } else {
                 // 新增
                 SysRole role = new SysRole();
                 BeanUtils.copyProperties(excel, role);
                 insertList.add(role);
-                result.incrementSuccess();
             }
         }
 
         if (!insertList.isEmpty()) {
             saveBatch(insertList);
+            batchResult.setSuccessCount(insertList.size());
         }
         if (!updateList.isEmpty()) {
             updateBatchById(updateList);
+            batchResult.setUpdateCount(updateList.size());
         }
 
-        return result;
+        // 累加到监听器的总结果中
+        return batchResult;
     }
 
     private void writeExcel(HttpServletResponse response, List<SysRoleExcel> data) {

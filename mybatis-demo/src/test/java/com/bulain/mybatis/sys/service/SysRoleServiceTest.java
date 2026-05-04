@@ -11,7 +11,6 @@ import com.bulain.mybatis.sys.dto.UpdateRoleDTO;
 import com.bulain.mybatis.sys.entity.SysPermission;
 import com.bulain.mybatis.sys.entity.SysRole;
 import com.bulain.mybatis.sys.excel.ImportResultVO;
-import com.bulain.mybatis.sys.excel.RoleReadListener;
 import com.bulain.mybatis.sys.excel.SysRoleExcel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +21,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -175,16 +175,19 @@ class SysRoleServiceTest {
     }
 
     @Test
-    void testImportRoles() {
-        // 创建ExcelData();
+    void testImportRoles() throws Exception {
         // 准备测试数据
         List<SysRoleExcel> dataList = List.of(
             createRoleExcel("ROLE_IMPORT_001", "Import Test Role 001"),
             createRoleExcel("ROLE_IMPORT_002", "Import Test Role 002")
         );
 
-        // 执行导入
-        ImportResultVO result = sysRoleService.importExcel(dataList);
+        // 写入Excel
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        EasyExcel.write(out, SysRoleExcel.class).sheet().doWrite(dataList);
+
+        // 执行流式导入
+        ImportResultVO result = sysRoleService.importExcel(new ByteArrayInputStream(out.toByteArray()));
 
         // 验证结果
         assertNotNull(result);
@@ -200,7 +203,7 @@ class SysRoleServiceTest {
     }
 
     @Test
-    void testImportRolesWithUpdate() {
+    void testImportRolesWithUpdate() throws Exception {
         // 先创建一个已存在的角色
         CreateRoleDTO dto = new CreateRoleDTO();
         dto.setCode("ROLE_UPDATE_IMPORT");
@@ -213,8 +216,12 @@ class SysRoleServiceTest {
             createRoleExcel("ROLE_NEW_IMPORT", "New Role")
         );
 
-        // 执行导入
-        ImportResultVO result = sysRoleService.importExcel(dataList);
+        // 写入Excel
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        EasyExcel.write(out, SysRoleExcel.class).sheet().doWrite(dataList);
+
+        // 执行流式导入
+        ImportResultVO result = sysRoleService.importExcel(new ByteArrayInputStream(out.toByteArray()));
 
         // 验证结果
         assertNotNull(result);
@@ -228,7 +235,7 @@ class SysRoleServiceTest {
     }
 
     @Test
-    void testRoleReadListenerValidation() {
+    void testRoleImportListenerValidation() throws Exception {
         // 准备测试数据（包含空值）
         List<SysRoleExcel> dataList = List.of(
             createRoleExcel(null, "Valid Name"),
@@ -240,15 +247,38 @@ class SysRoleServiceTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         EasyExcel.write(out, SysRoleExcel.class).sheet().doWrite(dataList);
 
-        // 读取验证
-        RoleReadListener listener = new RoleReadListener();
-        EasyExcel.read(new ByteArrayInputStream(out.toByteArray()), SysRoleExcel.class, listener).sheet().doRead();
+        // 流式导入（包含校验）
+        ImportResultVO result = sysRoleService.importExcel(new ByteArrayInputStream(out.toByteArray()));
 
-        ImportResultVO result = listener.getResult();
         // 第1、2行应该校验失败（空code和空name）
         assertEquals(2, result.getFailCount());
         // 第3行成功
-        assertEquals(1, listener.getDataList().size());
+        assertEquals(1, result.getSuccessCount());
+    }
+
+    @Test
+    void testStreamingBatchProcessing() throws Exception {
+        // 创建 150 行数据（超过1批，验证分批处理）
+        List<SysRoleExcel> dataList = new ArrayList<>();
+        for (int i = 1; i <= 150; i++) {
+            SysRoleExcel excel = new SysRoleExcel();
+            excel.setCode("BATCH_ROLE_" + i);
+            excel.setName("Batch Role " + i);
+            excel.setDescription("Batch test");
+            dataList.add(excel);
+        }
+
+        // 写入Excel
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        EasyExcel.write(out, SysRoleExcel.class).sheet().doWrite(dataList);
+
+        // 执行流式导入
+        ImportResultVO result = sysRoleService.importExcel(new ByteArrayInputStream(out.toByteArray()));
+
+        // 验证150行全部成功导入
+        assertEquals(150, result.getSuccessCount());
+        assertEquals(0, result.getUpdateCount());
+        assertEquals(0, result.getFailCount());
     }
 
     private SysRoleExcel createRoleExcel(String code, String name) {
