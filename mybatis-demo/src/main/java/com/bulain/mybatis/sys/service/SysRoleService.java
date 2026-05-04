@@ -7,6 +7,9 @@ import com.bulain.mybatis.sys.dto.RoleQueryDTO;
 import com.bulain.mybatis.sys.dto.UpdateRoleDTO;
 import com.bulain.mybatis.sys.entity.SysPermission;
 import com.bulain.mybatis.sys.entity.SysRole;
+import com.bulain.mybatis.sys.excel.ImportResultVO;
+import com.bulain.mybatis.sys.excel.SysRoleExcel;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.List;
 
@@ -44,5 +47,20 @@ public interface SysRoleService extends IService<SysRole> {
      * 分页查询角色
      */
     Paged<SysRole> pageRoles(RoleQueryDTO query);
+
+    /**
+     * 导出角色
+     */
+    void export(RoleQueryDTO query, HttpServletResponse response);
+
+    /**
+     * 导出指定角色
+     */
+    void exportByIds(List<String> ids, HttpServletResponse response);
+
+    /**
+     * 导入角色
+     */
+    ImportResultVO importExcel(List<SysRoleExcel> dataList);
 
 }

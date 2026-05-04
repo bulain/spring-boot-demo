@@ -1,5 +1,6 @@
 package com.bulain.mybatis.sys.service;
 
+import com.alibaba.excel.EasyExcel;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.bulain.mybatis.config.Profiles;
 import com.bulain.mybatis.core.pojo.Paged;
@@ -9,12 +10,18 @@ import com.bulain.mybatis.sys.dto.RoleQueryDTO;
 import com.bulain.mybatis.sys.dto.UpdateRoleDTO;
 import com.bulain.mybatis.sys.entity.SysPermission;
 import com.bulain.mybatis.sys.entity.SysRole;
+import com.bulain.mybatis.sys.excel.ImportResultVO;
+import com.bulain.mybatis.sys.excel.RoleReadListener;
+import com.bulain.mybatis.sys.excel.SysRoleExcel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -120,5 +127,135 @@ class SysRoleServiceTest {
 
         assertNotNull(permissions);
         assertTrue(permissions.isEmpty());
+    }
+
+    @Test
+    void testExportRoles() throws Exception {
+        // 创建测试数据
+        CreateRoleDTO dto = new CreateRoleDTO();
+        dto.setCode("ROLE_EXPORT_001");
+        dto.setName("Export Test Role 001");
+        sysRoleService.createRole(dto);
+
+        CreateRoleDTO dto2 = new CreateRoleDTO();
+        dto2.setCode("ROLE_EXPORT_002");
+        dto2.setName("Export Test Role 002");
+        sysRoleService.createRole(dto2);
+
+        // 测试导出
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        RoleQueryDTO query = new RoleQueryDTO();
+        sysRoleService.export(query, response);
+
+        assertNotNull(response.getContentAsByteArray());
+        assertTrue(response.getContentAsByteArray().length > 0);
+        assertNotNull(response.getContentType());
+        assertTrue(response.getContentType().startsWith("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"));
+    }
+
+    @Test
+    void testExportRolesByIds() throws Exception {
+        // 创建测试数据
+        CreateRoleDTO dto = new CreateRoleDTO();
+        dto.setCode("ROLE_EXPORT_ID_001");
+        dto.setName("Export ID Test Role 001");
+        SysRole role1 = sysRoleService.createRole(dto);
+
+        CreateRoleDTO dto2 = new CreateRoleDTO();
+        dto2.setCode("ROLE_EXPORT_ID_002");
+        dto2.setName("Export ID Test Role 002");
+        SysRole role2 = sysRoleService.createRole(dto2);
+
+        // 测试按ID导出
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        sysRoleService.exportByIds(List.of(role1.getId(), role2.getId()), response);
+
+        assertNotNull(response.getContentAsByteArray());
+        assertTrue(response.getContentAsByteArray().length > 0);
+    }
+
+    @Test
+    void testImportRoles() {
+        // 创建ExcelData();
+        // 准备测试数据
+        List<SysRoleExcel> dataList = List.of(
+            createRoleExcel("ROLE_IMPORT_001", "Import Test Role 001"),
+            createRoleExcel("ROLE_IMPORT_002", "Import Test Role 002")
+        );
+
+        // 执行导入
+        ImportResultVO result = sysRoleService.importExcel(dataList);
+
+        // 验证结果
+        assertNotNull(result);
+        assertEquals(2, result.getSuccessCount());
+        assertEquals(0, result.getUpdateCount());
+        assertEquals(0, result.getFailCount());
+
+        // 验证数据已创建
+        SysRole role1 = sysRoleService.getByCode("ROLE_IMPORT_001");
+        SysRole role2 = sysRoleService.getByCode("ROLE_IMPORT_002");
+        assertNotNull(role1);
+        assertNotNull(role2);
+    }
+
+    @Test
+    void testImportRolesWithUpdate() {
+        // 先创建一个已存在的角色
+        CreateRoleDTO dto = new CreateRoleDTO();
+        dto.setCode("ROLE_UPDATE_IMPORT");
+        dto.setName("Original Name");
+        sysRoleService.createRole(dto);
+
+        // 准备导入数据（包含已存在的，会更新）
+        List<SysRoleExcel> dataList = List.of(
+            createRoleExcel("ROLE_UPDATE_IMPORT", "Updated Name"),
+            createRoleExcel("ROLE_NEW_IMPORT", "New Role")
+        );
+
+        // 执行导入
+        ImportResultVO result = sysRoleService.importExcel(dataList);
+
+        // 验证结果
+        assertNotNull(result);
+        assertEquals(1, result.getSuccessCount());
+        assertEquals(1, result.getUpdateCount());
+        assertEquals(0, result.getFailCount());
+
+        // 验证更新
+        SysRole updated = sysRoleService.getByCode("ROLE_UPDATE_IMPORT");
+        assertEquals("Updated Name", updated.getName());
+    }
+
+    @Test
+    void testRoleReadListenerValidation() {
+        // 准备测试数据（包含空值）
+        List<SysRoleExcel> dataList = List.of(
+            createRoleExcel(null, "Valid Name"),
+            createRoleExcel("VALID_CODE", null),
+            createRoleExcel("VALID_CODE_2", "Valid Name 2")
+        );
+
+        // 写入Excel
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        EasyExcel.write(out, SysRoleExcel.class).sheet().doWrite(dataList);
+
+        // 读取验证
+        RoleReadListener listener = new RoleReadListener();
+        EasyExcel.read(new ByteArrayInputStream(out.toByteArray()), SysRoleExcel.class, listener).sheet().doRead();
+
+        ImportResultVO result = listener.getResult();
+        // 第1、2行应该校验失败（空code和空name）
+        assertEquals(2, result.getFailCount());
+        // 第3行成功
+        assertEquals(1, listener.getDataList().size());
+    }
+
+    private SysRoleExcel createRoleExcel(String code, String name) {
+        SysRoleExcel excel = new SysRoleExcel();
+        excel.setCode(code);
+        excel.setName(name);
+        excel.setDescription("Test description");
+        return excel;
     }
 }
