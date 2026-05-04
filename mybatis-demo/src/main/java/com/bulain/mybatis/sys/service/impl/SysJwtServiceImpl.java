@@ -1,21 +1,20 @@
 package com.bulain.mybatis.sys.service.impl;
 
+import cn.hutool.jwt.JWT;
+import cn.hutool.jwt.JWTUtil;
+import cn.hutool.jwt.signers.JWTSigner;
+import cn.hutool.jwt.signers.JWTSignerUtil;
 import com.bulain.mybatis.sys.service.SysJwtService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * JWT服务实现类
+ * JWT服务实现类（基于Hutool）
  */
 @Service
 public class SysJwtServiceImpl implements SysJwtService {
@@ -26,49 +25,41 @@ public class SysJwtServiceImpl implements SysJwtService {
     @Value("${jwt.expiration:86400000}")
     private Long expiration; // 默认24小时
 
-    private SecretKey getSigningKey() {
-        byte[] keyBytes = secret.getBytes(StandardCharsets.UTF_8);
-        return Keys.hmacShaKeyFor(keyBytes);
+    private byte[] getSigningKeyBytes() {
+        return secret.getBytes(StandardCharsets.UTF_8);
+    }
+
+    private JWTSigner getSigner() {
+        return JWTSignerUtil.hs256(getSigningKeyBytes());
     }
 
     @Override
     public String generateToken(String userId, String username) {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("userId", userId);
-        claims.put("username", username);
-        return createToken(claims, username);
-    }
-
-    private String createToken(Map<String, Object> claims, String subject) {
-        Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + expiration);
-
-        return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(subject)
-                .setIssuedAt(now)
-                .setExpiration(expiryDate)
-                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
-                .compact();
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("userId", userId);
+        payload.put("username", username);
+        payload.put("sub", username);
+        payload.put("iat", System.currentTimeMillis() / 1000);
+        payload.put("exp", (System.currentTimeMillis() + expiration) / 1000);
+        return JWTUtil.createToken(payload, getSigningKeyBytes());
     }
 
     @Override
     public String getUserIdFromToken(String token) {
-        Claims claims = getClaimsFromToken(token);
-        return claims.get("userId", String.class);
+        JWT jwt = JWTUtil.parseToken(token).setSigner(getSigner());
+        return jwt.getPayload("userId").toString();
     }
 
     @Override
     public String getUsernameFromToken(String token) {
-        Claims claims = getClaimsFromToken(token);
-        return claims.getSubject();
+        JWT jwt = JWTUtil.parseToken(token).setSigner(getSigner());
+        return jwt.getPayload("sub").toString();
     }
 
     @Override
     public boolean validateToken(String token) {
         try {
-            getClaimsFromToken(token);
-            return !isTokenExpired(token);
+            return JWTUtil.verify(token, getSigningKeyBytes()) && !isTokenExpired(token);
         } catch (Exception e) {
             return false;
         }
@@ -76,16 +67,9 @@ public class SysJwtServiceImpl implements SysJwtService {
 
     @Override
     public boolean isTokenExpired(String token) {
-        Date expiration = getClaimsFromToken(token).getExpiration();
+        JWT jwt = JWTUtil.parseToken(token).setSigner(getSigner());
+        Date expiration = jwt.getPayloads().getDate("exp");
         return expiration.before(new Date());
-    }
-
-    private Claims getClaimsFromToken(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getSigningKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
     }
 
 }
