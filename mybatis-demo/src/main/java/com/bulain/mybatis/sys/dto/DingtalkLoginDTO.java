@@ -12,4 +12,6 @@ public class DingtalkLoginDTO {
     @NotBlank(message = "钉钉授权码不能为空")
     private String authCode;
 
+    private String state;
+
 }
