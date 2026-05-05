@@ -2,15 +2,12 @@ package com.bulain.mybatis.sys.controller;
 
 import com.bulain.mybatis.core.pojo.Paged;
 import com.bulain.mybatis.sys.common.Result;
-import com.bulain.mybatis.sys.dto.CreateUserDTO;
-import com.bulain.mybatis.sys.dto.UpdateUserDTO;
-import com.bulain.mybatis.sys.dto.UserQueryDTO;
-import com.bulain.mybatis.sys.dto.UserRoleAssignDTO;
+import com.bulain.mybatis.sys.dto.*;
 import com.bulain.mybatis.sys.entity.SysRole;
 import com.bulain.mybatis.sys.entity.SysUser;
 import com.bulain.mybatis.sys.excel.ImportResultVO;
-import com.bulain.mybatis.sys.service.SysExcelService;
 import com.bulain.mybatis.sys.service.SysUserService;
+import com.bulain.mybatis.sys.service.WechatLoginService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +17,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -33,7 +31,7 @@ public class SysUserController {
     private SysUserService sysUserService;
 
     @Autowired
-    private SysExcelService sysExcelService;
+    private WechatLoginService wechatLoginService;
 
     @PostMapping
     public Result<SysUser> createUser(@RequestBody CreateUserDTO dto) {
@@ -118,7 +116,46 @@ public class SysUserController {
         String fileName = URLEncoder.encode("用户导入模板", StandardCharsets.UTF_8).replaceAll("\\+", "%20");
         response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
 
-        sysExcelService.downloadUserTemplate(response.getOutputStream());
+        //sysExcelService.downloadUserTemplate(response.getOutputStream());
+    }
+
+    /**
+     * 绑定微信账号
+     */
+    @PostMapping("/{id}/bind-wechat")
+    public Result<Void> bindWechat(@PathVariable("id") String userId, @RequestBody BindWechatDTO dto) {
+        try {
+            wechatLoginService.bindWechat(userId, dto);
+            return Result.success(null);
+        } catch (Exception e) {
+            return Result.error(e.getMessage());
+        }
+    }
+
+    /**
+     * 解绑微信账号
+     */
+    @PostMapping("/{id}/unbind-wechat")
+    public Result<Void> unbindWechat(@PathVariable("id") String userId, @RequestBody UnbindWechatDTO dto) {
+        try {
+            wechatLoginService.unbindWechat(userId, dto);
+            return Result.success(null);
+        } catch (Exception e) {
+            return Result.error(e.getMessage());
+        }
+    }
+
+    /**
+     * 查询微信绑定状态
+     */
+    @GetMapping("/{id}/wechat-status")
+    public Result<Map<String, Object>> getWechatStatus(@PathVariable("id") String userId) {
+        try {
+            Map<String, Object> result = wechatLoginService.getWechatStatus(userId);
+            return Result.success(result);
+        } catch (Exception e) {
+            return Result.error(e.getMessage());
+        }
     }
 
 }

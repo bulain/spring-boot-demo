@@ -54,6 +54,12 @@ logging:
     org.springframework: INFO
     com.bulain: DEBUG
 
+wechat:
+  open-platform:
+    app-id: ${WECHAT_APP_ID:wx1234567890abcdef}
+    app-secret: ${WECHAT_APP_SECRET:1234567890abcdef1234567890abcdef}
+    redirect-uri: ${WECHAT_REDIRECT_URI:http://localhost:8082/api/sys/auth/wechat-callback}
+
 ---
 spring:
   config:

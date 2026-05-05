@@ -7,6 +7,7 @@ import com.bulain.mybatis.sys.service.LoginSecurityService;
 import com.bulain.mybatis.sys.service.SysJwtService;
 import com.bulain.mybatis.sys.service.SysUserService;
 import com.bulain.mybatis.sys.service.VerificationCodeService;
+import com.bulain.mybatis.sys.service.WechatLoginService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -34,6 +35,9 @@ public class SysAuthController {
 
     @Autowired
     private LoginSecurityService loginSecurityService;
+
+    @Autowired
+    private WechatLoginService wechatLoginService;
 
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -203,22 +207,26 @@ public class SysAuthController {
         return ip;
     }
 
+    /**
+     * 获取微信登录二维码参数
+     */
+    @GetMapping("/wechat-qrcode")
+    public Result<WechatQrCodeResponse> getWechatQrCode() {
+        WechatQrCodeResponse qrCode = wechatLoginService.getQrCode();
+        return Result.success(qrCode);
+    }
+
+    /**
+     * 微信登录
+     */
     @PostMapping("/wechat-login")
     public Result<Map<String, Object>> wechatLogin(@RequestBody WechatLoginDTO dto) {
-        // TODO: 实现微信OAuth登录逻辑
-        SysUser user = sysUserService.getByWechatOpenid("TODO: get openid from wechat code");
-        if (user == null) {
-            return Result.error("微信账号未绑定");
+        try {
+            Map<String, Object> result = wechatLoginService.wechatLogin(dto);
+            return Result.success(result);
+        } catch (Exception e) {
+            return Result.error(e.getMessage());
         }
-
-        Set<String> permissionCodes = sysUserService.getUserPermissionCodes(user.getId());
-
-        Map<String, Object> result = new HashMap<>();
-        result.put("token", sysJwtService.generateToken(user.getId(), user.getUsername()));
-        result.put("userInfo", user);
-        result.put("permissionCodes", permissionCodes);
-
-        return Result.success(result);
     }
 
     @PostMapping("/dingtalk-login")

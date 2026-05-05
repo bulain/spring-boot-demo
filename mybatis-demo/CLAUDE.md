@@ -27,8 +27,6 @@ mvn spring-boot:run -Dspring-boot.run.profiles=oracle
 mvn test -Dtest=BlogMapperDemo
 ```
 
-**注意:** 大部分集成测试标记为 `@Disabled`，需要运行中的数据库和 Redis 基础设施。
-
 ## 核心依赖
 
 - MyBatis Plus 3.5.16、Redisson 3.52.0、Flyway 9.22.3、Hutool 5.8.42
@@ -44,3 +42,9 @@ mvn test -Dtest=BlogMapperDemo
 - 所有文档使用中文编写
 - 代码注释统一使用中文
 - 接口、类、方法的说明文档使用中文
+
+<!-- SPECKIT START -->
+当前功能实施计划请参考：specs/001-wechat-scan-login/plan.md
+
+有关技术选型、项目结构、命令行操作和其他重要信息的详细内容，请查阅上述计划文件。
+<!-- SPECKIT END -->
