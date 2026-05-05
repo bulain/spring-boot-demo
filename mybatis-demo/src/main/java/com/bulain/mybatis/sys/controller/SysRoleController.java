@@ -9,6 +9,7 @@ import com.bulain.mybatis.sys.dto.UpdateRoleDTO;
 import com.bulain.mybatis.sys.entity.SysPermission;
 import com.bulain.mybatis.sys.entity.SysRole;
 import com.bulain.mybatis.sys.excel.ImportResultVO;
+import com.bulain.mybatis.sys.service.ExcelTemplateService;
 import com.bulain.mybatis.sys.service.SysRoleService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -27,6 +30,9 @@ public class SysRoleController {
 
     @Autowired
     private SysRoleService sysRoleService;
+
+    @Autowired
+    private ExcelTemplateService excelTemplateService;
 
     @PostMapping
     public Result<SysRole> createRole(@RequestBody CreateRoleDTO dto) {
@@ -93,6 +99,20 @@ public class SysRoleController {
     public Result<ImportResultVO> importRoles(@RequestParam("file") MultipartFile file) throws IOException {
         ImportResultVO result = sysRoleService.importExcel(file.getInputStream());
         return Result.success(result);
+    }
+
+    /**
+     * 下载角色导入模板
+     * 需管理员权限
+     */
+    @GetMapping("/template")
+    public void downloadRoleTemplate(HttpServletResponse response) throws IOException {
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setCharacterEncoding("utf-8");
+        String fileName = URLEncoder.encode("角色导入模板", StandardCharsets.UTF_8).replaceAll("\\+", "%20");
+        response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
+
+        excelTemplateService.downloadRoleTemplate(response.getOutputStream());
     }
 
 }

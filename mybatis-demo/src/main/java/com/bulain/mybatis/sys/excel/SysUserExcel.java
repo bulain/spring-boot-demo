@@ -27,6 +27,9 @@ public class SysUserExcel {
     @ExcelProperty("手机号")
     private String phone;
 
+    @ExcelProperty("密码")
+    private String password;
+
     @ExcelProperty("状态")
     private String status;
 

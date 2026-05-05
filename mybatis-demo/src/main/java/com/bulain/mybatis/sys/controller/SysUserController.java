@@ -6,6 +6,7 @@ import com.bulain.mybatis.sys.dto.*;
 import com.bulain.mybatis.sys.entity.SysRole;
 import com.bulain.mybatis.sys.entity.SysUser;
 import com.bulain.mybatis.sys.excel.ImportResultVO;
+import com.bulain.mybatis.sys.service.ExcelTemplateService;
 import com.bulain.mybatis.sys.service.SysUserService;
 import com.bulain.mybatis.sys.service.WechatLoginService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,6 +33,9 @@ public class SysUserController {
 
     @Autowired
     private WechatLoginService wechatLoginService;
+
+    @Autowired
+    private ExcelTemplateService excelTemplateService;
 
     @PostMapping
     public Result<SysUser> createUser(@RequestBody CreateUserDTO dto) {
@@ -109,6 +113,10 @@ public class SysUserController {
         return Result.success(result);
     }
 
+    /**
+     * 下载用户导入模板
+     * 需管理员权限
+     */
     @GetMapping("/template")
     public void downloadUserTemplate(HttpServletResponse response) throws IOException {
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
@@ -116,7 +124,7 @@ public class SysUserController {
         String fileName = URLEncoder.encode("用户导入模板", StandardCharsets.UTF_8).replaceAll("\\+", "%20");
         response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
 
-        //sysExcelService.downloadUserTemplate(response.getOutputStream());
+        excelTemplateService.downloadUserTemplate(response.getOutputStream());
     }
 
     /**

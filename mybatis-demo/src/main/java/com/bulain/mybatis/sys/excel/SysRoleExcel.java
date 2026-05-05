@@ -24,4 +24,7 @@ public class SysRoleExcel {
     @ExcelProperty("描述")
     private String description;
 
+    @ExcelProperty("状态")
+    private String status;
+
 }
