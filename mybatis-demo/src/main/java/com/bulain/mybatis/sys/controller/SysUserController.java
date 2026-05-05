@@ -8,6 +8,7 @@ import com.bulain.mybatis.sys.entity.SysUser;
 import com.bulain.mybatis.sys.excel.ImportResultVO;
 import com.bulain.mybatis.sys.service.ExcelTemplateService;
 import com.bulain.mybatis.sys.service.SysUserService;
+import com.bulain.mybatis.sys.service.DingtalkLoginService;
 import com.bulain.mybatis.sys.service.WechatLoginService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ public class SysUserController {
 
     @Autowired
     private WechatLoginService wechatLoginService;
+
+    @Autowired
+    private DingtalkLoginService dingtalkLoginService;
 
     @Autowired
     private ExcelTemplateService excelTemplateService;
@@ -160,6 +164,45 @@ public class SysUserController {
     public Result<Map<String, Object>> getWechatStatus(@PathVariable("id") String userId) {
         try {
             Map<String, Object> result = wechatLoginService.getWechatStatus(userId);
+            return Result.success(result);
+        } catch (Exception e) {
+            return Result.error(e.getMessage());
+        }
+    }
+
+    /**
+     * 绑定钉钉账号
+     */
+    @PostMapping("/{id}/bind-dingtalk")
+    public Result<Void> bindDingtalk(@PathVariable("id") String userId, @RequestBody BindDingtalkDTO dto) {
+        try {
+            dingtalkLoginService.bindDingtalk(userId, dto);
+            return Result.success(null);
+        } catch (Exception e) {
+            return Result.error(e.getMessage());
+        }
+    }
+
+    /**
+     * 解绑钉钉账号
+     */
+    @PostMapping("/{id}/unbind-dingtalk")
+    public Result<Void> unbindDingtalk(@PathVariable("id") String userId, @RequestBody UnbindDingtalkDTO dto) {
+        try {
+            dingtalkLoginService.unbindDingtalk(userId, dto);
+            return Result.success(null);
+        } catch (Exception e) {
+            return Result.error(e.getMessage());
+        }
+    }
+
+    /**
+     * 查询钉钉绑定状态
+     */
+    @GetMapping("/{id}/dingtalk-status")
+    public Result<Map<String, Object>> getDingtalkStatus(@PathVariable("id") String userId) {
+        try {
+            Map<String, Object> result = dingtalkLoginService.getDingtalkStatus(userId);
             return Result.success(result);
         } catch (Exception e) {
             return Result.error(e.getMessage());

@@ -7,6 +7,7 @@ import com.bulain.mybatis.sys.service.LoginSecurityService;
 import com.bulain.mybatis.sys.service.SysJwtService;
 import com.bulain.mybatis.sys.service.SysUserService;
 import com.bulain.mybatis.sys.service.VerificationCodeService;
+import com.bulain.mybatis.sys.service.DingtalkLoginService;
 import com.bulain.mybatis.sys.service.WechatLoginService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,9 @@ public class SysAuthController {
 
     @Autowired
     private WechatLoginService wechatLoginService;
+
+    @Autowired
+    private DingtalkLoginService dingtalkLoginService;
 
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -229,22 +233,26 @@ public class SysAuthController {
         }
     }
 
+    /**
+     * 获取钉钉登录二维码参数
+     */
+    @GetMapping("/dingtalk-qrcode")
+    public Result<DingtalkQrCodeResponse> getDingtalkQrCode() {
+        DingtalkQrCodeResponse qrCode = dingtalkLoginService.getQrCode();
+        return Result.success(qrCode);
+    }
+
+    /**
+     * 钉钉登录
+     */
     @PostMapping("/dingtalk-login")
     public Result<Map<String, Object>> dingtalkLogin(@RequestBody DingtalkLoginDTO dto) {
-        // TODO: 实现钉钉OAuth登录逻辑
-        SysUser user = sysUserService.getByDingtalkUserid("TODO: get userid from dingtalk code");
-        if (user == null) {
-            return Result.error("钉钉账号未绑定");
+        try {
+            Map<String, Object> result = dingtalkLoginService.dingtalkLogin(dto);
+            return Result.success(result);
+        } catch (Exception e) {
+            return Result.error(e.getMessage());
         }
-
-        Set<String> permissionCodes = sysUserService.getUserPermissionCodes(user.getId());
-
-        Map<String, Object> result = new HashMap<>();
-        result.put("token", sysJwtService.generateToken(user.getId(), user.getUsername()));
-        result.put("userInfo", user);
-        result.put("permissionCodes", permissionCodes);
-
-        return Result.success(result);
     }
 
 }

@@ -60,6 +60,12 @@ wechat:
     app-secret: ${WECHAT_APP_SECRET:1234567890abcdef1234567890abcdef}
     redirect-uri: ${WECHAT_REDIRECT_URI:http://localhost:8082/api/sys/auth/wechat-callback}
 
+dingtalk:
+  open-platform:
+    app-id: ${DINGTALK_APP_ID:dingoabc1234567890}
+    app-secret: ${DINGTALK_APP_SECRET:abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ12}
+    redirect-uri: ${DINGTALK_REDIRECT_URI:http://localhost:8082/api/sys/auth/dingtalk-callback}
+
 ---
 spring:
   config:
